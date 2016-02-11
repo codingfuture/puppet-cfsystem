@@ -110,6 +110,6 @@ Ubuntu-specific configuration.
 * `apt_url = 'mirror://mirrors.ubuntu.com/mirrors.txt'` - APT base URL for Ubuntu repos
 * `release = 'wily'` - Ubuntu release name to configure
 
-[cfnetwork](https://github.com/codingfuture/puppet-cfnetwork)
-[cfauth](https://github.com/codingfuture/puppet-cfauth)
-[cffirehol](https://github.com/codingfuture/puppet-cffirehol)
+[cfnetwork]: https://github.com/codingfuture/puppet-cfnetwork
+[cfauth]: https://github.com/codingfuture/puppet-cfauth
+[cffirehol]: https://github.com/codingfuture/puppet-cffirehol
