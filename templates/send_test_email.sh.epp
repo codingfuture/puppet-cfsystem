@@ -1,0 +1,9 @@
+#!/bin/bash
+
+exim -v root <<EOT
+From: testuser@<%= $trusted['certname'] %>
+To: root
+Subject: Testing Exim $(date +'%s')
+
+This is a test message on <%= $trusted['certname'] %> 
+EOT
