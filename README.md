@@ -1,83 +1,115 @@
 # cfsystem
 
-#### Table of Contents
-
-1. [Description](#description)
-1. [Setup - The basics of getting started with cfsystem](#setup)
-    * [What cfsystem affects](#what-cfsystem-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with cfsystem](#beginning-with-cfsystem)
-1. [Usage - Configuration options and additional functionality](#usage)
-1. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-1. [Limitations - OS compatibility, etc.](#limitations)
-1. [Development - Guide for contributing to the module](#development)
-
 ## Description
 
-Start with a one- or two-sentence summary of what the module does and/or what
-problem it solves. This is your 30-second elevator pitch for your module.
-Consider including OS/Puppet version it works with.
+Configure a bare minimal production system regardless of its purpose. It depends on
+more specific [cfnetwork][], [cfauth][] and [cffirehol][] modules.
 
-You can give more descriptive information in a second paragraph. This paragraph
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?" If your module has a range of functionality (installation, configuration,
-management, etc.), this is the time to mention it.
+What it does:
+
+* Whatever [cfnetwork][] does
+* Whatever [cfauth][] does
+* Whatever [cffirehol][] does
+* Setups APT for Debian and Ubuntu
+* Setups timezone
+* Setups hostname based on certname
+* Adds firewall rules as required
+* Setups special location/pool facts for hiera lookup (see cfsystem::hierapool below)
+* Setups email system
+* Setups NTP
+* Installs many handy system tools which almost any admin would expect
 
 ## Setup
 
-### What cfsystem affects **OPTIONAL**
+If r10k is used until [RK-3](https://tickets.puppetlabs.com/browse/RK-3) is solved, make
+sure to have the following lines in Puppetfile:
 
-If it's obvious what your module touches, you can skip this section. For
-example, folks can probably figure out that your mysql_instance module affects
-their MySQL instances.
+```ruby
+mod 'puppetlabs/stdlib', '4.11.0'
+mod 'puppetlabs/apt', '2.2.1'
+mod 'puppetlabs/git', '0.4.0'
+mod 'saz/timezone', '3.3.0'
+mod 'tohuwabohu/openntp', '2.0.2'
+mod 'fiddyspence/sysctl', '1.1.0'
+mod 'codingfuture/cfnetwork'
+mod 'codingfuture/cfauth'
+```
 
-If there's more that they should know about, though, this is the place to mention:
+## Class parameters
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
+## `cfsystem`
 
-### Setup Requirements **OPTIONAL**
+* `allow_nfs` = `false` - purge RPC packages unless true
+* `admin_email` = `undef` - email address to use for `root` and as the default sink
+* `repo_proxy` = `undef` - if set, use the config as HTTP/HTTPS proxy for package retrieval.
+    * `host` - IP or hostname
+    * `port` - TCP port
+* `add_repo_cacher` = `false` - if true, install apt-cacher-ng and accept clients on `$service_face`
+* `service_face` = `'any'` - interface to accept client for NTP and HTTP proxy, if enabled separately
+* `ntp_servers` = [ 'pool.ntp.org' ] - upstream NTP server
+* `add_ntp_server` = false - if true, accept NTP service clients on `$service_face`
+* `timezone` = `'Etc/UTC'` - setup system timezone
 
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
+## `cfsystem::hierapool`
 
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you might want to include an additional "Upgrading" section
-here.
+Automatically including by `cfsystem`. This values are useful in hiera.yaml configuration
+to setup hierarchy based on location and tenant/server pool in it. Example:
 
-### Beginning with cfsystem
+```yaml
+    ---
+    :backends:
+    - yaml
+    :hierarchy:
+    - "%{::trusted.domain}/%{::trusted.hostname}"
+    - "%{::trusted.domain}"
+    - "%{::cf_location}/%{::cf_location_pool}"
+    - "%{::cf_location}"
+    - common
+    :merge_behavior: deeper
+    :yaml:
+    :datadir:
+```
 
-The very basic steps needed for a user to get the module up and running. This
-can include setup steps, if necessary, or it can be an example of the most
-basic use of the module.
+* `location = undef` - if set, its value will be provided as `cflocation` fact
+* `pool = undef` - if set, its value will be provided as `cflocationpool` fact
 
-## Usage
 
-This section is where you describe how to customize, configure, and do the
-fancy stuff with your module here. It's especially helpful if you include usage
-examples and code samples for doing things with your module.
+## `cfsystem::email`
 
-## Reference
+Setup email server for outgoing emails. **Please not that this configuration
+is not intended to accept internet traffic.**
 
-Here, include a complete list of your module's classes, types, providers,
-facts, along with the parameters for each. Users refer to this section (thus
-the name "Reference") to find specific details; most users don't read it per
-se.
+* `smarthost = undef` - if set, use as smarthost to relay outgoing emails through
+* `smarthost_login = undef` - if set, use as login on smarthost
+* `smarthost_password = undef` -  if set, use as password on smarthost (plain text)
+* `relay_nets = <private subnets>` - allowed clients for SMTP relay, if relay is enabled
+    with `$listen_ifaces`
+* `listen_ifaces = undef` - list of interface (`cfnetwork::iface` names), besides `lo` to
+    listen for SMTP client relay
+* `disable_ipv6 = true` - if true, IPv6 supports gets disabled (most likely you
+    need it disabled for SMTP)
 
-## Limitations
+## `cfsystem::sysctl`
 
-This is where you list OS compatibility, version compatibility, etc. If there
-are Known Issues, you might want to include them under their own heading here.
+Setup sysctl entries.
 
-## Development
+* `vm_swappiness = 1` - 0-100 (%) minimize swap activity by default
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
+## `cfsystem::debian`
 
-## Release Notes/Contributors/Etc. **Optional**
+Debian-specific configuration.
 
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You can also add any additional sections you feel
-are necessary or important to include here. Please use the `## ` header.
+* `apt_url = 'http://httpredir.debian.org/debian'` - APT base URL for Debian repos
+* `security_apt_url = 'http://security.debian.org/'` - APT base URL for Debian security repo
+* `release` = 'jessie' - Debian release name to configure
+
+## `cfsystem::ubuntu`
+
+Ubuntu-specific configuration.
+
+* `apt_url = 'mirror://mirrors.ubuntu.com/mirrors.txt'` - APT base URL for Ubuntu repos
+* `release = 'wily'` - Ubuntu release name to configure
+
+[cfnetwork](https://github.com/codingfuture/puppet-cfnetwork)
+[cfauth](https://github.com/codingfuture/puppet-cfauth)
+[cffirehol](https://github.com/codingfuture/puppet-cffirehol)
