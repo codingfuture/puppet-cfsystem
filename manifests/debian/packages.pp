@@ -51,13 +51,13 @@ class cfsystem::debian::packages {
     }
 
     class { 'openntp':
-        ensure => present,
-        enable => true,
-        listen => $ntp_listen,
-        server => any2array($cfsystem::ntp_servers),
+        ensure       => present,
+        enable       => true,
+        listen       => $ntp_listen,
+        server       => any2array($cfsystem::ntp_servers),
         package_name => 'openntpd',
         service_name => 'openntpd',
-        config_file => '/etc/openntpd/ntpd.conf',
+        config_file  => '/etc/openntpd/ntpd.conf',
     }
     
     # Git config

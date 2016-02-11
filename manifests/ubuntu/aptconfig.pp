@@ -7,32 +7,32 @@ class cfsystem::ubuntu::aptconfig {
     #---
     apt::source { 'ubuntu':
         location => $::cfsystem::ubuntu::apt_url,
-        release => $::cfsystem::ubuntu::release,
-        repos => 'main restricted universe multiverse',
-        include => { src => false },
+        release  => $::cfsystem::ubuntu::release,
+        repos    => 'main restricted universe multiverse',
+        include  => { src        => false },
     }
     apt::source { 'ubuntu-updates':
         location => $::cfsystem::ubuntu::apt_url,
-        release => "${::cfsystem::ubuntu::release}-updates",
-        repos => 'main restricted universe multiverse',
-        include => { src => false },
+        release  => "${::cfsystem::ubuntu::release}-updates",
+        repos    => 'main restricted universe multiverse',
+        include  => { src        => false },
     }
     apt::source { 'ubuntu-backports':
         location => $::cfsystem::ubuntu::apt_url,
-        release => "${::cfsystem::ubuntu::release}-backports",
-        repos => 'main restricted universe multiverse',
-        include => { src => false },
+        release  => "${::cfsystem::ubuntu::release}-backports",
+        repos    => 'main restricted universe multiverse',
+        include  => { src        => false },
     }
     apt::source { 'ubuntu-security':
         location => $::cfsystem::ubuntu::apt_url,
-        release => "${::cfsystem::ubuntu::release}-security",
-        repos => 'main restricted universe multiverse',
-        include => { src => false },
+        release  => "${::cfsystem::ubuntu::release}-security",
+        repos    => 'main restricted universe multiverse',
+        include  => { src        => false },
     }
 
     apt::source { 'puppetlabs':
         location => 'http://apt.puppetlabs.com',
-        release => $::cfsystem::ubuntu::release,
+        release  => $::cfsystem::ubuntu::release,
         repos    => 'PC1',
         key      => {
             id     => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30',

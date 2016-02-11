@@ -4,11 +4,11 @@ class cfsystem::debian::cache {
         service { 'apt-cacher-ng': ensure => running }
         
         file_line { 'apcng_enable_ssl_connect':
-            ensure => present,
-            path => '/etc/apt-cacher-ng/acng.conf',
-            line => 'PassThroughPattern: .*:443$',
+            ensure  => present,
+            path    => '/etc/apt-cacher-ng/acng.conf',
+            line    => 'PassThroughPattern: .*:443$',
             require => Package['apt-cacher-ng'],
-            notify => Service['apt-cacher-ng'],
+            notify  => Service['apt-cacher-ng'],
         }
         
         cfnetwork::describe_service{ 'apcng':
@@ -30,7 +30,7 @@ class cfsystem::debian::cache {
         cfnetwork::describe_service{ 'aptproxy':
             server => "tcp/${proxy_port}" }
         cfnetwork::client_port{ 'any:aptproxy:cfsystem':
-            dst => $proxy_host,
+            dst  => $proxy_host,
             user => 'root',
         }
     } else {

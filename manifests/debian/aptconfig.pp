@@ -7,32 +7,32 @@ class cfsystem::debian::aptconfig {
     #---
     apt::source { 'debian':
         location => $::cfsystem::debian::apt_url,
-        release => $::cfsystem::debian::release,
-        repos => 'main contrib non-free',
-        include => { src => false },
+        release  => $::cfsystem::debian::release,
+        repos    => 'main contrib non-free',
+        include  => { src        => false },
     }
     apt::source { 'debian-updates':
         location => $::cfsystem::debian::apt_url,
-        release => "${::cfsystem::debian::release}-updates",
-        repos => 'main contrib non-free',
-        include => { src => false },
+        release  => "${::cfsystem::debian::release}-updates",
+        repos    => 'main contrib non-free',
+        include  => { src        => false },
     }
     apt::source { 'debian-backports':
         location => $::cfsystem::debian::apt_url,
-        release => "${::cfsystem::debian::release}-backports",
-        repos => 'main contrib non-free',
-        include => { src => false },
+        release  => "${::cfsystem::debian::release}-backports",
+        repos    => 'main contrib non-free',
+        include  => { src        => false },
     }
     apt::source { 'debian-security':
         location => $::cfsystem::debian::security_apt_url,
-        release => "${::cfsystem::debian::release}/updates",
-        repos => 'main contrib non-free',
-        include => { src => false },
+        release  => "${::cfsystem::debian::release}/updates",
+        repos    => 'main contrib non-free',
+        include  => { src        => false },
     }
 
     apt::source { 'puppetlabs':
         location => 'http://apt.puppetlabs.com',
-        release => $::cfsystem::debian::release,
+        release  => $::cfsystem::debian::release,
         repos    => 'PC1',
         key      => {
             id     => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30',
