@@ -33,6 +33,64 @@ mod 'tohuwabohu/openntp', '2.0.2'
 mod 'fiddyspence/sysctl', '1.1.0'
 mod 'codingfuture/cfnetwork'
 mod 'codingfuture/cfauth'
+# make sure you check dependencies of dependencies too.
+```
+
+## Implicit resources created
+
+```yaml
+cfnetwork::describe_service:
+    puppet:
+        server: 'tcp/8140'
+    smtp:
+        server: 'tcp/25'
+    cfsmtp:
+        server:
+            - 'tcp/25'  # smtp
+            - 'tcp/465' # smtps
+            - 'tcp/587' # submission
+    # if $cfsystem::add_repo_cacher
+    'apcng':
+        server: 'tcp/3142'
+    # if $cfsystem::repo_proxy
+    'aptproxy':
+        server: "tcp/${proxy_port}"
+cfnetwork::service_port:
+    # foreach $cfsystem::email::listen_ifaces
+    "${listen_ifaces}:smtp:cfsystem": {}
+    'local:smtp:cfsystem': {}
+    # if $cfsystem::add_ntp_server
+    "${cfsystem::service_face}:ntp": {}
+    # if $cfsystem::add_repo_cacher
+    "${cfsystem::service_face}:apcng:cfsystem": {}
+    # if ${cfsystem::service_face} not in ['any', 'local']
+    'local:apcng:cfsystem': {}
+cfnetwork::client_ports:
+    'any:puppet:cfsystem':
+        user: 'root'
+    'local:smtp:cfsystem': {}
+    # if $smarthost = undef then dst filtering is disabled
+    'any:cfsmtp:cfsystem':
+        user => ['root', 'Debian-exim'],
+        dst  => $smarthost
+    'any:ntp:cfsystem':
+        user => ['root', 'ntpd'],
+    # if $cfsystem::add_repo_cacher
+    'any:http:apcng':
+        user: 'apt-cacher-ng'
+    # if $cfsystem::add_repo_cacher
+    'any:https:apcng':
+        user: 'apt-cacher-ng'
+    # if $cfsystem::repo_proxy
+    'any:aptproxy:cfsystem':
+        dst: $proxy_host
+        user: 'root'
+    # if not $cfsystem::repo_proxy
+    'any:http:cfsystem':
+        user: 'root'
+    # if not $cfsystem::repo_proxy
+    'any:https:cfsystem':
+        user: 'root'
 ```
 
 ## Class parameters

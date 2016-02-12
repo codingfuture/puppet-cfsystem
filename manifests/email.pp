@@ -33,6 +33,10 @@ class cfsystem::email (
     cfnetwork::service_port { 'local:smtp:cfsystem': }
     cfnetwork::client_port { 'local:smtp:cfsystem': }
     
+    cfnetwork::describe_service { 'smtp':
+        server => 'tcp/25', # smtp
+    }
+
     cfnetwork::describe_service { 'cfsmtp':
         server => [
             'tcp/25', # smtp
@@ -40,7 +44,8 @@ class cfsystem::email (
             'tcp/587', # submission
         ]
     }
-    
+
+    # NOTE: it must be defined even with undef smart host
     cfnetwork::client_port { 'any:cfsmtp:cfsystem':
         user => ['root', 'Debian-exim'],
         dst  => $dst_smarthost
