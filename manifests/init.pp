@@ -14,6 +14,17 @@ class cfsystem (
     
     $timezone = 'Etc/UTC',
     $xen_pv = false, # enable PV/PVH config changes TODO: facter
+    
+    $apt_purge = {
+        'sources.list'   => true,
+        'sources.list.d' => true,
+        'preferences'    => true,
+        'preferences.d'  => true,
+    },
+    $apt_update = {
+        frequency => 'daily',
+        timeout   => 30,
+    }
 ) {
     include cfnetwork
     include cfauth

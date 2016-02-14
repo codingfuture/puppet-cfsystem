@@ -1,7 +1,9 @@
 
 class cfsystem::debian::aptconfig {
     class {'apt':
-        proxy => $::cfsystem::repo_proxy,
+        proxy  => $::cfsystem::repo_proxy,
+        update => $::cfsystem::apt_update,
+        purge  => $::cfsystem::apt_purge,
     }
 
     #---
