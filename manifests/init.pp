@@ -23,7 +23,7 @@ class cfsystem (
     },
     $apt_update = {
         frequency => 'daily',
-        timeout   => 30,
+        timeout   => 300,
     }
 ) {
     include cfnetwork

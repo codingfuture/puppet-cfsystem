@@ -113,7 +113,7 @@ cfnetwork::client_ports:
 * `add_ntp_server` = false - if true, accept NTP service clients on `$service_face`
 * `timezone` = `'Etc/UTC'` - setup system timezone
 * `apt_purge` - passed to apt::purge, purge all sources and preferences by default
-* `apt_update` - passed to apt::update, update daily with 30 second timeout by default
+* `apt_update` - passed to apt::update, update daily with 300 second timeout by default
 
 ## `cfsystem::hierapool`
 
