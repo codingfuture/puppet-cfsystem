@@ -19,6 +19,11 @@ What it does:
 * Setups NTP
 * Installs many handy system tools which almost any admin would expect
 
+## Technical Support
+
+* [Example configuration](https://github.com/codingfuture/puppet-test)
+* Commercial support: [support@codingfuture.net](mailto:support@codingfuture.net)
+
 ## Setup
 
 If r10k is used until [RK-3](https://tickets.puppetlabs.com/browse/RK-3) is solved, make
@@ -107,6 +112,8 @@ cfnetwork::client_ports:
 * `ntp_servers` = [ 'pool.ntp.org' ] - upstream NTP server
 * `add_ntp_server` = false - if true, accept NTP service clients on `$service_face`
 * `timezone` = `'Etc/UTC'` - setup system timezone
+* `apt_purge` - passed to apt::purge, purge all sources and preferences by default
+* `apt_update` - passed to apt::update, update daily with 30 second timeout by default
 
 ## `cfsystem::hierapool`
 
