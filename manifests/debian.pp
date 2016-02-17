@@ -11,7 +11,7 @@ class cfsystem::debian (
     
     include cfsystem::debian::packages
     
-    if $::cfsystem::xen_pv and false {
+    if $::cf_virt_detect == 'xen' {
         file_line { 'xenpv_initab_disable_serial':
             ensure  => present,
             path    => '/etc/inittab',

@@ -119,8 +119,8 @@ cfnetwork::client_ports:
 * `timezone = 'Etc/UTC'` - setup system timezone
 * `apt_purge` - passed to apt::purge, purge all sources and preferences by default
 * `apt_update` - passed to apt::update, update daily with 300 second timeout by default
-* `rc_local = undef` - list of commands to execute in rc.local
-* `rotational_drive_scheduler = 'deadline'` - scheduler only for HDD on real servers
+* `real_hdd_scheduler` - default scheduler for not SSD and not virtualized HDDs
+* `rc_local` - list of additional commands to add to /etc/rc.local
     (SSD and virtual is always 'noop')
 
 ## `cfsystem::hierapool`

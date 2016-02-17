@@ -14,6 +14,7 @@ class cfsystem::debian::packages {
     package { 'openssh-server': }
     package { 'etckeeper': }
     package { 'apt-transport-https': }
+    package { 'systemd': }
 
     # Handy tools
     #---

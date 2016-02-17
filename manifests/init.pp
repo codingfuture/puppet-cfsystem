@@ -25,8 +25,8 @@ class cfsystem (
         frequency => 'daily',
         timeout   => 300,
     },
+    $real_hdd_scheduler = 'deadline',
     $rc_local = undef,
-    $rotational_drive_scheduler = 'deadline',
 ) {
     include cfnetwork
     include cfauth
@@ -74,10 +74,11 @@ class cfsystem (
         mode    => '0755',
         replace => true,
         content => epp('cfsystem/rc.local.epp'),
-        notify  => Exec['exec-rc.local'],
+        notify  => Exec['rc.local-update'],
     }
-    exec { 'exec-rc.local':
-        command     => '/etc/rc.local',
-        refreshonly => true,
+    exec { 'rc.local-update':
+      command     => "/etc/rc.local",
+      refreshonly => true,
     }
+
 }
