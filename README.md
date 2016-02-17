@@ -49,7 +49,7 @@ example of a complete infrastructure configuration and Vagrant provisioning.
 ## Implicitly created resources
 
 ```yaml
-cfnetwork::describe_service:
+cfnetwork::describe_services:
     puppet:
         server: 'tcp/8140'
     smtp:
@@ -65,7 +65,7 @@ cfnetwork::describe_service:
     # if $cfsystem::repo_proxy
     'aptproxy':
         server: "tcp/${proxy_port}"
-cfnetwork::service_port:
+cfnetwork::service_ports:
     # foreach $cfsystem::email::listen_ifaces
     "${listen_ifaces}:smtp:cfsystem": {}
     'local:smtp:cfsystem': {}
@@ -140,8 +140,8 @@ to setup hierarchy based on location and tenant/server pool in it. Example:
     :datadir:
 ```
 
-* `location = undef` - if set, its value will be provided as `cflocation` fact
-* `pool = undef` - if set, its value will be provided as `cflocationpool` fact
+* `location = undef` - if set, saved into `/etc/cflocation`
+* `pool = undef` - if set, aved into `/etc/cflocationpool`
 
 
 ## `cfsystem::email`
