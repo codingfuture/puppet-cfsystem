@@ -31,6 +31,12 @@ class cfsystem (
     include cfnetwork
     include cfauth
     
+    if $::cfsystem::add_repo_cacher and !$cf_has_acng {
+        $repo_proxy_cond = undef
+    } else {
+        $repo_proxy_cond = $repo_proxy
+    }
+    
     case $::operatingsystem {
         'Debian': { include cfsystem::debian }
         'Ubuntu': { include cfsystem::ubuntu }
