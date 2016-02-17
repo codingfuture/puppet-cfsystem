@@ -107,18 +107,21 @@ cfnetwork::client_ports:
 
 ## `cfsystem`
 
-* `allow_nfs` = `false` - purge RPC packages unless true
-* `admin_email` = `undef` - email address to use for `root` and as the default sink
-* `repo_proxy` = `undef` - if set, use the config as HTTP/HTTPS proxy for package retrieval.
+* `allow_nfs = false` - purge RPC packages unless true
+* `admin_email = undef` - email address to use for `root` and as the default sink
+* `repo_proxy = undef` - if set, use the config as HTTP/HTTPS proxy for package retrieval.
     * `host` - IP or hostname
     * `port` - TCP port
-* `add_repo_cacher` = `false` - if true, install apt-cacher-ng and accept clients on `$service_face`
-* `service_face` = `'any'` - interface to accept client for NTP and HTTP proxy, if enabled separately
-* `ntp_servers` = [ 'pool.ntp.org' ] - upstream NTP server
-* `add_ntp_server` = false - if true, accept NTP service clients on `$service_face`
-* `timezone` = `'Etc/UTC'` - setup system timezone
+* `add_repo_cacher = false` - if true, install apt-cacher-ng and accept clients on `$service_face`
+* `service_face = 'any'` - interface to accept client for NTP and HTTP proxy, if enabled separately
+* `ntp_servers = [ 'pool.ntp.org' ]` - upstream NTP server
+* `add_ntp_server = false` - if true, accept NTP service clients on `$service_face`
+* `timezone = 'Etc/UTC'` - setup system timezone
 * `apt_purge` - passed to apt::purge, purge all sources and preferences by default
 * `apt_update` - passed to apt::update, update daily with 300 second timeout by default
+* `rc_local = undef` - list of commands to execute in rc.local
+* `rotational_drive_scheduler = 'deadline'` - scheduler only for HDD on real servers
+    (SSD and virtual is always 'noop')
 
 ## `cfsystem::hierapool`
 

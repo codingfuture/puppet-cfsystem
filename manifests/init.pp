@@ -24,7 +24,9 @@ class cfsystem (
     $apt_update = {
         frequency => 'daily',
         timeout   => 300,
-    }
+    },
+    $rc_local = undef,
+    $rotational_drive_scheduler = 'deadline',
 ) {
     include cfnetwork
     include cfauth
@@ -56,5 +58,20 @@ class cfsystem (
         mode    => '0644',
         replace => true,
         content => "${certname}\n",
+    }
+    
+    #---
+    file { '/etc/rc.local':
+        ensure  => present,
+        owner   => root,
+        group   => root,
+        mode    => '0755',
+        replace => true,
+        content => epp('cfsystem/rc.local.epp'),
+        notify  => Exec['exec-rc.local'],
+    }
+    exec { 'exec-rc.local':
+        command     => '/etc/rc.local',
+        refreshonly => true,
     }
 }
