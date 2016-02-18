@@ -18,6 +18,10 @@ What it does:
 * Setups email system
 * Setups NTP
 * Installs many handy system tools which almost any admin would expect
+* Force noop scheduler on SSDs and virtual devices (in guests)
+* Force custom I/O scheduler for real spinning HDDs (deadline by default)
+* Add custom rc.local commands, if needed
+
 
 ## Technical Support
 
