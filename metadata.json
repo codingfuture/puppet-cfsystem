@@ -51,10 +51,6 @@
       "version_requirement": ">= 3.3.0"
     },
     {
-      "name": "tohuwabohu-openntp",
-      "version_requirement": ">= 2.0.2"
-    },
-    {
       "name": "codingfuture-cfnetwork",
       "version_requirement": ">= 0.9.3"
     },

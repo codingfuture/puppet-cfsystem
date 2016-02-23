@@ -39,28 +39,6 @@ class cfsystem::debian::packages {
     package { 'debsums': }
     
         
-    #---
-    cfnetwork::client_port { 'any:ntp:cfsystem':
-        user => ['root', 'ntpd'],
-        # it generates side effects on dynamic DNS
-        #dst => $cfsystem::ntp_servers,
-    }
-    
-    if $cfsystem::add_ntp_server {
-        cfnetwork::service_port { "${cfsystem::service_face}:ntp": }
-        $ntp_listen = '0.0.0.0'
-    }
-
-    class { 'openntp':
-        ensure       => present,
-        enable       => true,
-        listen       => $ntp_listen,
-        server       => any2array($cfsystem::ntp_servers),
-        package_name => 'openntpd',
-        service_name => 'openntpd',
-        config_file  => '/etc/openntpd/ntpd.conf',
-    }
-    
     # Git config
     #---
     include git

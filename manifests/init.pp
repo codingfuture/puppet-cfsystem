@@ -50,6 +50,7 @@ class cfsystem (
     include cfsystem::hierapool
     include cfsystem::sysctl
     include cfsystem::email
+    include cfsystem::ntp
     
     #---
     cfnetwork::describe_service{ 'puppet': server => 'tcp/8140' }
