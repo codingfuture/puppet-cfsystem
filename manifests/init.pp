@@ -51,6 +51,7 @@ class cfsystem (
     include cfsystem::sysctl
     include cfsystem::email
     include cfsystem::ntp
+    include cfsystem::git
     
     #---
     cfnetwork::describe_service{ 'puppet': server => 'tcp/8140' }

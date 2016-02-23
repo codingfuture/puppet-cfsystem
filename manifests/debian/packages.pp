@@ -37,12 +37,4 @@ class cfsystem::debian::packages {
     package { 'chkrootkit': }
     package { 'rkhunter': }
     package { 'debsums': }
-    
-        
-    # Git config
-    #---
-    include git
-    $certname = $::trusted['certname']
-    git::config { 'user.name': value => 'Root' }
-    git::config { 'user.email': value => "root@${certname}" }
 }
