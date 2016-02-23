@@ -5,5 +5,5 @@ class cfsystem::sysctl (
     include stdlib
     assert_private();
     
-    sysctl{ 'vm.swappiness': value => $vm_swappiness, permanent=>true }
+    sysctl{ 'vm.swappiness': value => $vm_swappiness }
 }
