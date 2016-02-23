@@ -37,7 +37,6 @@ sure to have the following lines in Puppetfile:
 mod 'puppetlabs/stdlib', '4.11.0'
 mod 'puppetlabs/apt', '2.2.1'
 mod 'puppetlabs/git', '0.4.0'
-mod 'saz/timezone', '3.3.0'
 mod 'fiddyspence/sysctl', '1.1.0'
 mod 'codingfuture/cfnetwork'
 mod 'codingfuture/cfauth'

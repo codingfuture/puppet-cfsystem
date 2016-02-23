@@ -43,10 +43,6 @@ class cfsystem (
         default: { fail("Not supported OS ${::operatingsystem}") }
     }
     
-    class { 'timezone':
-        timezone => $timezone,
-    }
-    
     include cfsystem::hierapool
     include cfsystem::sysctl
     include cfsystem::email
