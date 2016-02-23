@@ -45,7 +45,7 @@
     {
       "name": "herculesteam/augeasproviders_sysctl",
       "version_requirement": ">= 2.0.2"
-    }
+    },
     {
       "name": "codingfuture-cfnetwork",
       "version_requirement": ">= 0.9.3"
