@@ -10,8 +10,6 @@ class cfsystem::debian::packages {
     
     # Essential
     #---
-    package { 'sudo': }
-    package { 'openssh-server': }
     package { 'etckeeper': }
     package { 'apt-transport-https': }
     package { 'systemd': }
