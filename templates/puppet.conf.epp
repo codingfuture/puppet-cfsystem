@@ -1,7 +1,9 @@
 [main]
 certname = <%= $::trusted['certname'] %>
 server = <%= $cfsystem::puppet_host %>
+<% if $cfsystem::puppet_cahost { -%>
 ca_server = <%= $cfsystem::puppet_cahost %>
+<% } -%>
 environment = <%= $cfsystem::puppet_env %>
 srv_domain = <%= $::trusted['domain'] %>
 
