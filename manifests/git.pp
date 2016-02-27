@@ -6,11 +6,11 @@ class cfsystem::git {
     include ::git
     $certname = $::trusted['certname']
     git::config { 'user.name':
-        value => 'Root',
+        value   => 'Root',
         require => Package['git'],
     }
     git::config { 'user.email':
-        value => "root@${certname}",
+        value   => "root@${certname}",
         require => Package['git'],
     }
 }
