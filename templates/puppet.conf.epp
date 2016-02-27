@@ -1,0 +1,12 @@
+[main]
+certname = <%= $::trusted['certname'] %>
+server = <%= $cfsystem::puppet_host %>
+ca_server = <%= $cfsystem::puppet_cahost %>
+environment = <%= $cfsystem::puppet_env %>
+srv_domain = <%= $::trusted['domain'] %>
+
+<% if $cfsystem::puppet_env { -%>
+use_srv_records = true
+<% } else { -%>
+use_srv_records = false
+<% } -%>

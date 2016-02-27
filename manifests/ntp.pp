@@ -25,7 +25,7 @@ class cfsystem::ntp {
     
     package { 'openntpd': } ->
     file { '/etc/openntpd/ntpd.conf':
-        mode => '0644',
+        mode    => '0644',
         content => epp('cfsystem/openntp.conf.epp'),
     } ->
     service { 'openntpd': ensure => running }

@@ -1,7 +1,7 @@
 
 class cfsystem::ubuntu::aptconfig {
     class {'apt':
-        proxy => $::cfsystem::repo_proxy_cond,
+        proxy  => $::cfsystem::repo_proxy_cond,
         update => $::cfsystem::apt_update,
         purge  => $::cfsystem::apt_purge,
     }

@@ -27,6 +27,11 @@ class cfsystem (
     },
     $real_hdd_scheduler = 'deadline',
     $rc_local = undef,
+    
+    $puppet_host = "puppet.${::trusted['domain']}",
+    $puppet_cahost = $puppet_host,
+    $puppet_env = 'production',
+    $puppet_use_dns_srv = false,
 ) {
     include cfnetwork
     include cfauth
@@ -75,8 +80,22 @@ class cfsystem (
         notify  => Exec['rc.local-update'],
     }
     exec { 'rc.local-update':
-      command     => "/etc/rc.local",
+      command     => '/etc/rc.local',
       refreshonly => true,
     }
 
+    #---
+    if !member(lookup('classes', Array[String], 'unique'), 'cfpuppetserver') and
+       !defined(Class['cfpuppetserver'])
+    {
+        file {'/etc/puppetlabs/puppet/puppet.conf':
+            mode    => '0644',
+            content => epp('cfsystem/puppet.conf.epp'),
+            require => Package['puppet-agent']
+        }
+        
+        if !defined(Package['puppet-agent']) {
+            package { 'puppet-agent': }
+        }
+    }
 }
