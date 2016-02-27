@@ -30,7 +30,7 @@ class cfsystem (
     
     $puppet_host = "puppet.${::trusted['domain']}",
     $puppet_cahost = $puppet_host,
-    $puppet_env = 'production',
+    $puppet_env = $::environment,
     $puppet_use_dns_srv = false,
 ) {
     include cfnetwork
