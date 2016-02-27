@@ -117,6 +117,10 @@ cfnetwork::client_ports:
 * `real_hdd_scheduler` - default scheduler for not SSD and not virtualized HDDs
 * `rc_local` - list of additional commands to add to /etc/rc.local
     (SSD and virtual is always 'noop')
+* `puppet_host = "puppet.${::trusted['domain']}"` - Puppet Server hostname
+* `puppet_cahost = $puppet_host` - Puppet CA hostname
+* `puppet_env = $::environment` - Puppet environment
+* `puppet_use_dns_srv = false` - enable support DNS SRV records instead of hostnames
 
 ## `cfsystem::hierapool`
 
