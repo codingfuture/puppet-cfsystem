@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.5]
+
+- Changed to force 'default' value for cf_location and cf_location_pool, unless set.
+  That's required to minimize issues due to empty interpolation in Hiera paths.
+- Moved sudo and openssh-server installation to cfauth module
+- Reorganized internal manifests
+- Added puppet agent configuration parameters, including CA server, use DNS SRV records,
+  and puppet environment
+- Dropped off external timezone module dependency and re-implemented internally
+- Changed to use PuppetLabs approved augeas sysctl module
+- Dropped of external openntpd module dependency and re-implementd internally due
+  to original implementation dependency on module_data module which breaks Puppet 4.
+- OpenNTPd is using "servers" instead of "server" configuration option now.
+
+
 ## [0.9.4]
 
 * Removed inittab processing for Xen PV guests as they should use systemd
@@ -30,6 +45,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
+[0.9.5]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.5
 [0.9.4]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.4
 [0.9.3]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.3
 [0.9.2]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.2
