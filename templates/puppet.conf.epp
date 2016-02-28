@@ -7,7 +7,7 @@ ca_server = <%= $cfsystem::puppet_cahost %>
 environment = <%= $cfsystem::puppet_env %>
 srv_domain = <%= $::trusted['domain'] %>
 
-<% if $cfsystem::puppet_env { -%>
+<% if $cfsystem::puppet_use_dns_srv { -%>
 use_srv_records = true
 <% } else { -%>
 use_srv_records = false
