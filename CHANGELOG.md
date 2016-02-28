@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.7]
+
+- Fixed use_srv_records puppet setting to depend on correct parameter
+- Fixed to unconditionally install puppet-agent package
+
 ## [0.9.6]
 
 - Fixed issue of ca_server not being properly set in some cases
@@ -49,6 +54,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
+[0.9.7]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.7
 [0.9.6]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.6
 [0.9.5]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.5
 [0.9.4]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.4
