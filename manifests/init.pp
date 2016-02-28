@@ -85,6 +85,8 @@ class cfsystem (
     }
 
     #---
+    package { 'puppet-agent': }
+    
     if !member(lookup('classes', Array[String], 'unique'), 'cfpuppetserver') and
        !defined(Class['cfpuppetserver'])
     {
@@ -92,10 +94,6 @@ class cfsystem (
             mode    => '0644',
             content => epp('cfsystem/puppet.conf.epp'),
             require => Package['puppet-agent']
-        }
-        
-        if !defined(Package['puppet-agent']) {
-            package { 'puppet-agent': }
         }
     }
 }
