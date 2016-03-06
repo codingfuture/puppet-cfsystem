@@ -100,7 +100,7 @@ cfnetwork::client_ports:
 
 ## Class parameters
 
-## `cfsystem`
+## `cfsystem` class
 
 * `allow_nfs = false` - purge RPC packages unless true
 * `admin_email = undef` - email address to use for `root` and as the default sink
@@ -121,8 +121,9 @@ cfnetwork::client_ports:
 * `puppet_cahost = $puppet_host` - Puppet CA hostname
 * `puppet_env = $::environment` - Puppet environment
 * `puppet_use_dns_srv = false` - enable support DNS SRV records instead of hostnames
+* `locale = 'en_US.UTF-8'` - default system locale
 
-## `cfsystem::hierapool`
+## `cfsystem::hierapool` class
 
 Automatically including by `cfsystem`. This values are useful in hiera.yaml configuration
 to setup hierarchy based on location and tenant/server pool in it. Example:
@@ -146,7 +147,7 @@ to setup hierarchy based on location and tenant/server pool in it. Example:
 * `pool = undef` - if set, aved into `/etc/cflocationpool`
 
 
-## `cfsystem::email`
+## `cfsystem::email` class
 
 Setup email server for outgoing emails. **Please not that this configuration
 is not intended to accept internet traffic.**
@@ -161,13 +162,13 @@ is not intended to accept internet traffic.**
 * `disable_ipv6 = true` - if true, IPv6 supports gets disabled (most likely you
     need it disabled for SMTP)
 
-## `cfsystem::sysctl`
+## `cfsystem::sysctl` class
 
 Setup sysctl entries.
 
 * `vm_swappiness = 1` - 0-100 (%) minimize swap activity by default
 
-## `cfsystem::debian`
+## `cfsystem::debian` class
 
 Debian-specific configuration.
 
@@ -175,12 +176,19 @@ Debian-specific configuration.
 * `security_apt_url = 'http://security.debian.org/'` - APT base URL for Debian security repo
 * `release` = 'jessie' - Debian release name to configure
 
-## `cfsystem::ubuntu`
+## `cfsystem::ubuntu` class
 
 Ubuntu-specific configuration.
 
 * `apt_url = 'mirror://mirrors.ubuntu.com/mirrors.txt'` - APT base URL for Ubuntu repos
 * `release = 'wily'` - Ubuntu release name to configure
+
+## `cfsystem::debian::debconf` type
+
+* `package = $title` - package to configure & install
+* `ensure = present` - passed to `package ensure`
+* `config = []` - config entries for `debconf-set-selections`
+
 
 [cfnetwork]: https://github.com/codingfuture/puppet-cfnetwork
 [cfauth]: https://github.com/codingfuture/puppet-cfauth

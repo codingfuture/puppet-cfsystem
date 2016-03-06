@@ -32,6 +32,8 @@ class cfsystem (
     $puppet_cahost = undef,
     $puppet_env = $::environment,
     $puppet_use_dns_srv = false,
+    
+    $locale = 'en_US.UTF-8',
 ) {
     include cfnetwork
     include cfauth

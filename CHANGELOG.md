@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.8]
+- Added generic infrastructure for Debconf support (cfsystem::debian::debconf)
+- Added support for default system locale
+- Added installation of all locales
+- Updated Timezone configuration to properly utilize Debconf on Debian & Ubuntu
+
 ## [0.9.7]
 
 - Fixed use_srv_records puppet setting to depend on correct parameter
@@ -54,6 +60,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
+[0.9.8]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.8
 [0.9.7]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.7
 [0.9.6]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.6
 [0.9.5]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.5

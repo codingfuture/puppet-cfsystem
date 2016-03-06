@@ -3,6 +3,27 @@ class cfsystem::ntp {
     include stdlib
     assert_private();
     
+    case $::operatingsystem {
+        'Debian', 'Ubuntu': {
+            $zonecomp = split($cfsystem::timezone, '/')
+            
+            if size($zonecomp) != 2 {
+                fail('Timezone must be in {Area}/{Zone} format. Examples: Etc/UTC, Europe/Riga')
+            }
+            
+            $area = $zonecomp[0]
+            $zone = $zonecomp[1]
+            
+            cfsystem::debian::debconf { 'tzdata':
+                config => [
+                    "tzdata  tzdata/Areas select ${area}",
+                    "tzdata  tzdata/Zones/${area} select ${zone}",
+                ],
+            }
+        }
+        default: { fail("Not supported OS ${::operatingsystem}") }
+    }
+    
     file {'/etc/timezone':
         mode    => '0644',
         content => "${cfsystem::timezone}\n",
