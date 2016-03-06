@@ -12,24 +12,28 @@ class cfsystem::debian::aptconfig {
         release  => $::cfsystem::debian::release,
         repos    => 'main contrib non-free',
         include  => { src        => false },
+        pin      => $cfsystem::apt_pin,
     }
     apt::source { 'debian-updates':
         location => $::cfsystem::debian::apt_url,
         release  => "${::cfsystem::debian::release}-updates",
         repos    => 'main contrib non-free',
         include  => { src        => false },
+        pin      => $cfsystem::apt_pin,
     }
     apt::source { 'debian-backports':
         location => $::cfsystem::debian::apt_url,
         release  => "${::cfsystem::debian::release}-backports",
         repos    => 'main contrib non-free',
         include  => { src        => false },
+        pin      => $cfsystem::apt_pin,
     }
     apt::source { 'debian-security':
         location => $::cfsystem::debian::security_apt_url,
         release  => "${::cfsystem::debian::release}/updates",
         repos    => 'main contrib non-free',
         include  => { src        => false },
+        pin      => $cfsystem::apt_pin,
     }
 
     apt::source { 'puppetlabs':
@@ -40,6 +44,7 @@ class cfsystem::debian::aptconfig {
             id     => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30',
             server => 'pgp.mit.edu',
         },
+        pin      => $cfsystem::apt_pin + 1,
     }
     
     apt::conf { 'local-thin':

@@ -8,6 +8,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Added support for default system locale
 - Added installation of all locales
 - Updated Timezone configuration to properly utilize Debconf on Debian & Ubuntu
+- Added APT pinning support with forced downgrades by default
 
 ## [0.9.7]
 

@@ -12,24 +12,28 @@ class cfsystem::ubuntu::aptconfig {
         release  => $::cfsystem::ubuntu::release,
         repos    => 'main restricted universe multiverse',
         include  => { src        => false },
+        pin      => $cfsystem::apt_pin,
     }
     apt::source { 'ubuntu-updates':
         location => $::cfsystem::ubuntu::apt_url,
         release  => "${::cfsystem::ubuntu::release}-updates",
         repos    => 'main restricted universe multiverse',
         include  => { src        => false },
+        pin      => $cfsystem::apt_pin,
     }
     apt::source { 'ubuntu-backports':
         location => $::cfsystem::ubuntu::apt_url,
         release  => "${::cfsystem::ubuntu::release}-backports",
         repos    => 'main restricted universe multiverse',
         include  => { src        => false },
+        pin      => $cfsystem::apt_pin,
     }
     apt::source { 'ubuntu-security':
         location => $::cfsystem::ubuntu::apt_url,
         release  => "${::cfsystem::ubuntu::release}-security",
         repos    => 'main restricted universe multiverse',
         include  => { src        => false },
+        pin      => $cfsystem::apt_pin,
     }
 
     apt::source { 'puppetlabs':
@@ -40,6 +44,7 @@ class cfsystem::ubuntu::aptconfig {
             id     => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30',
             server => 'pgp.mit.edu',
         },
+        pin      => $cfsystem::apt_pin,
     }
     
     apt::conf { 'local-thin':

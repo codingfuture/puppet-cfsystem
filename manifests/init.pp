@@ -25,6 +25,7 @@ class cfsystem (
         frequency => 'daily',
         timeout   => 300,
     },
+    $apt_pin = 1001,
     $real_hdd_scheduler = 'deadline',
     $rc_local = undef,
     
