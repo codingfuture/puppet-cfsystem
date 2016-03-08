@@ -29,13 +29,22 @@ class cfsystem::debian::packages {
     package { 'apt-transport-https': }
     package { 'systemd': }
     
-    cfsystem::debian::debconf { 'locales':
-        config => [
-            "locales locales/locales_to_be_generated multiselect ${cfsystem::locale}",
-            "locales locales/default_environment_locale select ${cfsystem::locale}",
-        ],
-    } ->
-    package { 'locales-all': }
+    if $::operatingsystem == 'Ubuntu' {
+        # See old bug: https://bugs.launchpad.net/ubuntu/+source/glibc/+bug/1394929
+        file { '/etc/default/locale':
+            content => "
+LANG=\"${cfsystem::locale}\"
+"
+        }
+    } else {
+        cfsystem::debian::debconf { 'locales':
+            config => [
+                "locales locales/locales_to_be_generated multiselect ${cfsystem::locale}",
+                "locales locales/default_environment_locale select ${cfsystem::locale}",
+            ],
+        } ->
+        package { 'locales-all': }
+    }
 
     # Handy tools
     #---
