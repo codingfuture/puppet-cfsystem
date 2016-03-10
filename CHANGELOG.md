@@ -9,6 +9,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Added installation of all locales
 - Updated Timezone configuration to properly utilize Debconf on Debian & Ubuntu
 - Added APT pinning support with forced downgrades by default
+- Fixed apt-cacher-ng to allow root user http/https connections during dpkg processing
 
 ## [0.9.7]
 

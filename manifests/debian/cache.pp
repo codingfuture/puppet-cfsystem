@@ -18,8 +18,8 @@ class cfsystem::debian::cache {
         'any', 'local': {}
         default: { cfnetwork::service_port{ 'local:apcng:cfsystem': } }
         }
-        cfnetwork::client_port{ 'any:http:apcng': user=>'apt-cacher-ng' }
-        cfnetwork::client_port{ 'any:https:apcng': user=>'apt-cacher-ng' }
+        cfnetwork::client_port{ 'any:http:apcng': user=>['apt-cacher-ng', 'root'] }
+        cfnetwork::client_port{ 'any:https:apcng': user=>['apt-cacher-ng', 'root'] }
     }
     
     $proxy = $::cfsystem::repo_proxy
