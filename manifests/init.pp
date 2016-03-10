@@ -26,6 +26,7 @@ class cfsystem (
         timeout   => 300,
     },
     $apt_pin = 1001,
+    $apt_backports_pin = 600,
     $real_hdd_scheduler = 'deadline',
     $rc_local = undef,
     

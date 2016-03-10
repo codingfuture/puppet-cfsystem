@@ -26,6 +26,7 @@ class cfsystem::debian::aptconfig {
         release  => "${::cfsystem::debian::release}-backports",
         repos    => 'main contrib non-free',
         include  => { src        => false },
+        pin      => $cfsystem::apt_backports_pin,
     }
     apt::source { 'debian-security':
         location => $::cfsystem::debian::security_apt_url,

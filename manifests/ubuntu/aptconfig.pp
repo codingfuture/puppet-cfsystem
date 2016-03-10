@@ -26,6 +26,7 @@ class cfsystem::ubuntu::aptconfig {
         release  => "${::cfsystem::ubuntu::release}-backports",
         repos    => 'main restricted universe multiverse',
         include  => { src        => false },
+        pin      => $cfsystem::apt_backports_pin,
 }
     apt::source { 'ubuntu-security':
         location => $::cfsystem::ubuntu::apt_url,

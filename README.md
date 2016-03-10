@@ -115,6 +115,7 @@ cfnetwork::client_ports:
 * `apt_purge` - passed to apt::purge, purge all sources and preferences by default
 * `apt_update` - passed to apt::update, update daily with 300 second timeout by default
 * `apt_pin = 1001` - default priority (>=1001 - force downgrades to make the system consistent)
+* `apt_backports_pin = 600` - default priority (>=1001 - force downgrades to make the system consistent)
 * `real_hdd_scheduler` - default scheduler for not SSD and not virtualized HDDs
 * `rc_local` - list of additional commands to add to /etc/rc.local
     (SSD and virtual is always 'noop')
