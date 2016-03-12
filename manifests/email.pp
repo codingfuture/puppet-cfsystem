@@ -11,6 +11,7 @@ class cfsystem::email (
     $disable_ipv6 = true,
 ) {
     include stdlib
+    include cfsystem::custombin
     assert_private();
     
     #---
@@ -129,7 +130,7 @@ class cfsystem::email (
     
     # Create test email script
     #---
-    file { '/etc/exim4/send_test_email.sh':
+    file { "${cfsystem::custombin::bin_dir}/cf_send_test_email":
         owner   => root,
         group   => root,
         mode    => '0750',
@@ -137,7 +138,7 @@ class cfsystem::email (
         require => Package[$exim_package],
     }
     
-    file { '/etc/exim4/clear_queue.sh':
+    file { "${cfsystem::custombin::bin_dir}/cf_clear_email_queue":
         owner   => root,
         group   => root,
         mode    => '0750',
@@ -145,7 +146,7 @@ class cfsystem::email (
         content => "#!/bin/sh\nexiqgrep -i | xargs exim -Mrm",
     }
     
-    file { '/etc/exim4/clear_frozen.sh':
+    file { "${cfsystem::custombin::bin_dir}/cf_clear_frozen_emails":
         owner   => root,
         group   => root,
         mode    => '0750',

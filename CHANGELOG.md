@@ -6,6 +6,10 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.9.9]
 - Implemented cron job for outdated kernel version detection (reboot reminder)
 - Added generic /opt/codingfuture/bin folder for all installed scripts
+- Moved to generic bin dir and renamed exim helper tools
+    * cf_send_test_email
+    * cf_clear_email_queue
+    * cf_clear_frozen_emails
 
 ## [0.9.8]
 - Added generic infrastructure for Debconf support (cfsystem::debian::debconf)

@@ -23,6 +23,11 @@ What it does:
 * Forces custom I/O scheduler for real spinning HDDs (deadline by default)
 * Adds custom rc.local commands, if needed
 * Adds cron job to check if running kernel version matches the latest installed (reboot reminder)
+* The following helper scripts are installed
+    * cf_clear_email_queue - clear all emails in exim queue
+    * cf_clear_frozen_emails - clear only frozen emails in exim queue
+    * cf_send_test_email - send test email to admin address
+    * cf_kernel_version_check - check if kernel version mismatch the latest installed one
 
 
 ## Technical Support
