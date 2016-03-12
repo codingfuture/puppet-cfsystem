@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.9]
+- Implemented cron job for outdated kernel version detection (reboot reminder)
+- Added generic /opt/codingfuture/bin folder for all installed scripts
+
 ## [0.9.8]
 - Added generic infrastructure for Debconf support (cfsystem::debian::debconf)
 - Added support for default system locale

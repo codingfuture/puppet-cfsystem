@@ -1,0 +1,13 @@
+#!/bin/sh
+
+latest_kernel=$(/usr/bin/dpkg -l  | awk '/linux-image-[0-9]/ { print $3 }' | tail -n 1)
+running_kernel=$(/bin/uname -v | awk '{ print $4 }')
+
+if test "$latest_kernel" != "$running_kernel"; then
+    echo "!!! Possible security problem !!!"
+    echo "Running kernel version mismatch the latest installed ($latest_kernel != $running_kernel)"
+    echo "Reboot is required."
+    exit 1
+fi
+
+exit 0

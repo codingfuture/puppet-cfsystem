@@ -17,10 +17,12 @@ What it does:
 * Setups special location/pool facts for hiera lookup (see cfsystem::hierapool below)
 * Setups email system
 * Setups NTP
+* Setup all locales and the default locale (configurable)
 * Installs many handy system tools which almost any admin would expect
-* Force noop scheduler on SSDs and virtual devices (in guests)
-* Force custom I/O scheduler for real spinning HDDs (deadline by default)
-* Add custom rc.local commands, if needed
+* Forces noop scheduler on SSDs and virtual devices (in guests)
+* Forces custom I/O scheduler for real spinning HDDs (deadline by default)
+* Adds custom rc.local commands, if needed
+* Adds cron job to check if running kernel version matches the latest installed (reboot reminder)
 
 
 ## Technical Support
