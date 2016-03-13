@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.10]
+- Fixed cf_kernel_version_check to work on Ubuntu with /proc/version_signature
+
 ## [0.9.9]
 - Implemented cron job for outdated kernel version detection (reboot reminder)
 - Added generic /opt/codingfuture/bin folder for all installed scripts
@@ -70,6 +73,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
+[0.9.10]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.10
 [0.9.9]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.9
 [0.9.8]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.8
 [0.9.7]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.7

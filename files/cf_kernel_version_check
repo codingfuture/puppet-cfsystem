@@ -1,13 +1,24 @@
 #!/bin/sh
 
 latest_kernel=$(/usr/bin/dpkg -l  | awk '/linux-image-[0-9]/ { print $3 }' | tail -n 1)
-running_kernel=$(/bin/uname -v | awk '{ print $4 }')
 
-if test "$latest_kernel" != "$running_kernel"; then
-    echo "!!! Possible security problem !!!"
-    echo "Running kernel version mismatch the latest installed ($latest_kernel != $running_kernel)"
-    echo "Reboot is required."
-    exit 1
+if test -e /proc/version_signature; then
+    if grep -q "$latest_kernel" /proc/version_signature; then
+        exit 0
+    fi
+    
+    running_kernel=$(awk '{ print $2 }' /proc/version_signature)
+else
+    running_kernel=$(/bin/uname -v | awk '{ print $4 }')
+    
+    if test "$latest_kernel" = "$running_kernel"; then
+        exit 0
+    fi
 fi
 
-exit 0
+
+echo "!!! Possible security problem !!!"
+echo "Running kernel version mismatch the latest installed ($latest_kernel != $running_kernel / $running_signature)"
+echo "Reboot is required."
+exit 1
+
