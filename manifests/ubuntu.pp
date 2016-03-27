@@ -1,7 +1,7 @@
 
 class cfsystem::ubuntu (
     $apt_url = 'mirror://mirrors.ubuntu.com/mirrors.txt',
-    $release = 'wily',
+    $release = $::facts['lsbdistcodename'],
 ) {
     include stdlib
     assert_private();
