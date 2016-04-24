@@ -35,6 +35,12 @@ class cfsystem::ubuntu::aptconfig {
         include  => { src        => false },
         pin      => $cfsystem::apt_pin,
     }
+    
+    if ($::cfsystem::ubuntu::release == 'xenial') {
+        $puppet_release = 'wily'
+    } else {
+        $puppet_release = $::cfsystem::ubuntu::release 
+    }
 
     apt::source { 'puppetlabs':
         location => 'http://apt.puppetlabs.com',

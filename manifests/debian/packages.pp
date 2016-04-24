@@ -27,6 +27,7 @@ class cfsystem::debian::packages {
     #---
     package { 'etckeeper': }
     package { 'apt-transport-https': }
+    package { 'apt-listchanges': }
     package { 'systemd': }
     
     if $::operatingsystem == 'Ubuntu' {
