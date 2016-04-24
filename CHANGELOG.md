@@ -6,6 +6,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.9.12]
 - Added missing apt-listchanges installation
 - Added a workaround to install wily packages for xenial until PuppetLabs release those
+- Added special '_apt' user support for stretch/xenial
 
 ## [0.9.11]
 - Updated to use current Debian/Ubuntu release (fact) as the default for APT
