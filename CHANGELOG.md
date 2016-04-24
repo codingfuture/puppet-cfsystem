@@ -3,12 +3,10 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
-## [0.9.12]
+## [0.9.11]
 - Added missing apt-listchanges installation
 - Added a workaround to install wily packages for xenial until PuppetLabs release those
 - Added special '_apt' user support for stretch/xenial
-
-## [0.9.11]
 - Updated to use current Debian/Ubuntu release (fact) as the default for APT
 
 ## [0.9.10]
@@ -81,7 +79,6 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
-[0.9.12]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.12
 [0.9.11]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.11
 [0.9.10]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.10
 [0.9.9]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.9
