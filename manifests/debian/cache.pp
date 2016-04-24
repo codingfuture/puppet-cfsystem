@@ -2,9 +2,9 @@ class cfsystem::debian::cache {
     # Required by stretch/xenial
     user { '_apt':
         ensure => present,
-        home => '/nonexistent',
-        shell => '/bin/false',
-        gid => 'nogroup',
+        home   => '/nonexistent',
+        shell  => '/bin/false',
+        gid    => 'nogroup',
     }
     
     if $::cfsystem::add_repo_cacher {

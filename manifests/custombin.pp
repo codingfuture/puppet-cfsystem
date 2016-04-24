@@ -26,12 +26,12 @@ set path = (\$path ${bin_dir})
     
     $cf_kernel_version_check = "${bin_dir}/cf_kernel_version_check"
     file { $cf_kernel_version_check:
-        mode   => '755',
+        mode   => '0755',
         source => 'puppet:///modules/cfsystem/cf_kernel_version_check',
-    } ->    
+    } ->
     cron { $cf_kernel_version_check:
         command => $cf_kernel_version_check,
-        hour   => 12,
-        minute => 0,
+        hour    => 12,
+        minute  => 0,
     }
 }

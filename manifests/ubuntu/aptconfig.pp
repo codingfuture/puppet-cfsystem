@@ -39,7 +39,7 @@ class cfsystem::ubuntu::aptconfig {
     if ($::cfsystem::ubuntu::release == 'xenial') {
         $puppet_release = 'wily'
     } else {
-        $puppet_release = $::cfsystem::ubuntu::release 
+        $puppet_release = $::cfsystem::ubuntu::release
     }
 
     apt::source { 'puppetlabs':
