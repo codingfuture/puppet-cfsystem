@@ -36,15 +36,19 @@ class cfsystem::ubuntu::aptconfig {
         pin      => $cfsystem::apt_pin,
     }
     
-    if ($::cfsystem::ubuntu::release == 'xenial') {
-        $puppet_release = 'wily'
-    } else {
-        $puppet_release = $::cfsystem::ubuntu::release
+    # Use for temporary mapping with new releases
+    case $::cfsystem::ubuntu::release {
+        'yakkety': {
+            $puppet_release = 'xenial'
+        }
+        default: {
+            $puppet_release = $::cfsystem::ubuntu::release
+        }
     }
 
     apt::source { 'puppetlabs':
         location => 'http://apt.puppetlabs.com',
-        release  => $::cfsystem::ubuntu::release,
+        release  => $puppet_release,
         repos    => 'PC1',
         key      => {
             id     => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30',

@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.12]
+- Workaround to use jessie for stretch for PuppetLabs APT repo
+- Changed back to use xenial for appeared PuppetLabs APT repo
+- Added support for next Ubuntu 16.10 (yakkety)
+
 ## [0.9.11]
 - Added missing apt-listchanges installation
 - Added a workaround to install wily packages for xenial until PuppetLabs release those
@@ -79,6 +84,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
+[0.9.12]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.12
 [0.9.11]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.11
 [0.9.10]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.10
 [0.9.9]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.9
