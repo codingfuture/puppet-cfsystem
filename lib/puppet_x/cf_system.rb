@@ -1,6 +1,7 @@
 
 require 'puppet/util/logging'
 require 'puppet_x'
+require 'puppet/util/diff'
 
 # Done this way due to some weird behavior in tests also ignoring $LOAD_PATH
 require File.expand_path( '../cf_system/config', __FILE__ )
@@ -42,6 +43,14 @@ module PuppetX::CfSystem
         
         File.open(tmpfile, 'w+', 0600 ) do |f|
             f.write(content)
+        end
+        
+        # Show diff
+        #---
+        if File.exists?(file)
+            notice("File[#{file}]/content:\n" + Puppet::Util::Diff.diff(file, tmpfile))
+        else
+            notice("File[#{file}]/content:\n" + content)
         end
 
         # Atomically move config file to its location
@@ -123,6 +132,6 @@ module PuppetX::CfSystem
         
         #---
         self.memory_distribution = mem_distrib
-        notice('Memory distrivution result: ' + mem_distrib.to_s )
+        notice('Memory distribution result: ' + mem_distrib.to_s )
     end
 end

@@ -62,6 +62,7 @@ LANG=\"${cfsystem::locale}\"
     package { 'telnet': }
     package { 'screen': }
     package { 'debconf-utils': }
+    package { 'diffutils': }
     
     # Misc tools which may generate noise
     #---
