@@ -3,7 +3,7 @@ require 'puppet/provider'
 require 'puppet_x'
 
 # Done this way due to some weird behavior in tests also ignoring $LOAD_PATH
-require File.expand_path( '../../cfsystem', __FILE__ )
+require File.expand_path( '../../cf_system', __FILE__ )
 
 module PuppetX::CfSystem
 

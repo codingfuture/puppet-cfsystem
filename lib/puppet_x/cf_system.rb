@@ -3,7 +3,7 @@ require 'puppet/util/logging'
 require 'puppet_x'
 
 # Done this way due to some weird behavior in tests also ignoring $LOAD_PATH
-require File.expand_path( '../cfsystem/config', __FILE__ )
+require File.expand_path( '../cf_system/config', __FILE__ )
 
 module PuppetX::CfSystem
     CFSYSTEM_CONFIG = '/etc/cfsystem.json'
