@@ -7,6 +7,9 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Workaround to use jessie for stretch for PuppetLabs APT repo
 - Changed back to use xenial for appeared PuppetLabs APT repo
 - Added support for next Ubuntu 16.10 (yakkety)
+- Implemented experimental framework for:
+    * weight based memory distribution
+    * resource configuration management
 
 ## [0.9.11]
 - Added missing apt-listchanges installation

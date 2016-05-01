@@ -36,10 +36,23 @@ class cfsystem (
     $puppet_use_dns_srv = false,
     
     $locale = 'en_US.UTF-8',
+    
+    $reserve_ram = 64,
 ) {
     include cfnetwork
     include cfauth
     
+    #---
+    cfsystem_flush_config { 'begin': ensure => present }
+    cfsystem_flush_config { 'commit': ensure => present }
+    cfsystem_memory_weight { 'cfsystem':
+        ensure => present,
+        weight => 1,
+        min_mb => $ram_reserve_mb,
+    }
+    cfsystem_memory_calc { 'total': ensure => present }
+    
+    #---
     if $::cfsystem::add_repo_cacher and !$cf_has_acng {
         $repo_proxy_cond = undef
     } else {
