@@ -37,7 +37,9 @@ class ProviderBase < Puppet::Provider
             params[:name] = k
             params[:ensure] = :exists
             
-            instances << self.new(params)
+            if check_exists(params)
+                instances << self.new(params)
+            end
         end
         
         debug('Instances:' + instances.to_s)
@@ -60,7 +62,7 @@ class ProviderBase < Puppet::Provider
         cf_system = self.cf_system()
         config = cf_system.config
         
-        config.set_save_handler(type, cf_system.makeVersion(__FILE__)) do |new_conf|
+        config.set_save_handler(type, self.class.get_generator_version()) do |new_conf|
             self.class.on_config_change(new_conf)
         end
         
@@ -118,8 +120,16 @@ class ProviderBase < Puppet::Provider
         @property_hash[:ensure] != :absent
     end
     
+    def self.check_exists(params)
+        true
+    end
+    
     def self.get_config_index
         raise Puppet::DevError, 'Each provider must implement self.get_config_index'
+    end
+    
+    def self.get_generator_version
+        raise Puppet::DevError, 'Each provider must implement self.get_generator_version: cf_system().makeVersion(__FILE__)'
     end
     
     def self.on_config_change(newconf)

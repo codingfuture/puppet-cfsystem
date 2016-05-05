@@ -13,6 +13,10 @@ Puppet::Type.type(:cfsystem_memory_weight).provide(
         'memory_weight'
     end
     
+    def self.get_generator_version
+        cf_system().makeVersion(__FILE__)
+    end
+    
     def self.on_config_change(newconf)
     end
 end

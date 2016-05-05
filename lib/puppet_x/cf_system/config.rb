@@ -16,7 +16,8 @@ class Config
         conf = {
             'generator_version' => '',
             'sub_versions' => {},
-            'sections' => {}
+            'sections' => {},
+            'persistent' => {},
         }
         
         @old_config = conf
@@ -33,11 +34,10 @@ class Config
             
             conf.merge! confread
             debug "Read: " + conf.to_s
+            @new_config['persistent'] = conf['persistent']
         rescue => e
             warning("Error during old config read: #{e}")
         end
-
-        conf
     end
     
     def set_save_handler(type, version, &block)
@@ -74,23 +74,33 @@ class Config
         PuppetX::CfSystem.atomicWrite(@file, content)
     end
 
-    def get_old(type)
+    def get_old(type, default=nil)
         sections = @old_config['sections']
         if type and sections.has_key?(type)
             return sections[type]
         end
             
-        return {}
+        return default || {}
     end
     
-    def get_new(type)
+    def get_new(type, default=nil)
         sections = @new_config['sections']
             
         if not sections.has_key?(type)
-            sections[type] = {}
+            sections[type] = default || {}
         end
             
         return sections[type]
+    end
+    
+    def get_persistent(type, default=nil)
+        persistent = @new_config['persistent']
+            
+        if not persistent.has_key?(type)
+            persistent[type] = default || {}
+        end
+            
+        return persistent[type]
     end
 end
 

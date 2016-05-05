@@ -2,6 +2,8 @@
 require 'puppet/util/logging'
 require 'puppet_x'
 require 'puppet/util/diff'
+require 'fileutils'
+require 'securerandom'
 
 # Done this way due to some weird behavior in tests also ignoring $LOAD_PATH
 require File.expand_path( '../cf_system/config', __FILE__ )
@@ -32,7 +34,7 @@ module PuppetX::CfSystem
         self.config = nil
     end
     
-    def self.atomicWrite(file, content)
+    def self.atomicWrite(file, content, opts={})
         if File.exists?(file) and (content == File.read(file))
             debug("Content matches for #{file}")
             return false
@@ -41,7 +43,7 @@ module PuppetX::CfSystem
         #---
         tmpfile = file + ".#{$$}"
         
-        File.open(tmpfile, 'w+', 0600 ) do |f|
+        File.open(tmpfile, 'w+', opts.fetch(:mode, 0600) ) do |f|
             f.write(content)
         end
         
@@ -55,10 +57,34 @@ module PuppetX::CfSystem
 
         # Atomically move config file to its location
         #---
+        user = opts.fetch(:user, 'root')
+        group = opts.fetch(:group, user)
+        FileUtils.chown(user, group, tmpfile)
         File.rename(tmpfile, file)
         debug("Writed a new #{file}")
         
         return true
+    end
+    
+    def self.atomicWriteIni(file, settings, opts={})
+        content = []
+        settings.each do |section, subsettings|
+            content << "[#{section}]"
+            subsettings.each do |k, v|
+                if v.is_a? Array
+                    v.each do |ve|
+                        content << "#{k}=#{ve}"
+                    end
+                else
+                    content << "#{k}=#{v}"
+                end
+            end
+            content << ''
+        end
+        
+        content = content.join("\n")
+        
+        self.atomicWrite(file, content, opts)
     end
     
     def self.calcMemorySections()
@@ -133,5 +159,36 @@ module PuppetX::CfSystem
         #---
         self.memory_distribution = mem_distrib
         notice('Memory distribution result: ' + mem_distrib.to_s )
+    end
+    
+    def self.getMemory(name)
+        self.memory_distribution[name]
+    end
+    
+    BASE_PORT = 1025
+    
+    def self.genPort(assoc_id)
+        ports = self.config.get_persistent('ports')
+        
+        return ports[assoc_id] if ports.has_key? assoc_id
+        
+        if ports.empty?
+            next_port = BASE_PORT
+        else
+            next_port = ports.values.max() + 1
+        end
+        
+        ports[assoc_id] = next_port
+        return next_port
+    end
+    
+    def self.genSecret(assoc_id, len=32)
+        secrets = self.config.get_persistent('secrets')
+        
+        if not secrets.has_key? assoc_id
+            secrets[assoc_id] = SecureRandom.base64(len)
+        end
+        
+        return secrets[assoc_id]
     end
 end
