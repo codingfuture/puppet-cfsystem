@@ -39,6 +39,8 @@ class ProviderBase < Puppet::Provider
             
             if check_exists(params)
                 instances << self.new(params)
+            else
+                config_type[k] = nil
             end
         end
         

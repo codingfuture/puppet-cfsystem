@@ -87,6 +87,21 @@ module PuppetX::CfSystem
         self.atomicWrite(file, content, opts)
     end
     
+    def self.atomicWriteEnv(file, settings, opts={})
+        content = []
+        settings.each do |k, v|
+            if v.is_a? Array
+                v = v.join(' ')
+            end
+            
+            content << "#{k}=\"#{v}\""
+        end
+        
+        content = content.join("\n")
+        
+        self.atomicWrite(file, content, opts)
+    end
+    
     def self.calcMemorySections()
         debug('Calculating RAM sections')
         

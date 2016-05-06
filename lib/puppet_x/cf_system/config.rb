@@ -53,6 +53,7 @@ class Config
 
         #---
         sections = conf['sections']
+        old_sections = @old_config['sections']
         subver = conf['sub_versions']
 
         sections.each do |section_name, section_conf|
@@ -61,7 +62,9 @@ class Config
             end
             
             if (old_subver.has_key? section_name and
-                old_subver[section_name] == subver[section_name])
+                old_subver[section_name] == subver[section_name] and
+                old_sections.has_key? section_name and
+                section_conf == old_sections[section_name])
             then
                 next
             end
