@@ -23,6 +23,7 @@ What it does:
 * Forces custom I/O scheduler for real spinning HDDs (deadline by default)
 * Adds custom rc.local commands, if needed
 * Adds cron job to check if running kernel version matches the latest installed (reboot reminder)
+* Ruby framework for other cf* modules
 * The following helper scripts are installed
     * cf_clear_email_queue - clear all emails in exim queue
     * cf_clear_frozen_emails - clear only frozen emails in exim queue
@@ -198,6 +199,16 @@ Ubuntu-specific configuration.
 * `package = $title` - package to configure & install
 * `ensure = present` - passed to `package ensure`
 * `config = []` - config entries for `debconf-set-selections`
+
+## `cfsystem::dotenv` type
+
+A special helper to create entries in user ~/.env files
+
+* `user` - previously defined user{ $user: home => 'path'} ($home must be explicitly set)
+* `variable` - variable name
+* `value` - value
+* `env_file = '.env'` - name of .env file relative to $home
+
 
 
 [cfnetwork]: https://github.com/codingfuture/puppet-cfnetwork

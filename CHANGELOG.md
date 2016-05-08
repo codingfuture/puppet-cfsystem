@@ -10,6 +10,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Implemented experimental framework for:
     * weight based memory distribution
     * resource configuration management
+- Implemented a new feature cfsystem::dotenv to manange ~/.env config
 
 ## [0.9.11]
 - Added missing apt-listchanges installation
