@@ -182,15 +182,31 @@ module PuppetX::CfSystem
     
     BASE_PORT = 1025
     
-    def self.genPort(assoc_id)
+    def self.genPort(assoc_id, forced_port=nil)
         ports = self.config.get_persistent('ports')
         
-        return ports[assoc_id] if ports.has_key? assoc_id
+        forced_port = forced_port.to_i
         
-        if ports.empty?
-            next_port = BASE_PORT
-        else
-            next_port = ports.values.max() + 1
+        if forced_port > 0 and ports[assoc_id] != forced_port
+            old_assoc_id = ports.key(forced_port)
+            ports.delete(old_assoc_id) if not old_assoc_id.nil?
+            ports[assoc_id] = forced_port
+        end
+        
+        return ports[assoc_id] if ports[assoc_id].to_i > 0
+        
+        next_port = BASE_PORT
+        
+        if not ports.empty?
+            sorted_ports = ports.invert
+            
+            while true
+                if sorted_ports[next_port]
+                    next_port += 1
+                else
+                    break
+                end
+            end
         end
         
         ports[assoc_id] = next_port
