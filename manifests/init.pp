@@ -48,7 +48,7 @@ class cfsystem (
     cfsystem_memory_weight { 'cfsystem':
         ensure => present,
         weight => 1,
-        min_mb => $ram_reserve_mb,
+        min_mb => $reserve_ram,
     }
     cfsystem_memory_calc { 'total': ensure => present }
     
