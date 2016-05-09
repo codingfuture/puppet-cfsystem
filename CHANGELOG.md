@@ -11,6 +11,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
     * weight based memory distribution
     * resource configuration management
 - Implemented a new feature cfsystem::dotenv to manange ~/.env config
+- Moved block scheduler logic from rc.local to cf_auto_block_scheduler script
 
 ## [0.9.11]
 - Added missing apt-listchanges installation

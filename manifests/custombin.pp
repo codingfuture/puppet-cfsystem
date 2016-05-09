@@ -34,4 +34,10 @@ set path = (\$path ${bin_dir})
         hour    => 12,
         minute  => 0,
     }
+    
+    file { "${bin_dir}/cf_auto_block_scheduler":
+        mode   => '0755',
+        source => 'puppet:///modules/cfsystem/cf_auto_block_scheduler',
+    }
+    
 }

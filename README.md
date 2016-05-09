@@ -29,6 +29,7 @@ What it does:
     * cf_clear_frozen_emails - clear only frozen emails in exim queue
     * cf_send_test_email - send test email to admin address
     * cf_kernel_version_check - check if kernel version mismatch the latest installed one
+    * cf_auto_block_scheduler - setup auto-detected I/O scheduler per block device
 
 
 ## Technical Support

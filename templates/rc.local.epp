@@ -18,36 +18,10 @@
 # Force to reconf after all modules are loaded
 /sbin/sysctl -p
 
-# Force NOOP on Xen PV disks
-if test -e /sys/block/xvd?/queue/; then
-    for dq in /sys/block/xvd?/queue/; do
-        echo noop > $dq/scheduler
-        echo "Setting noop scheduler for $(basename $(dirname $dq))"
-    done
-fi
+# Setup block device schedulers with auto-detect
+<%= $cfsystem::custombin::bin_dir %>/cf_auto_block_scheduler
 
-# Force NOOP on SSD and virtualized hosts
-# Otherwise, force cfsystem configured default scheduler
-virtdetect=$(systemd-detect-virt)
-if test -e /sys/block/sd?/queue/; then
-    scheduler="<%= $cfsystem::real_hdd_scheduler %>"
-
-    for dq in /sys/block/sd?/queue/; do
-        scheduler=noop
-        
-        if test "$(cat $dq/rotational)" -ne 1; then
-            scheduler=noop
-        fi
-    
-        # Disable scheduler for virtualized hosts
-        if test "$virtdetect" != noop; then
-            scheduler=noop
-        fi
-        
-        echo "Setting $scheduler scheduler for $(basename $(dirname $dq))"
-    done
-fi
-
+# Add user-defined rc.local commands
 <% if $cfsystem::rc_local { any2array($cfsystem::rc_local).each |$cmd| { -%>
 <%= $cmd %>
 <% } } -%>
