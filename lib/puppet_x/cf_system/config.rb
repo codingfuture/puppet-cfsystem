@@ -90,7 +90,11 @@ class Config
         sections = @new_config['sections']
             
         if not sections.has_key?(type)
-            sections[type] = default || {}
+            begin
+                sections[type] = default || {}
+            rescue
+                return nil
+            end
         end
             
         return sections[type]
