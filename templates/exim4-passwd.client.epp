@@ -9,6 +9,6 @@
 #
 # Example:
 ### target.mail.server.example:login:password
-<% if $smarthost and $smarthost_login { -%>
-<%= $smarthost %>:<%= $smarthost_login %>:<%= $smarthost_password %>
+<% if $cfsystem::email::smarthost and $cfsystem::email::smarthost_login { -%>
+<%= $smarthost %>:<%= $cfsystem::email::smarthost_login %>:<%= $cfsystem::email::smarthost_password %>
 <% } -%>

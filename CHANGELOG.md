@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.13]
+- Fixed to pass strict mode checking
+
 ## [0.9.12]
 - Workaround to use jessie for stretch for PuppetLabs APT repo
 - Changed back to use xenial for appeared PuppetLabs APT repo
@@ -89,6 +92,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
+[0.9.13]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.13
 [0.9.12]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.12
 [0.9.11]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.11
 [0.9.10]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.10

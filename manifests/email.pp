@@ -23,10 +23,14 @@ class cfsystem::email (
         any2array($listen_ifaces).each |$iface| {
             cfnetwork::service_port { "${iface}:smtp:cfsystem": }
         }
+    } else {
+        $listen_iface_ips = undef
     }
     
     if $smarthost {
         $dst_smarthost = any2array($smarthost).map |$sh| { split($sh, ':')[0] }
+    } else {
+        $dst_smarthost = undef
     }
     
     # Firewall setup
