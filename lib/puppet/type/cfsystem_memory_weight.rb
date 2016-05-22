@@ -22,7 +22,9 @@ Puppet::Type.newtype(:cfsystem_memory_weight) do
         desc "Abstract memory weight to reserve"
         
         validate do |value|
-            unless value.is_a? Integer and value > 0
+            unless ((value.is_a? Integer and value > 0) or
+                    (resource.value(:name).split('/').size > 1) or
+                    (resource.value(:min_mb).is_a? Integer))
                 raise ArgumentError, "%s is not a valid positive integer" % value
             end
         end

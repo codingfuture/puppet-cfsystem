@@ -116,6 +116,7 @@ module PuppetX::CfSystem
         min_ram = 0
         total_weight = 0
         min_weight = 0
+        merged_conf = {}
         
         newconf.each do |k, v|
             weight = v[:weight]
@@ -125,6 +126,21 @@ module PuppetX::CfSystem
             if not min_mb.nil?
                 min_ram += min_mb
                 min_weight += weight
+            end
+            
+            # Support sub-section definition
+            k = k.split('/')[0]
+            
+            if merged_conf.has_key? k
+                mv = merged_conf[k]
+                mv[:weight] += weight
+                
+                min_mb = ((mv[:min_mb] || 0) + (min_mb || 0))
+                max_mb = ((mv[:max_mb] || 0) + (v[:max_mb] || 0))
+                mv[:min_mb] = min_mb if min_mb > 0
+                mv[:max_mb] = max_mb if max_mb > 0
+            else
+                merged_conf[k] = v.clone
             end
         end
         
@@ -140,7 +156,7 @@ module PuppetX::CfSystem
         alloc_ram = 0
         mem_distrib = {}
         
-        newconf.each do |k, v|
+        merged_conf.each do |k, v|
             min_mb = v[:min_mb]
             min_mb = 0 if min_mb.nil?
             max_mb = v[:max_mb]
@@ -161,7 +177,7 @@ module PuppetX::CfSystem
         # Pass #2 unallocated memory distribution
         #---
         unalloc_ram = total_ram - alloc_ram
-        newconf.each do |k, v|
+        merged_conf.each do |k, v|
             next if not v[:max_mb].nil?
             
             weight = v[:weight] 

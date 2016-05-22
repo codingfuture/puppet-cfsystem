@@ -37,7 +37,7 @@ class cfsystem (
     
     $locale = 'en_US.UTF-8',
     
-    $reserve_ram = 64,
+    $reserve_ram = 128,
 ) {
     include cfnetwork
     include cfauth

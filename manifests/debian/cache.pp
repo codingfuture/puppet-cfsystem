@@ -28,6 +28,12 @@ class cfsystem::debian::cache {
         }
         cfnetwork::client_port{ 'any:http:apcng': user=>['apt-cacher-ng', 'root', '_apt'] }
         cfnetwork::client_port{ 'any:https:apcng': user=>['apt-cacher-ng', 'root', '_apt'] }
+        
+        cfsystem_memory_weight { 'cfsystem::acng':
+            ensure => present,
+            weight => 1,
+            min_mb => 64,
+        }
     }
     
     $proxy = $::cfsystem::repo_proxy
