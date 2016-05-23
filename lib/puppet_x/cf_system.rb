@@ -2,6 +2,7 @@
 require 'puppet/util/logging'
 require 'puppet_x'
 require 'puppet/util/diff'
+require 'puppet/util/execution'
 require 'fileutils'
 require 'securerandom'
 
@@ -35,6 +36,8 @@ module PuppetX::CfSystem
     end
     
     def self.atomicWrite(file, content, opts={})
+        content = content.join("\n") if content.is_a? Array
+        
         if File.exists?(file) and (content == File.read(file))
             debug("Content matches for #{file}")
             return false
@@ -237,5 +240,96 @@ module PuppetX::CfSystem
         end
         
         return secrets[assoc_id]
+    end
+    
+    def self.fitRange(min, max, val=nil)
+        val = max if val.nil?
+        return [min, [max, val].min].max
+    end
+    
+    def self.roundTo(to, val)
+        return (((val + to) / to).to_i * to).to_i
+    end    
+    
+    def self.createService(options)
+        service_name = options[:service_name]
+        user = options.fetch(:user, service_name)
+        group = options.fetch(:group, user)
+        
+        service_file = "/etc/systemd/system/#{service_name}.service"
+        env_file = "/etc/default/#{service_name}.conf"
+        
+        content_ini = options[:content_ini]
+        content_env = options.fetch(:content_env, {})
+        
+        cpu_weight = options.fetch(:cpu_weight, nil)
+        io_weight = options.fetch(:io_weight, nil)
+        mem_limit = options.fetch(:mem_limit, nil)
+        mem_lock = options.fetch(:mem_lock, false)
+        
+        # Unit
+        #---
+        content_ini['Unit'] = {} unless content_ini.has_key? 'Unit'
+        unit_ini = content_ini['Unit']
+        unit_ini['Description'] ||= service_name
+        unit_ini['After'] ||= 'syslog.target network.target'
+        
+        # Install
+        #---
+        content_ini['Install'] ||= {
+            'WantedBy' => 'multi-user.target',
+        }
+
+        # Service
+        #---
+        service_ini = content_ini['Service']
+        service_ini.replace({
+            'Type' => 'simple',
+            'Restart' => 'always',
+            'RestartSec' => 5,
+            'User' => user,
+            'Group' => group,
+            'UMask' => '0027',
+            'RuntimeDirectory' => service_name,
+        }.merge service_ini)
+
+        service_ini['EnvironmentFile'] = env_file unless content_env.empty?        
+        
+        
+        unless cpu_weight.nil?
+            service_ini['CPUShares'] = (1024 * cpu_weight.to_i / 100).to_i
+        end
+        
+        unless io_weight.nil?
+            io_weight = (1000 * io_weight.to_i / 100).to_i
+            service_ini['BlockIOWeight'] = fitRange(1, 1000, io_weight)
+        end
+        
+        unless mem_limit.nil?
+            service_ini['MemoryLimit'] = "#{mem_limit}M"
+                    
+            if mem_lock
+                mem_lock = mem_limit * 1024 * 1024
+                service_ini['LimitMEMLOCK'] = "#{mem_lock}"
+            end
+        end
+        
+        # Write configs
+        #---
+        if content_env.empty?
+            FileUtils.rm_f(env_file)
+        else
+            env_changed = atomicWriteEnv(env_file, content_env, {:mode => 0644})
+        end
+        
+        reload = atomicWriteIni(service_file, content_ini, {:mode => 0644})
+        
+        # reload on demand
+        #---
+        if reload
+            Puppet::Util::Execution.execute(['/bin/systemctl', 'daemon-reload'])
+        end
+        
+        return env_changed || reload
     end
 end
