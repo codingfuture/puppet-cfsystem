@@ -51,7 +51,7 @@ define cfsystem::puppetpki(
         file { "${dst_dir}/local.crt":
             mode   => '0600',
             owner  => $user,
-            group   => $group,
+            group  => $group,
             source => "${puppet_ssl_dir}/certs/${certname}.pem",
         }
     }
