@@ -63,6 +63,7 @@ LANG=\"${cfsystem::locale}\"
     package { 'screen': }
     package { 'debconf-utils': }
     package { 'diffutils': }
+    package { 'strace': }
     
     # Misc tools which may generate noise
     #---
