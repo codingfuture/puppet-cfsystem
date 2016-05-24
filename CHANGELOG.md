@@ -6,6 +6,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.9.13]
 - Fixed to pass strict mode checking
 - Implemented automatic memory distribution with incremental part definitions per service
+- Added cfsystem::puppetpki type to copy puppet PKI for local user
 
 ## [0.9.12]
 - Workaround to use jessie for stretch for PuppetLabs APT repo
