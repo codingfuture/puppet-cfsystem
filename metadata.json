@@ -49,11 +49,11 @@
     },
     {
       "name": "codingfuture-cfnetwork",
-      "version_requirement": ">= 0.9.7"
+      "version_requirement": ">= 0.9.8"
     },
     {
       "name": "codingfuture-cfauth",
-      "version_requirement": ">= 0.9.5"
+      "version_requirement": ">= 0.9.6"
     }
   ],
   "data_provider": "hiera"
