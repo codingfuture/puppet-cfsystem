@@ -5,6 +5,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.9.14]
 - Disabled scheduled agent runs for safety purposes
+- Implemented framework support for systemd slices
 
 ## [0.9.13]
 - Fixed to pass strict mode checking

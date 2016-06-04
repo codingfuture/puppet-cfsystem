@@ -249,7 +249,67 @@ module PuppetX::CfSystem
     
     def self.roundTo(to, val)
         return (((val + to) / to).to_i * to).to_i
-    end    
+    end
+
+    def self.createLimitsCommon(section_ini, options)
+        cpu_weight = options.fetch(:cpu_weight, nil)
+        io_weight = options.fetch(:io_weight, nil)
+        mem_limit = options.fetch(:mem_limit, nil)
+        mem_lock = options.fetch(:mem_lock, false)
+        
+        unless cpu_weight.nil?
+            section_ini['CPUAccounting'] = 'true'
+            section_ini['CPUShares'] = (1024 * cpu_weight.to_i / 100).to_i
+        end
+        
+        unless io_weight.nil?
+            io_weight = (1000 * io_weight.to_i / 100).to_i
+            section_ini['BlockIOAccounting'] = 'true'
+            section_ini['BlockIOWeight'] = fitRange(1, 1000, io_weight)
+        end
+        
+        unless mem_limit.nil?
+            section_ini['MemoryAccounting'] = 'true'
+            section_ini['MemoryLimit'] = "#{mem_limit}M"
+                    
+            if mem_lock
+                mem_lock = mem_limit * 1024 * 1024
+                section_ini['LimitMEMLOCK'] = "#{mem_lock}"
+            end
+        end        
+    end
+    
+    def self.createSlice(options)
+        slice_name = options[:slice_name]
+        slice_file = "/etc/systemd/system/#{slice_name}.service"
+        
+        content_ini = options.fetch(:content_ini, {})
+        
+        # Unit
+        #---
+        content_ini['Unit'] = {} unless content_ini.has_key? 'Unit'
+        unit_ini = content_ini['Unit']
+        unit_ini['Description'] ||= slice_name
+        unit_ini['DefaultDependencies'] ||= 'no'
+        unit_ini['Before'] ||= 'slices.target'
+
+        # Service
+        #---
+        content_ini['Slice'] = {} unless content_ini.has_key? 'Slice'
+        slice_ini = content_ini['Slice']
+        
+        self.createLimitsCommon(slice_ini, options)
+        
+        reload = atomicWriteIni(slice_file, content_ini, {:mode => 0644})
+        
+        # reload on demand
+        #---
+        if reload
+            Puppet::Util::Execution.execute(['/bin/systemctl', 'daemon-reload'])
+        end
+        
+        return reload
+    end
     
     def self.createService(options)
         service_name = options[:service_name]
@@ -259,13 +319,8 @@ module PuppetX::CfSystem
         service_file = "/etc/systemd/system/#{service_name}.service"
         env_file = "/etc/default/#{service_name}.conf"
         
-        content_ini = options[:content_ini]
-        content_env = options.fetch(:content_env, {})
-        
-        cpu_weight = options.fetch(:cpu_weight, nil)
-        io_weight = options.fetch(:io_weight, nil)
-        mem_limit = options.fetch(:mem_limit, nil)
-        mem_lock = options.fetch(:mem_lock, false)
+        content_ini = options[:content_ini].clone
+        content_env = options.fetch(:content_env, {}).clone
         
         # Unit
         #---
@@ -295,24 +350,7 @@ module PuppetX::CfSystem
 
         service_ini['EnvironmentFile'] = env_file unless content_env.empty?        
         
-        
-        unless cpu_weight.nil?
-            service_ini['CPUShares'] = (1024 * cpu_weight.to_i / 100).to_i
-        end
-        
-        unless io_weight.nil?
-            io_weight = (1000 * io_weight.to_i / 100).to_i
-            service_ini['BlockIOWeight'] = fitRange(1, 1000, io_weight)
-        end
-        
-        unless mem_limit.nil?
-            service_ini['MemoryLimit'] = "#{mem_limit}M"
-                    
-            if mem_lock
-                mem_lock = mem_limit * 1024 * 1024
-                service_ini['LimitMEMLOCK'] = "#{mem_lock}"
-            end
-        end
+        self.createLimitsCommon(service_ini, options)
         
         # Write configs
         #---
