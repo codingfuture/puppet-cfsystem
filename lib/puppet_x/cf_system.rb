@@ -36,7 +36,7 @@ module PuppetX::CfSystem
     end
     
     def self.atomicWrite(file, content, opts={})
-        content = content.join("\n") if content.is_a? Array
+        content = content.join("\n") + "\n" if content.is_a? Array
         
         if File.exists?(file) and (content == File.read(file))
             debug("Content matches for #{file}")
@@ -232,11 +232,15 @@ module PuppetX::CfSystem
         return next_port
     end
     
-    def self.genSecret(assoc_id, len=32)
+    def self.genSecret(assoc_id, len=24, set=nil)
         secrets = self.config.get_persistent('secrets')
         
         if not secrets.has_key? assoc_id
-            secrets[assoc_id] = SecureRandom.base64(len)
+            if set.nil? or set.empty?
+                secrets[assoc_id] = SecureRandom.base64(len)
+            else
+                secrets[assoc_id] = set
+            end
         end
         
         return secrets[assoc_id]
