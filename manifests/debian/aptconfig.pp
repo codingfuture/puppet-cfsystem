@@ -58,11 +58,11 @@ class cfsystem::debian::aptconfig {
     }
     
     apt::conf { 'local-thin':
-        content => '
-APT::Install-Recommends "0";
-APT::Install-Suggests "0";
-Acquire::Languages "none";
-',
+        content => [
+            'APT::Install-Recommends "0";',
+            'APT::Install-Suggests "0";',
+            'Acquire::Languages "none";'
+        ].join("\n"),
     }
     
     package { 'puppetlabs-release': ensure => absent }

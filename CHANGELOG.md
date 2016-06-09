@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.15]
+- Fixed to correctly support Ubuntu Xenial
+    - Added disabling of IPv6 in APT
+    - Added disabling of not yet supported backports
+    - Changed to use fixed mirror by default
+
 ## [0.9.14]
 - Disabled scheduled agent runs for safety purposes
 - Implemented framework support for systemd slices
@@ -100,6 +106,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
+[0.9.15]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.15
 [0.9.14]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.14
 [0.9.13]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.13
 [0.9.12]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.12
