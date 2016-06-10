@@ -21,7 +21,17 @@ module PuppetX::CfSystem
     end
     
     def self.makeVersion(file)
-        Digest::MD5.hexdigest(File.read(file))
+        if file.is_a? Array
+            content = []
+            file.each do |f|
+                content << File.read(f)
+            end
+            content = content.join()
+        else
+            content = File.read(file)
+        end
+        
+        Digest::MD5.hexdigest(content)
     end
     
     def self.begin
