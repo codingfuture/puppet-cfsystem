@@ -35,6 +35,8 @@ class cfsystem (
     $puppet_env = $::environment,
     $puppet_use_dns_srv = false,
     
+    $mcollective = false,
+    
     $locale = 'en_US.UTF-8',
     
     $reserve_ram = 128,
@@ -113,5 +115,18 @@ class cfsystem (
             content => epp('cfsystem/puppet.conf.epp'),
             require => Package['puppet-agent']
         }
+    }
+    
+    #---
+    if $mcollective {
+        ensure_resource('service', 'mcollective', {
+            ensure => running,
+            enable => true,
+        })
+    } else {
+        ensure_resource('service', 'mcollective', {
+            ensure => stopped,
+            enable => false,
+        })
     }
 }

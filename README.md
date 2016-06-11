@@ -132,6 +132,7 @@ cfnetwork::client_ports:
 * `puppet_cahost = $puppet_host` - Puppet CA hostname
 * `puppet_env = $::environment` - Puppet environment
 * `puppet_use_dns_srv = false` - enable support DNS SRV records instead of hostnames
+* `mcollective = false` - controls if mcollective service is enabled
 * `locale = 'en_US.UTF-8'` - default system locale
 * `reserve_ram` = 64 - amount of ram to reserve for system in automatic calculations
 

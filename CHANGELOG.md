@@ -8,6 +8,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
     - Added disabling of IPv6 in APT
     - Added disabling of not yet supported backports
     - Changed to use fixed mirror by default
+- Added control parameter for mcollective service
 
 ## [0.9.14]
 - Disabled scheduled agent runs for safety purposes
