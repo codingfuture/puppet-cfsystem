@@ -3,13 +3,15 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.16]
+- Added control parameter for mcollective service
+- Improved security of .env files - only owner can read
+
 ## [0.9.15]
 - Fixed to correctly support Ubuntu Xenial
     - Added disabling of IPv6 in APT
     - Added disabling of not yet supported backports
     - Changed to use fixed mirror by default
-- Added control parameter for mcollective service
-- Improved security of .env files - only owner can read
 
 ## [0.9.14]
 - Disabled scheduled agent runs for safety purposes
