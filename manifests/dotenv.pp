@@ -13,13 +13,13 @@ define cfsystem::dotenv(
     
     $dotenv_file = "${home}/${env_file}"
     
-    if !defined(File[$dotenv_file]) {
-        file { $dotenv_file:
-            ensure  => present,
-            content => '',
-            replace => false,
-        }
-    }
+    ensure_resource('file', $dotenv_file, {
+        ensure  => present,
+        owner   => $user,
+        mode    => '0400',
+        content => '',
+        replace => false,
+    })
     
     file_line { "${dotenv_file}/${variable}":
         ensure   => present,
