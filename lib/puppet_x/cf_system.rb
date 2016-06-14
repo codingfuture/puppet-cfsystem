@@ -11,6 +11,7 @@ require File.expand_path( '../cf_system/config', __FILE__ )
 
 module PuppetX::CfSystem
     CFSYSTEM_CONFIG = '/etc/cfsystem.json'
+    CUSTOM_BIN_DIR = '/opt/codingfuture/bin'
     
     class << self
         attr_accessor :config
