@@ -53,7 +53,7 @@
     },
     {
       "name": "codingfuture-cfauth",
-      "version_requirement": ">= 0.9.6"
+      "version_requirement": ">= 0.9.7"
     }
   ],
   "data_provider": "hiera"
