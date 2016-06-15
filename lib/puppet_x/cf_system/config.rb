@@ -57,6 +57,13 @@ class Config
         subver = conf['sub_versions']
 
         sections.each do |section_name, section_conf|
+            sorted_section = {}
+            section_conf.keys.sort.each do |k|
+                sorted_section[k] = section_conf[k]
+            end
+            section_conf.replace sorted_section
+            
+            #---
             if not subver.has_key? section_name
                 next
             end

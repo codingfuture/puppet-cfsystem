@@ -6,6 +6,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.9.16]
 - Added control parameter for mcollective service
 - Improved security of .env files - only owner can read
+- Implemented stable sorting of cfsystem.json section content
 
 ## [0.9.15]
 - Fixed to correctly support Ubuntu Xenial
