@@ -92,6 +92,8 @@ class cfsystem::email (
                 line              => 'disable_ipv6 = true',
                 match             => 'disable_ipv6',
                 match_for_absence => true,
+                require           => Package[$exim_package],
+                notify            => Exec['update-exim4.conf'],
             }
             file { '/etc/exim4/passwd.client':
                 content => epp('cfsystem/exim4-passwd.client.epp'),
@@ -147,7 +149,7 @@ class cfsystem::email (
         group   => root,
         mode    => '0750',
         require => Package[$exim_package],
-        content => "#!/bin/sh\nexiqgrep -i | xargs exim -Mrm",
+        content => "#!/bin/sh\nexiqgrep -i | /usr/bin/xargs exim -Mrm",
     }
     
     file { "${cfsystem::custombin::bin_dir}/cf_clear_frozen_emails":
@@ -155,6 +157,6 @@ class cfsystem::email (
         group   => root,
         mode    => '0750',
         require => Package[$exim_package],
-        content => "#!/bin/sh\nexiqgrep -z -i | xargs exim -Mrm",
+        content => "#!/bin/sh\nexiqgrep -z -i | /usr/bin/xargs exim -Mrm",
     }
 }
