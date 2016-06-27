@@ -48,6 +48,10 @@
       "version_requirement": ">= 2.0.2"
     },
     {
+      "name": "dalen-puppetdbquery",
+      "version_requirement": ">= 2.1.1"
+    },
+    {
       "name": "codingfuture-cfnetwork",
       "version_requirement": ">= 0.9.8"
     },

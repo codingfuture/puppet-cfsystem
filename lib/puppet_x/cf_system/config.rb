@@ -55,7 +55,17 @@ class Config
         sections = conf['sections']
         old_sections = @old_config['sections']
         subver = conf['sub_versions']
+        
+        # sort sections
+        sorted_sections = {}
+        sections.keys.sort.each do |k|
+                sorted_sections[k] = sections[k]
+        end
+        sections.replace sorted_sections
+        
+        exceptions = []
 
+        # process each section
         sections.each do |section_name, section_conf|
             sorted_section = {}
             section_conf.keys.sort.each do |k|
@@ -76,12 +86,22 @@ class Config
                 next
             end
             
-            @save_handlers[section_name].call(section_conf)
+            begin
+                @save_handlers[section_name].call(section_conf)
+            rescue => e
+                # force reconfigure
+                sections[section_name] = {}
+                exceptions << "#{e}\n#{e.backtrace}"
+            end
         end
         
         #---
         content = JSON.pretty_generate(conf)
         PuppetX::CfSystem.atomicWrite(@file, content)
+        
+        if not exceptions.empty?
+            fail(exceptions.join("\n"))
+        end
     end
 
     def get_old(type, default=nil)

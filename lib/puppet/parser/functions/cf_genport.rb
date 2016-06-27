@@ -1,13 +1,14 @@
+
 # Make sure to reload on each run at server
 load File.expand_path( '../../../../puppet_x/cf_system/util.rb', __FILE__ )
 
 module Puppet::Parser::Functions
-    newfunction(:cf_genpass,  :type => :rvalue) do |args|
-        assoc_id, len, set = args
+    newfunction(:cf_genport,  :type => :rvalue) do |args|
+        assoc_id, forced_port = args
         
-        secrets = PuppetX::CfSystem::Util.mutableFact(self, 'secrets') do |v|
+        ports = PuppetX::CfSystem::Util.mutableFact(self, 'ports') do |v|
             lookupvar('::facts').fetch('cf_persistent', {})[v] or {}
         end
-        PuppetX::CfSystem::Util.genSecretCommon(secrets, assoc_id, len, set)
+        PuppetX::CfSystem::Util.genPortCommon(ports, assoc_id, forced_port)
     end
 end

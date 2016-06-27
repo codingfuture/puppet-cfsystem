@@ -26,8 +26,8 @@ set path = (\$path ${bin_dir})
     
     $cf_kernel_version_check = "${bin_dir}/cf_kernel_version_check"
     file { $cf_kernel_version_check:
-        mode   => '0755',
-        source => 'puppet:///modules/cfsystem/cf_kernel_version_check',
+        mode    => '0755',
+        content => file('cfsystem/cf_kernel_version_check'),
     } ->
     cron { $cf_kernel_version_check:
         command => $cf_kernel_version_check,
@@ -36,8 +36,8 @@ set path = (\$path ${bin_dir})
     }
     
     file { "${bin_dir}/cf_auto_block_scheduler":
-        mode   => '0755',
-        source => 'puppet:///modules/cfsystem/cf_auto_block_scheduler',
+        mode    => '0755',
+        content => file('cfsystem/cf_auto_block_scheduler'),
     }
     
 }

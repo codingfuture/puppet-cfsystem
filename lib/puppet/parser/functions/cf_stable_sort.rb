@@ -1,21 +1,12 @@
+# Make sure to reload on each run at server
+load File.expand_path( '../../../../puppet_x/cf_system/util.rb', __FILE__ )
 
 module Puppet::Parser::Functions
     newfunction(:cf_stable_sort,  :type => :rvalue, :arity => 1) do |args|
         arg = args[0]
-        
-        if arg.is_a? Hash
-            ret = arg.keys.sort.map do |k|
-                function_cf_stable_sort(arg[k])
-            end
-        elsif arg.is_a? Array
-            ret = arg.map do |v|
-                function_cf_stable_sort(v)
-            end
-            ret.sort!
-        else
-            ret = arg
-        end
-        
+        ret = PuppetX::CfSystem::Util.cf_stable_sort(arg)
+        #warning("In #{arg}")
+        #warning("Out #{ret}")
         ret
     end
 end

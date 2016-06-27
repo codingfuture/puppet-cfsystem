@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.17]
+- Changed parser helper `cf_genpass` and `cf_genport` to use facts and act like client-side counterpart
+- Added `cf_genport` helper integrated with facts
+- Improved logic of CfSystem.genPort()
+- Added `cfsystem::haproxy` to setup packages
+- Added custom `$pki_dir` support to `cfsystem::puppetpki`
+- Fixed to make sort cfsystem.json sections are sorted as well
+- Fixed not to fail all resources, if some resource save handler fails in cfsystem.json
+- Added wrappers around `puppetdbquery` module
+- Fixed to support static catalog (no puppet:// source)
+
 ## [0.9.16]
 - Added control parameter for mcollective service
 - Improved security of .env files - only owner can read

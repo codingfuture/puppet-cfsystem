@@ -2,20 +2,27 @@
 define cfsystem::puppetpki(
     $user = $title,
     $copy_key = true,
+    $pki_dir = undef,
 ) {
-    $home = getparam(User[$user], 'home')
     $group = pick(getparam(User[$user], 'group'), $user)
     
-    if !$home or $home == '' {
-        fail("User ${user} must be defined with explicit 'home' parameter")
+    if $pki_dir {
+        $q_pki_dir = $pki_dir
+    } else {
+        $home = getparam(User[$user], 'home')
+        
+        if !$home or $home == '' {
+            fail("User ${user} must be defined with explicit 'home' parameter")
+        }
+        
+        $q_pki_dir = "${home}/pki"
     }
     
-    $pki_dir = "${home}/pki"
-    $dst_dir = "${pki_dir}/puppet"
+    $dst_dir = "${q_pki_dir}/puppet"
     $puppet_ssl_dir = '/etc/puppetlabs/puppet/ssl'
     $certname = $::trusted['certname']
     
-    file { $pki_dir:
+    file { $q_pki_dir:
         ensure => directory,
         owner  => $user,
         group  => $group,

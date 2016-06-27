@@ -25,11 +25,16 @@ What it does:
 * Adds cron job to check if running kernel version matches the latest installed (reboot reminder)
 * Ruby framework for other cf* modules
 * The following helper scripts are installed
-    * cf_clear_email_queue - clear all emails in exim queue
-    * cf_clear_frozen_emails - clear only frozen emails in exim queue
-    * cf_send_test_email - send test email to admin address
-    * cf_kernel_version_check - check if kernel version mismatch the latest installed one
-    * cf_auto_block_scheduler - setup auto-detected I/O scheduler per block device
+    * `cf_clear_email_queue` - clear all emails in exim queue
+    * `cf_clear_frozen_emails` - clear only frozen emails in exim queue
+    * `cf_send_test_email` - send test email to admin address
+    * `cf_kernel_version_check` - check if kernel version mismatch the latest installed one
+    * `cf_auto_block_scheduler` - setup auto-detected I/O scheduler per block device
+* Public API for Puppet parser:
+    * `cf_query_facts` - wrapper around `query_facts`
+    * `cf_query_nodes` - wrapper around `query_nodes`
+    * `cf_query_resources` - wrapper around `query_resources`
+    * `cf_stable_sort(arg)` - deep sort of Hash/Array to avoid isomorphic configuration "change"
 
 
 ## Technical Support
@@ -210,6 +215,20 @@ A special helper to create entries in user ~/.env files
 * `variable` - variable name
 * `value` - value
 * `env_file = '.env'` - name of .env file relative to $home
+
+## `cfsystem::puppetpki` type
+Make actual Puppet PKI (CA, CRL, client cert and private key) data available to specific user.
+By default the data is copied under ~/pki/puppet/.
+
+* `user = $title` - local user to use
+* `copy_key = true` - if true then private keys of local machine are copied as well
+* `pki_dir = undef` - override the default destination folder
+
+## `cfsystem::haproxy` class
+
+Setup haproxy package. No configuration. Used by other modules
+
+* `$disable_standard = true` - controls if default HAProxy service must be disabled
 
 
 

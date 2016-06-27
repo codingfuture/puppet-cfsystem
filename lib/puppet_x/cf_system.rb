@@ -13,6 +13,11 @@ module PuppetX::CfSystem
     CFSYSTEM_CONFIG = '/etc/cfsystem.json'
     CUSTOM_BIN_DIR = '/opt/codingfuture/bin'
     
+    #---
+    BASE_DIR = File.expand_path('../', __FILE__)
+    require "#{BASE_DIR}/cf_system/provider_base"
+    require "#{BASE_DIR}/cf_system/util"
+    
     class << self
         attr_accessor :config
         attr_accessor :memory_distribution
@@ -210,53 +215,17 @@ module PuppetX::CfSystem
         self.memory_distribution[name]
     end
     
-    BASE_PORT = 1025
-    
     def self.genPort(assoc_id, forced_port=nil)
         ports = self.config.get_persistent('ports')
-        
-        forced_port = forced_port.to_i
-        
-        if forced_port > 0 and ports[assoc_id] != forced_port
-            old_assoc_id = ports.key(forced_port)
-            ports.delete(old_assoc_id) if not old_assoc_id.nil?
-            ports[assoc_id] = forced_port
-        end
-        
-        return ports[assoc_id] if ports[assoc_id].to_i > 0
-        
-        next_port = BASE_PORT
-        
-        if not ports.empty?
-            sorted_ports = ports.invert
-            
-            while true
-                if sorted_ports[next_port]
-                    next_port += 1
-                else
-                    break
-                end
-            end
-        end
-        
-        ports[assoc_id] = next_port
-        return next_port
+        PuppetX::CfSystem::Util.genPortCommon(ports, assoc_id, forced_port)
     end
-    
+        
     def self.genSecret(assoc_id, len=24, set=nil)
         secrets = self.config.get_persistent('secrets')
-        
-        if not secrets.has_key? assoc_id
-            if set.nil? or set.empty?
-                secrets[assoc_id] = SecureRandom.base64(len)
-            else
-                secrets[assoc_id] = set
-            end
-        end
-        
-        return secrets[assoc_id]
+        PuppetX::CfSystem::Util.genSecretCommon(secrets, assoc_id, len, set)
     end
-    
+        
+   
     def self.fitRange(min, max, val=nil)
         val = max if val.nil?
         return [min, [max, val].min].max
@@ -384,5 +353,15 @@ module PuppetX::CfSystem
         end
         
         return env_changed || reload
+    end
+    
+    def self.maskService(service_name)
+        service_file = "/etc/systemd/system/#{service_name}.service"
+        
+        if !File.exists?(service_file) or !File.symlink?(service_file)
+            warning("> systemd masking #{service_name}")
+            Puppet::Util::Execution.execute(['/bin/systemctl', 'stop', service_name])
+            Puppet::Util::Execution.execute(['/bin/systemctl', 'mask', service_name])
+        end
     end
 end
