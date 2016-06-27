@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.18]
+- Minor fix of private Ruby infrastructure
+
 ## [0.9.17]
 - Changed parser helper `cf_genpass` and `cf_genport` to use facts and act like client-side counterpart
 - Added `cf_genport` helper integrated with facts

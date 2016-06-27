@@ -12,6 +12,8 @@ module PuppetX::CfSystem::Util
         Puppet::Util.logmethods(self, true)
     end
     
+    BASE_PORT = 1025
+    
     #---
     def self.cf_stable_cmp(a, b)
         if a.is_a? Hash and b.is_a? Hash
