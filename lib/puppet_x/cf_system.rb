@@ -352,6 +352,9 @@ module PuppetX::CfSystem
             Puppet::Util::Execution.execute(['/bin/systemctl', 'daemon-reload'])
         end
         
+        # Make sure it's enabled
+        Puppet::Util::Execution.execute(['/bin/systemctl', 'enable', service_name, '--no-reload'])
+        
         return env_changed || reload
     end
     

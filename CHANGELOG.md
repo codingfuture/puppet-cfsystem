@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.19]
+- Fixed to enable services during creation in Ruby framework
+
 ## [0.9.18]
 - Minor fix of private Ruby infrastructure
 
@@ -126,6 +129,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
+[0.9.19]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.19
 [0.9.18]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.18
 [0.9.17]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.17
 [0.9.16]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.16
