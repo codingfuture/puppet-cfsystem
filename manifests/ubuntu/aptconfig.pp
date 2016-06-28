@@ -41,7 +41,7 @@ class cfsystem::ubuntu::aptconfig {
             location => $::cfsystem::ubuntu::apt_url,
             release  => "${::cfsystem::ubuntu::release}-backports",
             repos    => 'main restricted universe multiverse',
-            include  => { src        => false },
+            include  => { src            => false },
             pin      => $cfsystem::apt_backports_pin,
         }
     }
