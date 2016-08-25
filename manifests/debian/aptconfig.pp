@@ -48,7 +48,11 @@ class cfsystem::debian::aptconfig {
 
     $puppet_key_id = '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'
     $puppet_key_server = 'hkp://pgp.mit.edu:80'
-    $http_proxy = "http://${cfsystem::repo_proxy_cond['host']}:${cfsystem::repo_proxy_cond['port']}"
+    if $::cfsystem::repo_proxy_cond {
+        $http_proxy = "http://${cfsystem::repo_proxy_cond['host']}:${cfsystem::repo_proxy_cond['port']}"
+    } else {
+        $http_proxy = ''
+    }
     apt::source { 'puppetlabs':
         location => 'http://apt.puppetlabs.com',
         release  => $puppet_release,
