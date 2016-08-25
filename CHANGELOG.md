@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.21]
+- Fixed wrong version of PuppetLabs PGP key auto-update getting in release
+
 ## [0.9.20]
 - Implemented auto-update of PuppetLabs PGP key
 
@@ -132,6 +135,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
+[0.9.21]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.21
 [0.9.20]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.20
 [0.9.19]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.19
 [0.9.18]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.18
