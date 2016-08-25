@@ -67,11 +67,10 @@ class cfsystem::ubuntu::aptconfig {
             options => "http-proxy='${http_proxy}'",
         },
         pin      => $cfsystem::apt_pin + 1,
-    } ->
+    }
     exec { 'apt-key update puppetlabs':
-        unless  => "/usr/bin/apt-key list | \
-            /bin/grep '${puppet_key_id}' | \
-            /bin/grep -v expired",
+        onlyif  => "/usr/bin/apt-key adv --list-keys '${puppet_key_id}' | \
+            /bin/grep expired",
         command => "/usr/bin/apt-key adv \
             --keyserver-options http-proxy='${http_proxy}' \
             --keyserver ${puppet_key_server} \
