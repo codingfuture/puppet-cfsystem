@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.23]
+- Fixed to install libssl1.0.0 dep for latest HAProxy @ Jessie
+
 ## [0.9.22]
 - Fixed case of PuppetLabs PGP key auto-update without proxy
 
@@ -138,6 +141,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
+[0.9.23]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.23
 [0.9.22]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.22
 [0.9.21]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.21
 [0.9.20]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.20
