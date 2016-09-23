@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.24]
+- Added internal `cfsystem_info` helper to store arbitrary info in `cfsystem.json`
+
 ## [0.9.23]
 - Fixed to install libssl1.0.0 dep for latest HAProxy @ Jessie
 
