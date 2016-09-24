@@ -17,6 +17,7 @@ Puppet::Type.newtype(:cfsystem_info) do
     
     newproperty(:info) do
         desc "Arbitrary hash with section info"
+        isrequired
         
         validate do |value|
             value.is_a? Hash
