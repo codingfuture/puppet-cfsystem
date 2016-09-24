@@ -144,6 +144,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
+[0.9.24]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.24
 [0.9.23]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.23
 [0.9.22]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.22
 [0.9.21]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.21
