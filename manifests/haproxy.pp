@@ -1,6 +1,6 @@
 
 class cfsystem::haproxy(
-    $disable_standard = true
+    Boolean $disable_standard = true
 ) {
     $package_name = 'haproxy'
     

@@ -1,8 +1,8 @@
 
 class cfsystem::debian (
-    $apt_url = 'http://httpredir.debian.org/debian',
-    $security_apt_url = 'http://security.debian.org/',
-    $release = $::facts['lsbdistcodename'],
+    String $apt_url = 'http://httpredir.debian.org/debian',
+    String $security_apt_url = 'http://security.debian.org/',
+    String $release = $::facts['lsbdistcodename'],
 ) {
     include stdlib
     assert_private();

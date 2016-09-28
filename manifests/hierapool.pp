@@ -1,7 +1,7 @@
 
 class cfsystem::hierapool (
-    $location = undef,
-    $pool = undef
+    Optional[String] $location = undef,
+    Optional[String] $pool = undef
 ) {
     include stdlib
     assert_private();

@@ -5,6 +5,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.9.26]
 - Fixed previous broken release for cases with no HTTP proxy configured
+- Enforced parameter types
 
 ## [0.9.25]
 - Added more puppet keys to auto-update

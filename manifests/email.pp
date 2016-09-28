@@ -1,13 +1,13 @@
 class cfsystem::email (
-    $smarthost = undef,
-    $smarthost_login = undef,
-    $smarthost_password = undef,
-    $relay_nets = [
+    Optional[String] $smarthost = undef,
+    Optional[String] $smarthost_login = undef,
+    Optional[String] $smarthost_password = undef,
+    Variant[ Array[String], String] $relay_nets = [
         '10.0.0.0/8',
         '192.168.0.0/16',
         '172.16.0.0/12',
     ],
-    $listen_ifaces = undef,
+    Optional[Variant[Array[String], String]] $listen_ifaces = undef,
     $disable_ipv6 = true,
 ) {
     include stdlib

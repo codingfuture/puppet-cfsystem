@@ -1,47 +1,47 @@
 
 class cfsystem (
-    $allow_nfs = false,
+    Boolean $allow_nfs = false,
     
-    $admin_email = undef,
+    Optional[String] $admin_email = undef,
 
-    $repo_proxy = undef, # proxy host
-    $add_repo_cacher = false, # enable repo cacher service
+    Optional[Hash] $repo_proxy = undef, # proxy host
+    Boolean $add_repo_cacher = false, # enable repo cacher service
 
-    $service_face = 'any',
+    String $service_face = 'any',
     
-    $ntp_servers = [ 'pool.ntp.org' ],
-    $add_ntp_server = false,
+    Variant[ Array[String], String ] $ntp_servers = [ 'pool.ntp.org' ],
+    Boolean $add_ntp_server = false,
     
-    $timezone = 'Etc/UTC',
-    $xen_pv = false, # enable PV/PVH config changes TODO: facter
+    String $timezone = 'Etc/UTC',
+    Boolean $xen_pv = false, # enable PV/PVH config changes TODO: facter
     
-    $apt_purge = {
+    Hash $apt_purge = {
         'sources.list'   => true,
         'sources.list.d' => true,
         'preferences'    => true,
         'preferences.d'  => true,
     },
-    $apt_update = {
+    Hash $apt_update = {
         frequency => 'daily',
         timeout   => 300,
     },
-    $apt_pin = 1001,
-    $apt_backports_pin = 600,
-    $real_hdd_scheduler = 'deadline',
-    $rc_local = undef,
+    Integer $apt_pin = 1001,
+    Integer $apt_backports_pin = 600,
+    String $real_hdd_scheduler = 'deadline',
+    Optional[Variant[ String, Array[String] ]] $rc_local = undef,
     
-    $puppet_host = "puppet.${::trusted['domain']}",
-    $puppet_cahost = undef,
-    $puppet_env = $::environment,
-    $puppet_use_dns_srv = false,
+    String $puppet_host = "puppet.${::trusted['domain']}",
+    Optional[String] $puppet_cahost = undef,
+    String $puppet_env = $::environment,
+    Boolean $puppet_use_dns_srv = false,
     
-    $mcollective = false,
+    Boolean $mcollective = false,
     
-    $locale = 'en_US.UTF-8',
+    String $locale = 'en_US.UTF-8',
     
-    $reserve_ram = 128,
+    Integer $reserve_ram = 128,
     
-    $key_server = 'hkp://pgp.mit.edu:80',
+    String $key_server = 'hkp://pgp.mit.edu:80',
 ) {
     include cfnetwork
     include cfauth
