@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.25]
+- Added more puppet keys to auto-update
+- Added generic helper `cf_apt_key_updater`
+
 ## [0.9.24]
 - Added internal `cfsystem_info` helper to store arbitrary info in `cfsystem.json`
 
@@ -144,6 +148,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
+[0.9.25]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.25
 [0.9.24]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.24
 [0.9.23]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.23
 [0.9.22]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.22

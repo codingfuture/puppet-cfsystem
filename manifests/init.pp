@@ -40,6 +40,8 @@ class cfsystem (
     $locale = 'en_US.UTF-8',
     
     $reserve_ram = 128,
+    
+    $key_server = 'hkp://pgp.mit.edu:80',
 ) {
     include cfnetwork
     include cfauth
@@ -57,9 +59,13 @@ class cfsystem (
     #---
     if $::cfsystem::add_repo_cacher and !$cf_has_acng {
         $repo_proxy_cond = undef
+        $http_proxy = ''
     } else {
         $repo_proxy_cond = $repo_proxy
+        $http_proxy = "http://${cfsystem::repo_proxy_cond['host']}:${cfsystem::repo_proxy_cond['port']}"
     }
+    
+    class { 'cfsystem::custombin': stage => 'setup' }
     
     case $::operatingsystem {
         'Debian': { include cfsystem::debian }
@@ -72,7 +78,6 @@ class cfsystem (
     include cfsystem::email
     include cfsystem::ntp
     include cfsystem::git
-    include cfsystem::custombin
     
     #---
     cfnetwork::describe_service{ 'puppet': server => 'tcp/8140' }

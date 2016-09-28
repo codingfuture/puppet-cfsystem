@@ -30,6 +30,7 @@ What it does:
     * `cf_send_test_email` - send test email to admin address
     * `cf_kernel_version_check` - check if kernel version mismatch the latest installed one
     * `cf_auto_block_scheduler` - setup auto-detected I/O scheduler per block device
+    * `cf_apt_key_updater <key_id>` - run GPG key re-import, if expired
 * Public API for Puppet parser:
     * `cf_query_facts` - wrapper around `query_facts`
     * `cf_query_nodes` - wrapper around `query_nodes`
@@ -140,6 +141,7 @@ cfnetwork::client_ports:
 * `mcollective = false` - controls if mcollective service is enabled
 * `locale = 'en_US.UTF-8'` - default system locale
 * `reserve_ram` = 64 - amount of ram to reserve for system in automatic calculations
+* `$key_server = 'hkp://pgp.mit.edu:80'` - default PGP key server
 
 ## `cfsystem::hierapool` class
 
@@ -206,6 +208,13 @@ Ubuntu-specific configuration.
 * `package = $title` - package to configure & install
 * `ensure = present` - passed to `package ensure`
 * `config = []` - config entries for `debconf-set-selections`
+
+## `cfsystem::debian::aptkey` type
+
+Configure APT key & add automatic update of expired keys
+
+* `id` - PGP key ID
+* `extra_opts = {}` - any additional options for `apt::key`
 
 ## `cfsystem::dotenv` type
 

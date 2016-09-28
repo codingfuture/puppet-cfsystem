@@ -1,0 +1,21 @@
+<% |
+    String $http_proxy,
+    String $key_server,
+| -%>
+#!/bin/sh
+
+key_id=$1
+
+if test -z "${key_id}"; then
+    echo "Usage: $0 <gpg_key_id>"
+    exit -1
+fi
+
+if /usr/bin/apt-key adv --list-keys "${key_id}" | /bin/grep -q expired; then
+    /usr/bin/apt-key adv \
+            --keyserver-options http-proxy='<%= $http_proxy %>' \
+            --keyserver '<%= $key_server %>' \
+            --recv-keys "${key_id}"
+else
+    exit 0
+fi
