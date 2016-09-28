@@ -24,7 +24,7 @@ class cfsystem::haproxy(
             priority => $cfsystem::apt_pin + 1,
         } ->
         package{ $package_name:
-            ensure => latest,
+            ensure  => latest,
             require => Package['libssl1.0.0']
         }
         

@@ -51,7 +51,7 @@ set path = (\$path ${bin_dir})
     $cf_apt_key_updater = "${cfsystem::custombin::bin_dir}/cf_apt_key_updater"
     
     file { $cf_apt_key_updater:
-        mode => '0700',
+        mode    => '0700',
         content => epp('cfsystem/cf_apt_key_updater.epp', {
             http_proxy => $cfsystem::http_proxy,
             key_server => $cfsystem::key_server,
