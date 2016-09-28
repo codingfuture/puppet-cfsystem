@@ -49,6 +49,18 @@ module PuppetX::CfSystem
         debug('cfsystem::commit')
         self.config.save()
         self.config = nil
+        self.post_commit()
+    end
+    
+    def self.post_commit
+        res = Puppet::Util::Execution.execute(
+            ['/opt/codingfuture/bin/cf_kernel_version_check'],
+            {
+                :failonfail => false,
+                :combine => true,
+            }
+        )
+        warning(res) if res.exitstatus != 0
     end
     
     def self.atomicWrite(file, content, opts={})

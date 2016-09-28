@@ -6,6 +6,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.9.25]
 - Added more puppet keys to auto-update
 - Added generic helper `cf_apt_key_updater`
+- Added `cf_kernel_version_check` on every deploy
 
 ## [0.9.24]
 - Added internal `cfsystem_info` helper to store arbitrary info in `cfsystem.json`
