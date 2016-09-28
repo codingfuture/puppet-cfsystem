@@ -9,7 +9,7 @@ define cfsystem::debian::aptkey(
             "cfsystem_${title}" => {
                 id      => $id,
                 server  => $cfsystem::key_server,
-                options => "http-proxy='${cfsystem::http_proxy}'",
+                options => "http-proxy=${cfsystem::http_proxy}",
             }
         },
         $extra_opts
