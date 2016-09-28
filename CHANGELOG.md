@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.26]
+- Fixed previous broken release for cases with no HTTP proxy configured
+
 ## [0.9.25]
 - Added more puppet keys to auto-update
 - Added generic helper `cf_apt_key_updater`

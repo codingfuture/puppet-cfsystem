@@ -62,7 +62,11 @@ class cfsystem (
         $http_proxy = ''
     } else {
         $repo_proxy_cond = $repo_proxy
-        $http_proxy = "http://${cfsystem::repo_proxy_cond['host']}:${cfsystem::repo_proxy_cond['port']}"
+        
+        $http_proxy = $repo_proxy ? {
+            undef => '',
+            default => "http://${repo_proxy['host']}:${repo_proxy['port']}"
+        }
     }
     
     class { 'cfsystem::custombin': stage => 'setup' }
