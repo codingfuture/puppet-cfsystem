@@ -12,10 +12,17 @@ if test -z "${key_id}"; then
 fi
 
 if /usr/bin/apt-key adv --list-keys "${key_id}" | /bin/grep -q expired; then
+    set -e
     /usr/bin/apt-key adv \
             --keyserver-options http-proxy='<%= $http_proxy %>' \
             --keyserver '<%= $key_server %>' \
             --recv-keys "${key_id}"
+
+    if $2 == 'puppet'; then
+        exit 1
+    else
+        exit 0
+    fi
 else
     exit 0
 fi

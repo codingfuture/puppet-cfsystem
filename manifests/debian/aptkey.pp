@@ -17,7 +17,8 @@ define cfsystem::debian::aptkey(
     
     $cf_apt_key_updater = $cfsystem::custombin::cf_apt_key_updater
     exec { "cf_apt_key_updater ${title}":
-        command => "${cf_apt_key_updater} ${id}",
+        command => '/bin/true',
+        unless  => "${cf_apt_key_updater} ${id} puppet",
         require => File[$cf_apt_key_updater],
     }
 }
