@@ -257,13 +257,14 @@ module PuppetX::CfSystem
         
         unless cpu_weight.nil?
             section_ini['CPUAccounting'] = 'true'
-            section_ini['CPUShares'] = (1024 * cpu_weight.to_i / 100).to_i
+            cpu_shares = (1024 * cpu_weight.to_i / 100).to_i
+            section_ini['CPUShares'] = fitRange(2, 262144, cpu_shares)
         end
         
         unless io_weight.nil?
-            io_weight = (1000 * io_weight.to_i / 100).to_i
+            io_weight = (500 * io_weight.to_i / 100).to_i
             section_ini['BlockIOAccounting'] = 'true'
-            section_ini['BlockIOWeight'] = fitRange(1, 1000, io_weight)
+            section_ini['BlockIOWeight'] = fitRange(10, 1000, io_weight)
         end
         
         unless mem_limit.nil?
