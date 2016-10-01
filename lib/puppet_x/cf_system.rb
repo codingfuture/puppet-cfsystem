@@ -71,6 +71,8 @@ module PuppetX::CfSystem
             return false
         end
         
+        return true if opts[:dry_run]
+        
         #---
         tmpfile = file + ".#{$$}"
         
@@ -296,7 +298,9 @@ module PuppetX::CfSystem
         
         self.createLimitsCommon(slice_ini, options)
         
-        reload = atomicWriteIni(slice_file, content_ini, {:mode => 0644})
+        reload = atomicWriteIni(slice_file, content_ini,
+                                {:mode => 0644,
+                                 :dry_run => options[:dry_run]})
         
         # reload on demand
         #---
