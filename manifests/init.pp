@@ -35,6 +35,7 @@ class cfsystem (
     String $puppet_env = $::environment,
     Boolean $puppet_use_dns_srv = false,
     
+    Boolean $agent = false,
     Boolean $mcollective = false,
     
     String $locale = 'en_US.UTF-8',
@@ -127,15 +128,13 @@ class cfsystem (
     }
     
     #---
-    if $mcollective {
-        ensure_resource('service', 'mcollective', {
-            ensure => running,
-            enable => true,
-        })
-    } else {
-        ensure_resource('service', 'mcollective', {
-            ensure => stopped,
-            enable => false,
-        })
-    }
+    ensure_resource('service', 'puppet', {
+        ensure => $agent,
+        enable => $agent,
+    })
+    ensure_resource('service', 'mcollective', {
+        ensure => $mcollective,
+        enable => $mcollective,
+    })
+
 }
