@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.27]
+- Added global wget configuration with http_proxy/https_proxy
+- Fixed BlockIOWeight and CPUShares default calculations
+- Added more advanced apt-cacher-ng configuration support
+- Added maxmind GeoIP database support for apt-cacher-ng
+- Changed to disable puppet agent by default
+- Added atomic file write dry_run support (internal API)
+
 ## [0.9.26]
 - Fixed previous broken release for cases with no HTTP proxy configured
 - Enforced parameter types
@@ -153,6 +161,8 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
+[0.9.27]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.27
+[0.9.26]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.26
 [0.9.25]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.25
 [0.9.24]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.24
 [0.9.23]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.23
