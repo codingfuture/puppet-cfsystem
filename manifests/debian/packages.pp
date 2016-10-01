@@ -25,10 +25,12 @@ class cfsystem::debian::packages {
     
     # Essential
     #---
-    package { 'etckeeper': }
-    package { 'apt-transport-https': }
-    package { 'apt-listchanges': }
-    package { 'systemd': }
+    ensure_packages([
+        'etckeeper',
+        'apt-transport-https',
+        'apt-listchanges',
+        'systemd',
+    ])
     
     if $::operatingsystem == 'Ubuntu' {
         # See old bug: https://bugs.launchpad.net/ubuntu/+source/glibc/+bug/1394929
@@ -49,26 +51,29 @@ LANG=\"${cfsystem::locale}\"
 
     # Handy tools
     #---
-    package { 'curl': }
-    package { 'wget': }
-    #package { 'git': }
-    package { 'htop': }
-    package { 'tree': }
-    package { 'ethtool': }
-    package { 'iftop': }
-    package { 'netcat-traditional': }
-    package { 'netstat-nat': }
-    package { 'conntrack': }
-    package { 'telnet': }
-    package { 'screen': }
-    package { 'debconf-utils': }
-    package { 'diffutils': }
-    package { 'strace': }
+    ensure_packages([
+        'curl',
+        'wget',
+        'htop',
+        'tree',
+        'ethtool',
+        'iftop',
+        'netcat-traditional',
+        'netstat-nat',
+        'conntrack',
+        'telnet',
+        'screen',
+        'debconf-utils',
+        'diffutils',
+        'strace',
+    ])
     
     # Misc tools which may generate noise
     #---
-    package { 'apticron': }
-    package { 'chkrootkit': }
-    package { 'rkhunter': }
-    package { 'debsums': }
+    ensure_packages([
+        'apticron',
+        'chkrootkit',
+        'rkhunter',
+        'debsums',
+    ])
 }

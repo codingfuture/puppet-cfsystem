@@ -70,6 +70,39 @@ class cfsystem (
         }
     }
     
+    ensure_packages(['wget'])
+    
+    if $http_proxy and $http_proxy != '' {
+        Package['wget'] ->
+        file_line { 'wgetrc_http_proxy':
+            path     => '/etc/wgetrc',
+            line     => "http_proxy = ${http_proxy}",
+            match    => 'http_proxy',
+            multiple => true,
+        } ->
+        file_line { 'wgetrc_https_proxy':
+            path     => '/etc/wgetrc',
+            line     => "https_proxy = ${http_proxy}",
+            match    => 'https_proxy',
+            multiple => true,
+        }
+    } else {
+        Package['wget'] ->
+        file_line { 'wgetrc_http_proxy':
+            path     => '/etc/wgetrc',
+            line     => "# http_proxy = ",
+            match    => 'http_proxy',
+            multiple => true,
+        } ->
+        file_line { 'wgetrc_https_proxy':
+            path     => '/etc/wgetrc',
+            line     => "# https_proxy = ",
+            match    => 'https_proxy',
+            multiple => true,
+        }
+    }
+    
+    #---
     class { 'cfsystem::custombin': stage => 'setup' }
     
     case $::operatingsystem {
