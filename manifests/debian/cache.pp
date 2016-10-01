@@ -1,4 +1,6 @@
-class cfsystem::debian::cache {
+class cfsystem::debian::cache(
+    $acng_patterns = {},
+) {
     # Required by stretch/xenial
     user { '_apt':
         ensure => present,
@@ -8,16 +10,38 @@ class cfsystem::debian::cache {
     }
     
     if $::cfsystem::add_repo_cacher {
-        package { 'apt-cacher-ng': }
-        service { 'apt-cacher-ng': ensure => running }
+        $acng_patterns_def = {
+            'P' => [],
+            'V' => [
+                '/download/geoip/database/.*\.dat\.gz'
+            ],
+            'S' => [],
+            'SV' => [],
+            'W' => [],
+        }
+        $acng_content = ($acng_patterns_def.map |$k, $v| {
+            $va = ($v + pick_default($acng_patterns[$k], [])).join('|')
+            
+            if size($va) > 0 {
+                "${k}filePatternEx: (${va})$"
+            } else {
+                undef
+            }
+        }.filter |$v| { $v != undef }) + [
+            'PassThroughPattern: .*:443$'
+        ]
         
-        file_line { 'apcng_enable_ssl_connect':
-            ensure  => present,
-            path    => '/etc/apt-cacher-ng/acng.conf',
-            line    => 'PassThroughPattern: .*:443$',
-            require => Package['apt-cacher-ng'],
+        package { 'apt-cacher-ng': } ->
+        service { 'apt-cacher-ng':
+            ensure => running,
+            enable => true,
+        }
+        
+        file { '/etc/apt-cacher-ng/cfsystem.conf':
+            content => $acng_content.join("\n"),
             notify  => Service['apt-cacher-ng'],
         }
+        
         
         cfnetwork::describe_service{ 'apcng':
             server => 'tcp/3142' }
