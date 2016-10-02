@@ -82,10 +82,12 @@ module PuppetX::CfSystem
         
         # Show diff
         #---
-        if File.exists?(file)
-            notice("File[#{file}]/content:\n" + Puppet::Util::Diff.diff(file, tmpfile))
-        else
-            notice("File[#{file}]/content:\n" + content)
+        if opts.fetch(:show_diff, true)
+            if File.exists?(file)
+                notice("File[#{file}]/content:\n" + Puppet::Util::Diff.diff(file, tmpfile))
+            else
+                notice("File[#{file}]/content:\n" + content)
+            end
         end
 
         # Atomically move config file to its location
