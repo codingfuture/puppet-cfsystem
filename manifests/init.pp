@@ -90,13 +90,13 @@ class cfsystem (
         Package['wget'] ->
         file_line { 'wgetrc_http_proxy':
             path     => '/etc/wgetrc',
-            line     => "# http_proxy = ",
+            line     => '# http_proxy = ',
             match    => 'http_proxy',
             multiple => true,
         } ->
         file_line { 'wgetrc_https_proxy':
             path     => '/etc/wgetrc',
-            line     => "# https_proxy = ",
+            line     => '# https_proxy = ',
             match    => 'https_proxy',
             multiple => true,
         }
