@@ -11,6 +11,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Changed to disable puppet agent by default
 - Added atomic file write dry_run support (internal API)
 - Fixed to strip /etc/cflocation & /etc/cflocationpool in case of manual changes
+- Disabled show diff on cfsystem::puppetpki
 
 ## [0.9.26]
 - Fixed previous broken release for cases with no HTTP proxy configured

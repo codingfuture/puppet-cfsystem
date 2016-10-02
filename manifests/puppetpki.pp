@@ -35,31 +35,35 @@ define cfsystem::puppetpki(
         mode   => '0700',
     } ->
     file { "${dst_dir}/ca.crt":
-        mode   => '0600',
-        owner  => $user,
-        group  => $group,
-        source => "${puppet_ssl_dir}/certs/ca.pem",
+        mode      => '0600',
+        owner     => $user,
+        group     => $group,
+        source    => "${puppet_ssl_dir}/certs/ca.pem",
+        show_diff => false,
     } ->
     file { "${dst_dir}/crl.crt":
-        mode   => '0600',
-        owner  => $user,
-        group  => $group,
-        source => "${puppet_ssl_dir}/crl.pem",
+        mode      => '0600',
+        owner     => $user,
+        group     => $group,
+        source    => "${puppet_ssl_dir}/crl.pem",
+        show_diff => false,
     }
     
     if $copy_key {
         file { "${dst_dir}/local.key":
-            mode    => '0600',
-            owner   => $user,
-            group   => $group,
-            source  => "${puppet_ssl_dir}/private_keys/${certname}.pem",
-            require => File[$dst_dir],
+            mode      => '0600',
+            owner     => $user,
+            group     => $group,
+            source    => "${puppet_ssl_dir}/private_keys/${certname}.pem",
+            show_diff => false,
+            require   => File[$dst_dir],
         } ->
         file { "${dst_dir}/local.crt":
-            mode   => '0600',
-            owner  => $user,
-            group  => $group,
-            source => "${puppet_ssl_dir}/certs/${certname}.pem",
+            mode      => '0600',
+            owner     => $user,
+            group     => $group,
+            source    => "${puppet_ssl_dir}/certs/${certname}.pem",
+            show_diff => false,
         }
     }
 }
