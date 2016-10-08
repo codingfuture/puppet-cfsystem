@@ -6,6 +6,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.9.28]
 - Added `cfsystem::ntpd_type` to support ntp(default), openntpd and chrony
 - Changed default ntp.conf to use "tinker panic 0" to force time sync
+- Precised parameter types
 
 ## [0.9.27]
 - Added global wget configuration with http_proxy/https_proxy

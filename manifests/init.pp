@@ -2,21 +2,29 @@
 class cfsystem (
     Boolean $allow_nfs = false,
     
-    Optional[String] $admin_email = undef,
+    Optional[String[1]] $admin_email = undef,
 
-    Optional[Hash] $repo_proxy = undef, # proxy host
+    Optional[Struct[{
+        host => String[1],
+        port => Integer[1,65535],
+    }]] $repo_proxy = undef, # proxy host
     Boolean $add_repo_cacher = false, # enable repo cacher service
 
-    String $service_face = 'any',
+    String[1] $service_face = 'any',
     
-    Variant[ Array[String], String ] $ntp_servers = [ 'pool.ntp.org' ],
+    Variant[ Array[String[1]], String[1] ] $ntp_servers = [ 'pool.ntp.org' ],
     Boolean $add_ntp_server = false,
     Enum['ntp', 'openntpd', 'chrony'] $ntpd_type = 'ntp',
     
-    String $timezone = 'Etc/UTC',
+    String[1] $timezone = 'Etc/UTC',
     Boolean $xen_pv = false, # enable PV/PVH config changes TODO: facter
     
-    Hash $apt_purge = {
+    Struct[{
+        'sources.list'   => Optional[Boolean],
+        'sources.list.d' => Optional[Boolean],
+        'preferences'    => Optional[Boolean],
+        'preferences.d'  => Optional[Boolean],
+    }] $apt_purge = {
         'sources.list'   => true,
         'sources.list.d' => true,
         'preferences'    => true,
@@ -28,22 +36,22 @@ class cfsystem (
     },
     Integer $apt_pin = 1001,
     Integer $apt_backports_pin = 600,
-    String $real_hdd_scheduler = 'deadline',
-    Optional[Variant[ String, Array[String] ]] $rc_local = undef,
+    String[1] $real_hdd_scheduler = 'deadline',
+    Optional[Variant[ String[1], Array[String[1]] ]] $rc_local = undef,
     
-    String $puppet_host = "puppet.${::trusted['domain']}",
-    Optional[String] $puppet_cahost = undef,
-    String $puppet_env = $::environment,
+    String[1] $puppet_host = "puppet.${::trusted['domain']}",
+    Optional[String[1]] $puppet_cahost = undef,
+    String[1] $puppet_env = $::environment,
     Boolean $puppet_use_dns_srv = false,
     
     Boolean $agent = false,
     Boolean $mcollective = false,
     
-    String $locale = 'en_US.UTF-8',
+    String[1] $locale = 'en_US.UTF-8',
     
-    Integer $reserve_ram = 128,
+    Integer[0] $reserve_ram = 128,
     
-    String $key_server = 'hkp://pgp.mit.edu:80',
+    String[1] $key_server = 'hkp://pgp.mit.edu:80',
 ) {
     include cfnetwork
     include cfauth

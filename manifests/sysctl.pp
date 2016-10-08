@@ -1,6 +1,6 @@
 
 class cfsystem::sysctl (
-    Integer $vm_swappiness = 1 # 0-100%
+    Integer[0,100] $vm_swappiness = 1 # 0-100%
 ) {
     include stdlib
     assert_private();

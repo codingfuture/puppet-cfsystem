@@ -1,9 +1,9 @@
 
 define cfsystem::dotenv(
-    String $user,
-    String $variable,
+    String[1] $user,
+    String[1] $variable,
     Variant[String, Numeric] $value,
-    String $env_file = '.env',
+    String[1] $env_file = '.env',
 ) {
     $home = getparam(User[$user], 'home')
     

@@ -1,8 +1,8 @@
 
 define cfsystem::puppetpki(
-    String $user = $title,
+    String[1] $user = $title,
     Boolean $copy_key = true,
-    Optional[String] $pki_dir = undef,
+    Optional[String[1]] $pki_dir = undef,
 ) {
     $group = pick(getparam(User[$user], 'group'), $user)
     
