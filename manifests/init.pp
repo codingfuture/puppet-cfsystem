@@ -11,6 +11,7 @@ class cfsystem (
     
     Variant[ Array[String], String ] $ntp_servers = [ 'pool.ntp.org' ],
     Boolean $add_ntp_server = false,
+    Enum['ntp', 'openntpd', 'chrony'] $ntpd_type = 'ntp',
     
     String $timezone = 'Etc/UTC',
     Boolean $xen_pv = false, # enable PV/PVH config changes TODO: facter

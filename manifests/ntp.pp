@@ -25,13 +25,14 @@ class cfsystem::ntp {
     }
     
     file {'/etc/timezone':
+        ensure  => file,
         mode    => '0644',
         content => "${cfsystem::timezone}\n",
     }
     file {'/etc/localtime':
-        ensure => link,
+        ensure => file,
         mode   => '0644',
-        target => "/usr/share/zoneinfo/${cfsystem::timezone}"
+        source => "/usr/share/zoneinfo/${cfsystem::timezone}"
     }
     
     cfnetwork::client_port { 'any:ntp:cfsystem':
@@ -44,10 +45,37 @@ class cfsystem::ntp {
         cfnetwork::service_port { "${cfsystem::service_face}:ntp": }
     }
     
-    package { 'openntpd': } ->
-    file { '/etc/openntpd/ntpd.conf':
+    $type = $cfsystem::ntpd_type
+    
+    case $type {
+        'ntp': {
+            $absent =  ['openntpd', 'chrony']
+            $conf = '/etc/ntp.conf'
+            $tpl = 'cfsystem/ntpd.conf.epp'
+        }
+        'openntpd': {
+            $absent =  ['ntp', 'chrony']
+            $conf = '/etc/openntpd/ntpd.conf'
+            $tpl = 'cfsystem/openntp.conf.epp'
+        }
+        'chrony': {
+            $absent =  ['openntpd', 'ntp']
+            $conf = '/etc/chrony/chrony.conf'
+            $tpl = 'cfsystem/chrony.conf.epp'
+        }
+    }
+    
+    package { $absent: ensure => absent } ->
+    package { $type: ensure => present } ->
+    file { $conf:
         mode    => '0644',
-        content => epp('cfsystem/openntp.conf.epp'),
+        content => epp($tpl),
+        notify  => Service[$type],
     } ->
-    service { 'openntpd': ensure => running }
+    service { $type:
+        ensure => running,
+        enable => true,
+    }
+    
+    package { 'ntpdate': }
 }

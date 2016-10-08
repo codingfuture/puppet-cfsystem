@@ -126,6 +126,7 @@ cfnetwork::client_ports:
 * `service_face = 'any'` - interface to accept client for NTP and HTTP proxy, if enabled separately
 * `ntp_servers = [ 'pool.ntp.org' ]` - upstream NTP server
 * `add_ntp_server = false` - if true, accept NTP service clients on `$service_face`
+* `Enum['ntp', 'openntpd', 'chrony'] $ntpd_type = 'ntp'` - NTP implementation to use
 * `timezone = 'Etc/UTC'` - setup system timezone
 * `apt_purge` - passed to apt::purge, purge all sources and preferences by default
 * `apt_update` - passed to apt::update, update daily with 300 second timeout by default
