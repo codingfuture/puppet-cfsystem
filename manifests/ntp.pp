@@ -25,14 +25,13 @@ class cfsystem::ntp {
     }
     
     file {'/etc/timezone':
-        ensure  => file,
         mode    => '0644',
         content => "${cfsystem::timezone}\n",
     }
+    
     file {'/etc/localtime':
-        ensure => file,
-        mode   => '0644',
-        source => "/usr/share/zoneinfo/${cfsystem::timezone}"
+        ensure => link,
+        target => "/usr/share/zoneinfo/${cfsystem::timezone}"
     }
     
     cfnetwork::client_port { 'any:ntp:cfsystem':
