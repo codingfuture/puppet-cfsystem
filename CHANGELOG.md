@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.30]
+- Bug fixes for recent internal API
+
 ## [0.9.29]
 - New internal API for systemd file cleanup
 
@@ -171,6 +174,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
+[0.9.30]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.30
 [0.9.29]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.29
 [0.9.28]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.28
 [0.9.27]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.27

@@ -134,6 +134,8 @@ module PuppetX::CfSystem
             content << "#{k}=\"#{v}\""
         end
         
+        content << ''
+        
         content = content.join("\n")
         
         self.atomicWrite(file, content, opts)
@@ -390,12 +392,12 @@ module PuppetX::CfSystem
     end
     
     def self.cleanupSystemD(prefix, new_files, ext='service')
-        old_files = Dir.glob("#{SYSTEMD_DIR}/#{prefix}-*.#{ext}").
+        old_files = Dir.glob("#{SYSTEMD_DIR}/#{prefix}*.#{ext}").
                             map { |v| File.basename(v, ".#{ext}") }
         old_files -= new_files
         old_files.each do |s|
             warning("Removing old sytemd file: #{s}.#{ext}")
-            FileUtils.rm_f "#{systemd_dir}/#{s}.#{ext}"
+            FileUtils.rm_f "#{SYSTEMD_DIR}/#{s}.#{ext}"
         end
         
         if old_files.size
