@@ -12,6 +12,8 @@ require File.expand_path( '../cf_system/config', __FILE__ )
 module PuppetX::CfSystem
     CFSYSTEM_CONFIG = '/etc/cfsystem.json'
     CUSTOM_BIN_DIR = '/opt/codingfuture/bin'
+    SYSTEMD_DIR = '/etc/systemd/system'
+    SYSTEMD_CTL = '/bin/systemctl'
     
     #---
     BASE_DIR = File.expand_path('../', __FILE__)
@@ -282,7 +284,7 @@ module PuppetX::CfSystem
     
     def self.createSlice(options)
         slice_name = options[:slice_name]
-        slice_file = "/etc/systemd/system/#{slice_name}.service"
+        slice_file = "#{SYSTEMD_DIR}/#{slice_name}.service"
         
         content_ini = options.fetch(:content_ini, {})
         
@@ -308,7 +310,7 @@ module PuppetX::CfSystem
         # reload on demand
         #---
         if reload
-            Puppet::Util::Execution.execute(['/bin/systemctl', 'daemon-reload'])
+            Puppet::Util::Execution.execute([SYSTEMD_CTL, 'daemon-reload'])
         end
         
         return reload
@@ -319,7 +321,7 @@ module PuppetX::CfSystem
         user = options.fetch(:user, service_name)
         group = options.fetch(:group, user)
         
-        service_file = "/etc/systemd/system/#{service_name}.service"
+        service_file = "#{SYSTEMD_DIR}/#{service_name}.service"
         env_file = "/etc/default/#{service_name}.conf"
         
         content_ini = options[:content_ini].clone
@@ -368,22 +370,36 @@ module PuppetX::CfSystem
         # reload on demand
         #---
         if reload
-            Puppet::Util::Execution.execute(['/bin/systemctl', 'daemon-reload'])
+            Puppet::Util::Execution.execute([SYSTEMD_CTL, 'daemon-reload'])
         end
         
         # Make sure it's enabled
-        Puppet::Util::Execution.execute(['/bin/systemctl', 'enable', service_name, '--no-reload'])
+        Puppet::Util::Execution.execute([SYSTEMD_CTL, 'enable', service_name, '--no-reload'])
         
         return env_changed || reload
     end
     
     def self.maskService(service_name)
-        service_file = "/etc/systemd/system/#{service_name}.service"
+        service_file = "#{SYSTEMD_DIR}/#{service_name}.service"
         
         if !File.exists?(service_file) or !File.symlink?(service_file)
             warning("> systemd masking #{service_name}")
-            Puppet::Util::Execution.execute(['/bin/systemctl', 'stop', service_name])
-            Puppet::Util::Execution.execute(['/bin/systemctl', 'mask', service_name])
+            Puppet::Util::Execution.execute([SYSTEMD_CTL, 'stop', service_name])
+            Puppet::Util::Execution.execute([SYSTEMD_CTL, 'mask', service_name])
+        end
+    end
+    
+    def self.cleanupSystemD(prefix, new_files, ext='service')
+        old_files = Dir.glob("#{SYSTEMD_DIR}/#{prefix}-*.#{ext}").
+                            map { |v| File.basename(v, ".#{ext}") }
+        old_files -= new_files
+        old_files.each do |s|
+            warning("Removing old sytemd file: #{s}.#{ext}")
+            FileUtils.rm_f "#{systemd_dir}/#{s}.#{ext}"
+        end
+        
+        if old_files.size
+            Puppet::Util::Execution.execute([SYSTEMD_CTL, 'daemon-reload'])
         end
     end
 end

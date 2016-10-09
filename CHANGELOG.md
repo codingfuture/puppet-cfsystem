@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.29]
+- New internal API for systemd file cleanup
+
 ## [0.9.28]
 - Added `cfsystem::ntpd_type` to support ntp(default), openntpd and chrony
 - Changed default ntp.conf to use "tinker panic 0" to force time sync
