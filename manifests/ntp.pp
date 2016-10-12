@@ -34,16 +34,6 @@ class cfsystem::ntp {
         target => "/usr/share/zoneinfo/${cfsystem::timezone}"
     }
     
-    cfnetwork::client_port { 'any:ntp:cfsystem':
-        user => ['root', 'ntpd'],
-        # it generates side effects on dynamic DNS
-        #dst => $cfsystem::ntp_servers,
-    }
-    
-    if $cfsystem::add_ntp_server {
-        cfnetwork::service_port { "${cfsystem::service_face}:ntp": }
-    }
-    
     $type = $cfsystem::ntpd_type
     
     case $type {
@@ -51,16 +41,19 @@ class cfsystem::ntp {
             $absent =  ['openntpd', 'chrony']
             $conf = '/etc/ntp.conf'
             $tpl = 'cfsystem/ntpd.conf.epp'
+            $user = 'ntp'
         }
         'openntpd': {
             $absent =  ['ntp', 'chrony']
             $conf = '/etc/openntpd/ntpd.conf'
             $tpl = 'cfsystem/openntp.conf.epp'
+            $user = 'ntpd'
         }
         'chrony': {
             $absent =  ['openntpd', 'ntp']
             $conf = '/etc/chrony/chrony.conf'
             $tpl = 'cfsystem/chrony.conf.epp'
+            $user = '_chrony'
         }
     }
     
@@ -77,4 +70,16 @@ class cfsystem::ntp {
     }
     
     package { 'ntpdate': }
+    
+    #
+    cfnetwork::client_port { 'any:ntp:cfsystem':
+        user => ['root', $user],
+        # it generates side effects on dynamic DNS
+        #dst => $cfsystem::ntp_servers,
+    }
+    
+    if $cfsystem::add_ntp_server {
+        cfnetwork::service_port { "${cfsystem::service_face}:ntp": }
+    }
+    
 }
