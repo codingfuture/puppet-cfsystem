@@ -58,6 +58,7 @@ LANG=\"${cfsystem::locale}\"
         'tree',
         'ethtool',
         'iftop',
+        'iotop',
         'netcat-traditional',
         'netstat-nat',
         'conntrack',
