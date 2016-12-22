@@ -143,6 +143,7 @@ cfnetwork::client_ports:
 * `locale = 'en_US.UTF-8'` - default system locale
 * `reserve_ram` = 64 - amount of ram to reserve for system in automatic calculations
 * `$key_server = 'hkp://pgp.mit.edu:80'` - default PGP key server
+* `$random_feed = true` - enable random entropy generating daemon
 
 ## `cfsystem::hierapool` class
 
@@ -240,6 +241,12 @@ Setup haproxy package. No configuration. Used by other modules
 
 * `$disable_standard = true` - controls if default HAProxy service must be disabled
 
+## `cfsystem::randomfeed` class
+
+Setup random entropy generating tools
+
+* `$type = 'haveged'` - tools type
+* `$threshold = 2048` - minimal random entropy level
 
 
 [cfnetwork]: https://github.com/codingfuture/puppet-cfnetwork

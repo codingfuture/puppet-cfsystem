@@ -52,6 +52,8 @@ class cfsystem (
     Integer[0] $reserve_ram = 128,
     
     String[1] $key_server = 'hkp://pgp.mit.edu:80',
+    
+    Boolean $random_feed = true,
 ) {
     include cfnetwork
     include cfauth
@@ -179,4 +181,8 @@ class cfsystem (
         enable => $mcollective,
     })
 
+    #---
+    if $random_feed {
+        include cfsystem::randomfeed
+    }
 }
