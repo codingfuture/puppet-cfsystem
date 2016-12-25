@@ -162,8 +162,8 @@ class cfsystem (
     package { 'puppet-agent': }
     
     if !member(lookup('classes', Array[String], 'unique'), 'cfpuppetserver') and
-       !defined(Class['cfpuppetserver'])
-    {
+        !defined(Class['cfpuppetserver']
+    ) {
         file {'/etc/puppetlabs/puppet/puppet.conf':
             mode    => '0644',
             content => epp('cfsystem/puppet.conf.epp'),
@@ -185,4 +185,7 @@ class cfsystem (
     if $random_feed {
         include cfsystem::randomfeed
     }
+    
+    #---
+    include cfsystem::hwm
 }

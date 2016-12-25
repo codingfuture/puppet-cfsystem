@@ -23,6 +23,10 @@ What it does:
 * Forces custom I/O scheduler for real spinning HDDs (deadline by default)
 * Adds custom rc.local commands, if needed
 * Adds cron job to check if running kernel version matches the latest installed (reboot reminder)
+* Auto-detect hardware nodes with IPMI
+    * Install generic IPMI tools
+    * Install Dell-specific tools
+    * Other vendors - TODO
 * Ruby framework for other cf* modules
 * The following helper scripts are installed
     * `cf_clear_email_queue` - clear all emails in exim queue
@@ -248,6 +252,26 @@ Setup random entropy generating tools
 * `$type = 'haveged'` - tools type
 * `$threshold = 2048` - minimal random entropy level
 
+## `cfsystem::hwm` class
+
+Generic class for HardWare Management
+
+* `Enum['none', 'auto', 'generic', 'dell', 'smc'] $type = 'auto'` - 
+    select type of HW vendor, if auto-detection fails.
+
+## `cfsystem::hwm::generic` class
+
+Just a placeholder for generic IPMI system.
+
+## `cfsystem::hwm::dell` class
+
+Support for Dell PowerEdge family.
+
+* `$community_repo = 'http://linux.dell.com/repo/community'`
+
+## `cfsystem::hwm::smc` class
+
+Placeholder for SuperMicro support. Not implemented yet.
 
 [cfnetwork]: https://github.com/codingfuture/puppet-cfnetwork
 [cfauth]: https://github.com/codingfuture/puppet-cfauth
