@@ -69,7 +69,7 @@ class cfsystem (
     cfsystem_memory_calc { 'total': ensure => present }
     
     #---
-    if $::cfsystem::add_repo_cacher and !$cf_has_acng {
+    if $::cfsystem::add_repo_cacher and !$::facts['cf_has_acng'] {
         $repo_proxy_cond = undef
         $http_proxy = ''
     } else {

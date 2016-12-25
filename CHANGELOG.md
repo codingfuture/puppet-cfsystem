@@ -7,6 +7,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Added experimental support for HardWare Management
  > Added generic IPMI support
  > Added Dell APT report + OpenManage installation
+- Fixed minor issue with undefined variables
 
 ## [0.9.32]
 - Added `cfsystem::randomfeed` with `haveged`
