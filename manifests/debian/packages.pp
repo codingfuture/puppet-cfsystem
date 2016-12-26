@@ -1,3 +1,5 @@
+
+# Please see README
 class cfsystem::debian::packages {
     include cfsystem::debian::cache
 
@@ -15,14 +17,14 @@ class cfsystem::debian::packages {
         group  => 'root',
         mode   => '0755',
     }
-    
+
     # Hardening
     #---
     if !$::cfsystem::allow_nfs {
         package { 'rpcbind': ensure => absent }
         package { 'nfs-common': ensure => absent }
     }
-    
+
     # Essential
     #---
     ensure_packages([
@@ -31,7 +33,7 @@ class cfsystem::debian::packages {
         'apt-listchanges',
         'systemd',
     ])
-    
+
     if $::operatingsystem == 'Ubuntu' {
         # See old bug: https://bugs.launchpad.net/ubuntu/+source/glibc/+bug/1394929
         file { '/etc/default/locale':
@@ -68,7 +70,7 @@ LANG=\"${cfsystem::locale}\"
         'diffutils',
         'strace',
     ])
-    
+
     # Misc tools which may generate noise
     #---
     ensure_packages([

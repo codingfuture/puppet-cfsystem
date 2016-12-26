@@ -1,4 +1,5 @@
 
+# Please see README
 class cfsystem::randomfeed(
     String[1] $type = 'haveged',
     Integer[1,4096] $threshold = 2048,

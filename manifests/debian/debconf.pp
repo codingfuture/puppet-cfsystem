@@ -1,11 +1,12 @@
 
+# Please see README
 define cfsystem::debian::debconf (
     $package = $title,
     $ensure = present,
     $config = [],
 ) {
     $cfg_file = "/etc/cfsystem/debconf/${package}.debconf"
-    
+
     if $ensure != absent {
         file { $cfg_file:
             owner   => 'root',
@@ -20,7 +21,7 @@ define cfsystem::debian::debconf (
         package { $package:
             ensure => $ensure,
         }
-        
+
         exec { "cfsystem_dpkgreconf_${package}":
             command     => "/usr/sbin/dpkg-reconfigure ${package}",
             refreshonly => true,

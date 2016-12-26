@@ -1,3 +1,5 @@
+
+# Please see README
 class cfsystem::email (
     Optional[String[1]] $smarthost = undef,
     Optional[String[1]] $smarthost_login = undef,
@@ -13,31 +15,31 @@ class cfsystem::email (
     include stdlib
     include cfsystem::custombin
     assert_private();
-    
+
     #---
     if $listen_ifaces {
         $listen_iface_ips = any2array($listen_ifaces).map |$iface| {
             split(getparam(Cfnetwork::Iface[$iface], 'address'), '/')[0]
         }
-        
+
         any2array($listen_ifaces).each |$iface| {
             cfnetwork::service_port { "${iface}:smtp:cfsystem": }
         }
     } else {
         $listen_iface_ips = undef
     }
-    
+
     if $smarthost {
         $dst_smarthost = any2array($smarthost).map |$sh| { split($sh, ':')[0] }
     } else {
         $dst_smarthost = undef
     }
-    
+
     # Firewall setup
     #---
     cfnetwork::service_port { 'local:smtp:cfsystem': }
     cfnetwork::client_port { 'local:smtp:cfsystem': }
-    
+
     cfnetwork::describe_service { 'smtp':
         server => 'tcp/25', # smtp
     }
@@ -62,14 +64,14 @@ class cfsystem::email (
         'Debian', 'Ubuntu': {
             $exim_package = 'exim4'
             $exim_service = 'exim4'
-            
+
             exec { 'update-exim4.conf':
                 command     => '/usr/sbin/update-exim4.conf',
                 refreshonly => true,
                 require     => Package[$exim_package],
                 notify      => Service[$exim_service],
             }
-            
+
             file { '/etc/exim4/update-exim4.conf.conf':
                 content => epp('cfsystem/update-exim4.conf.conf.epp'),
                 owner   => root,
@@ -109,11 +111,11 @@ class cfsystem::email (
 
     package { $exim_package: notify => Exec['update-exim4.conf'] }
     service { $exim_service: ensure => running }
-    
+
     # Admin email setup
     #---
     $admin_email = $::cfsystem::admin_email
-    
+
     if $admin_email {
         mailalias{'root':
             recipient => $admin_email,
@@ -133,7 +135,7 @@ class cfsystem::email (
         content => "${certname}\n",
         notify  => Exec['update-exim4.conf'],
     }
-    
+
     # Create test email script
     #---
     file { "${cfsystem::custombin::bin_dir}/cf_send_test_email":
@@ -143,7 +145,7 @@ class cfsystem::email (
         content => epp('cfsystem/send_test_email.sh.epp'),
         require => Package[$exim_package],
     }
-    
+
     file { "${cfsystem::custombin::bin_dir}/cf_clear_email_queue":
         owner   => root,
         group   => root,
@@ -151,7 +153,7 @@ class cfsystem::email (
         require => Package[$exim_package],
         content => "#!/bin/sh\nexiqgrep -i | /usr/bin/xargs exim -Mrm",
     }
-    
+
     file { "${cfsystem::custombin::bin_dir}/cf_clear_frozen_emails":
         owner   => root,
         group   => root,

@@ -1,5 +1,6 @@
 
+# Please see README
 class cfsystem::hwm::generic(
 ) {
-    assert_private();
+    assert_private()
 }

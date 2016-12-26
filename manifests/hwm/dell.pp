@@ -1,9 +1,10 @@
 
+# Please see README
 class cfsystem::hwm::dell(
     String[1] $community_repo = 'http://linux.dell.com/repo/community',
 ) {
     assert_private();
-    
+
     case $::operatingsystem {
         'Debian', 'Ubuntu': {
             class { 'cfsystem::hwm::dell::aptrepo': stage => 'setup' }
@@ -19,6 +20,9 @@ class cfsystem::hwm::dell(
                 enable  => true,
                 require => Package['srvadmin-base'],
             }
+        }
+        default : {
+            fail("Dell supported is not implemented for this OS: ${::operatingsystem}")
         }
     }
 }

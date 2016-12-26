@@ -1,4 +1,5 @@
 
+# Please see README
 class cfsystem::debian::aptconfig {
     class {'apt':
         proxy  => $::cfsystem::repo_proxy_cond,
@@ -53,7 +54,7 @@ class cfsystem::debian::aptconfig {
         repos    => 'PC1',
         pin      => $cfsystem::apt_pin + 1,
     }
-    
+
     apt::conf { 'local-thin':
         content => [
             'APT::Install-Recommends "0";',
@@ -61,7 +62,7 @@ class cfsystem::debian::aptconfig {
             'Acquire::Languages "none";'
         ].join("\n"),
     }
-    
+
     package { 'puppetlabs-release': ensure => absent }
     package { 'puppetlabs-release-pc1': ensure => absent }
 }

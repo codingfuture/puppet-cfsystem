@@ -1,4 +1,5 @@
 
+# Please see README
 class cfsystem::git {
     include stdlib
     assert_private();

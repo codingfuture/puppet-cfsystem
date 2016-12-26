@@ -1,4 +1,5 @@
 
+# Please see README
 class cfsystem::ubuntu::aptconfig {
     # Use for temporary mapping with new releases
     #---
@@ -45,7 +46,7 @@ class cfsystem::ubuntu::aptconfig {
             pin      => $cfsystem::apt_backports_pin,
         }
     }
-    
+
     apt::source { 'ubuntu-security':
         location => $::cfsystem::ubuntu::apt_url,
         release  => "${::cfsystem::ubuntu::release}-security",
@@ -61,7 +62,7 @@ class cfsystem::ubuntu::aptconfig {
         repos    => 'PC1',
         pin      => $cfsystem::apt_pin + 1,
     }
-    
+
     apt::conf { 'local-thin':
         content => [
             'APT::Install-Recommends "0";',
@@ -69,7 +70,7 @@ class cfsystem::ubuntu::aptconfig {
             'Acquire::Languages "none";'
         ].join("\n"),
     }
-    
+
     if $::cfsystem::ubuntu::disable_ipv6 {
         apt::conf { 'force-ipv4':
             content => [
@@ -77,7 +78,7 @@ class cfsystem::ubuntu::aptconfig {
             ].join("\n"),
         }
     }
-    
+
     package { 'puppetlabs-release': ensure => absent }
     package { 'puppetlabs-release-pc1': ensure => absent }
 }

@@ -1,11 +1,12 @@
 
+# Please see README
 class cfsystem::hierapool (
     Optional[String[1]] $location = undef,
     Optional[String[1]] $pool = undef
 ) {
     include stdlib
     assert_private();
-    
+
     if $location {
         file {'/etc/cflocation':
             group   => root,

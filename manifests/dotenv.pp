@@ -1,4 +1,5 @@
 
+# Please see README
 define cfsystem::dotenv(
     String[1] $user,
     String[1] $variable,
@@ -6,13 +7,13 @@ define cfsystem::dotenv(
     String[1] $env_file = '.env',
 ) {
     $home = getparam(User[$user], 'home')
-    
+
     if !$home or $home == '' {
         fail("User ${user} must be defined with explicit 'home' parameter")
     }
-    
+
     $dotenv_file = "${home}/${env_file}"
-    
+
     ensure_resource('file', $dotenv_file, {
         ensure  => present,
         owner   => $user,
@@ -20,7 +21,7 @@ define cfsystem::dotenv(
         content => '',
         replace => false,
     })
-    
+
     file_line { "${dotenv_file}/${variable}":
         ensure   => present,
         path     => $dotenv_file,

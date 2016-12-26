@@ -1,9 +1,10 @@
 
+# Please see README
 class cfsystem::haproxy(
     Boolean $disable_standard = true
 ) {
     $package_name = 'haproxy'
-    
+
     if $::facts['lsbdistcodename'] == 'jessie' {
         $libssl_name = 'libssl1.0.0'
 
@@ -17,7 +18,7 @@ class cfsystem::haproxy(
             ensure  => latest,
             require => Apt::Pin[$libssl_name],
         })
-        
+
         apt::pin{ $package_name:
             codename => 'jessie-backports',
             packages => $package_name,
@@ -27,11 +28,11 @@ class cfsystem::haproxy(
             ensure  => latest,
             require => Package['libssl1.0.0']
         }
-        
+
     } else {
         package{ $package_name: }
     }
-    
+
     if $disable_standard {
         service { 'haproxy':
             ensure => stopped,

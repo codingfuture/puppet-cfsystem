@@ -1,7 +1,8 @@
 
+# Please see README
 class cfsystem::hwm::dell::aptrepo {
     assert_private();
-    
+
     $release = $::operatingsystem ? {
         'Debian' => $::cfsystem::debian::release ? {
             'stretch' => 'jessie',
@@ -9,7 +10,7 @@ class cfsystem::hwm::dell::aptrepo {
         },
         'Ubuntu' => $::cfsystem::ubuntu::release,
     }
-    
+
     apt::key { 'dell':
         key     => '42550ABD1E80D7C1BC0BAD851285491434D8786F',
         content => '

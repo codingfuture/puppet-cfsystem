@@ -1,10 +1,11 @@
 
+# Please see README
 class cfsystem::custombin {
     include cfsystem
-    
+
     $root_dir = '/opt/codingfuture'
     $bin_dir = "${root_dir}/bin"
-    
+
     file { $root_dir:
         ensure => directory,
         mode   => '0755',
@@ -25,7 +26,7 @@ fi
 set path = (\$path ${bin_dir})
 "
     }
-    
+
     # Kernel version checker
     #---
     $cf_kernel_version_check = "${bin_dir}/cf_kernel_version_check"
@@ -45,11 +46,11 @@ set path = (\$path ${bin_dir})
         mode    => '0755',
         content => file('cfsystem/cf_auto_block_scheduler'),
     }
-    
+
     # PGP key updater
     #---
     $cf_apt_key_updater = "${cfsystem::custombin::bin_dir}/cf_apt_key_updater"
-    
+
     file { $cf_apt_key_updater:
         mode    => '0700',
         content => epp('cfsystem/cf_apt_key_updater.epp', {

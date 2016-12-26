@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.34]
+- Fixed syntax error in HWM generic type
+- Automatic newer puppet-lint fixes
+- Fixed puppet-lint and metadata-json-lint warnings
+
 ## [0.9.33]
 - Added experimental support for HardWare Management
  > Added generic IPMI support
@@ -187,6 +192,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
+[0.9.34]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.34
 [0.9.33]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.33
 [0.9.32]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.32
 [0.9.31]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.31

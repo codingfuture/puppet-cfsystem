@@ -1,7 +1,8 @@
 
+# Please see README
 class cfsystem (
     Boolean $allow_nfs = false,
-    
+
     Optional[String[1]] $admin_email = undef,
 
     Optional[Struct[{
@@ -11,14 +12,14 @@ class cfsystem (
     Boolean $add_repo_cacher = false, # enable repo cacher service
 
     String[1] $service_face = 'any',
-    
+
     Variant[ Array[String[1]], String[1] ] $ntp_servers = [ 'pool.ntp.org' ],
     Boolean $add_ntp_server = false,
     Enum['ntp', 'openntpd', 'chrony'] $ntpd_type = 'ntp',
-    
+
     String[1] $timezone = 'Etc/UTC',
     Boolean $xen_pv = false, # enable PV/PVH config changes TODO: facter
-    
+
     Struct[{
         'sources.list'   => Optional[Boolean],
         'sources.list.d' => Optional[Boolean],
@@ -38,26 +39,26 @@ class cfsystem (
     Integer $apt_backports_pin = 600,
     String[1] $real_hdd_scheduler = 'deadline',
     Optional[Variant[ String[1], Array[String[1]] ]] $rc_local = undef,
-    
+
     String[1] $puppet_host = "puppet.${::trusted['domain']}",
     Optional[String[1]] $puppet_cahost = undef,
     String[1] $puppet_env = $::environment,
     Boolean $puppet_use_dns_srv = false,
-    
+
     Boolean $agent = false,
     Boolean $mcollective = false,
-    
+
     String[1] $locale = 'en_US.UTF-8',
-    
+
     Integer[0] $reserve_ram = 128,
-    
+
     String[1] $key_server = 'hkp://pgp.mit.edu:80',
-    
+
     Boolean $random_feed = true,
 ) {
     include cfnetwork
     include cfauth
-    
+
     #---
     cfsystem_flush_config { 'begin': ensure => present }
     cfsystem_flush_config { 'commit': ensure => present }
@@ -67,22 +68,22 @@ class cfsystem (
         min_mb => $reserve_ram,
     }
     cfsystem_memory_calc { 'total': ensure => present }
-    
+
     #---
     if $::cfsystem::add_repo_cacher and !$::facts['cf_has_acng'] {
         $repo_proxy_cond = undef
         $http_proxy = ''
     } else {
         $repo_proxy_cond = $repo_proxy
-        
+
         $http_proxy = $repo_proxy ? {
             undef => '',
             default => "http://${repo_proxy['host']}:${repo_proxy['port']}"
         }
     }
-    
+
     ensure_packages(['wget'])
-    
+
     if $http_proxy and $http_proxy != '' {
         Package['wget'] ->
         file_line { 'wgetrc_http_proxy':
@@ -112,26 +113,26 @@ class cfsystem (
             multiple => true,
         }
     }
-    
+
     #---
     class { 'cfsystem::custombin': stage => 'setup' }
-    
+
     case $::operatingsystem {
         'Debian': { include cfsystem::debian }
         'Ubuntu': { include cfsystem::ubuntu }
         default: { fail("Not supported OS ${::operatingsystem}") }
     }
-    
+
     include cfsystem::hierapool
     include cfsystem::sysctl
     include cfsystem::email
     include cfsystem::ntp
     include cfsystem::git
-    
+
     #---
     cfnetwork::describe_service{ 'puppet': server => 'tcp/8140' }
     cfnetwork::client_port{ 'any:puppet:cfsystem': user => 'root' }
-    
+
     #---
     $certname = $::trusted['certname'];
     file { '/etc/hostname':
@@ -142,7 +143,7 @@ class cfsystem (
         replace => true,
         content => "${certname}\n",
     }
-    
+
     #---
     file { '/etc/rc.local':
         ensure  => present,
@@ -160,7 +161,7 @@ class cfsystem (
 
     #---
     package { 'puppet-agent': }
-    
+
     if !member(lookup('classes', Array[String], 'unique'), 'cfpuppetserver') and
         !defined(Class['cfpuppetserver']
     ) {
@@ -170,7 +171,7 @@ class cfsystem (
             require => Package['puppet-agent']
         }
     }
-    
+
     #---
     ensure_resource('service', 'puppet', {
         ensure => $agent,
@@ -185,7 +186,7 @@ class cfsystem (
     if $random_feed {
         include cfsystem::randomfeed
     }
-    
+
     #---
     include cfsystem::hwm
 }
