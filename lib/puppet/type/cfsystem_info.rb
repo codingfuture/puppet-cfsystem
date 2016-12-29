@@ -1,3 +1,7 @@
+#
+# Copyright 2016 (c) Andrey Galkin
+#
+
 Puppet::Type.newtype(:cfsystem_info) do
     desc "Store arbitrary section info in cfsystem.json"
 

@@ -1,3 +1,7 @@
+#
+# Copyright 2016 (c) Andrey Galkin
+#
+
 # Make sure to reload on each run at server
 load File.expand_path( '../../../../puppet_x/cf_system/util.rb', __FILE__ )
 

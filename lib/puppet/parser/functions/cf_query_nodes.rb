@@ -1,3 +1,7 @@
+#
+# Copyright 2016 (c) Andrey Galkin
+#
+
 
 module Puppet::Parser::Functions
     newfunction(:cf_query_nodes,  :type => :rvalue) do |args|

@@ -1,3 +1,7 @@
+#
+# Copyright 2016 (c) Andrey Galkin
+#
+
 Puppet::Type.newtype(:cfsystem_memory_weight) do
     desc "Make cfsystem aware of reserved memory with abstract weight"
 

@@ -1,3 +1,7 @@
+#
+# Copyright 2016 (c) Andrey Galkin
+#
+
 Puppet::Type.newtype(:cfsystem_memory_calc) do
     desc "Calculate memory scopes based on configured weights"
     

@@ -1,3 +1,7 @@
+#
+# Copyright 2016 (c) Andrey Galkin
+#
+
 Puppet::Type.newtype(:cfsystem_flush_config) do
     desc "DO NOT USE DIRECTLY."
 
