@@ -1,5 +1,5 @@
 #
-# Copyright 2016 (c) Andrey Galkin
+# Copyright 2016-2017 (c) Andrey Galkin
 #
 
 
@@ -47,6 +47,9 @@ class cfsystem::ntp {
             $conf = '/etc/ntp.conf'
             $tpl = 'cfsystem/ntpd.conf.epp'
             $user = 'ntp'
+
+            # for internal NTPd connections
+            cfnetwork::service_port { 'local:ntp': }
         }
         'openntpd': {
             $absent =  ['ntp', 'chrony']
