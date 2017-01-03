@@ -25,8 +25,7 @@ class cfsystem::debian::packages {
     # Hardening
     #---
     if !$::cfsystem::allow_nfs {
-        package { 'rpcbind': ensure => absent }
-        package { 'nfs-common': ensure => absent }
+        ensure_packages(['rpcbind', 'nfs-common'], { ensure => absent })
     }
 
     # Essential
@@ -36,6 +35,7 @@ class cfsystem::debian::packages {
         'apt-transport-https',
         'apt-listchanges',
         'systemd',
+        'systemd-sysv',
     ])
 
     if $::operatingsystem == 'Ubuntu' {

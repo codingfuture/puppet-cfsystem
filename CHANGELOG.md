@@ -5,6 +5,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.9.36]
 - Fixed to allow ntp connection to localhost for internal purposes
+- Fixed to make sure `systemd` is init
 
 ## [0.9.35]
 - Fixed another minor typo in hwm::smc type
