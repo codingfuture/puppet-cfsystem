@@ -7,6 +7,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed to allow ntp connection to localhost for internal purposes
 - Fixed to make sure `systemd` is init
 - Updated to `cfnetwork` 0.10.0 API changes
+- Updated CF deps to v0.10.x
 
 ## [0.9.35]
 - Fixed another minor typo in hwm::smc type
