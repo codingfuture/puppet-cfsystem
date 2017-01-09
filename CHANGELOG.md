@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.10.1]
+- Added installation of libpam-systemd to workaround sshd session issues
+
 ## [0.10.0]
 - Fixed to allow ntp connection to localhost for internal purposes
 - Fixed to make sure `systemd` is init

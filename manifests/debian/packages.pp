@@ -36,6 +36,7 @@ class cfsystem::debian::packages {
         'apt-listchanges',
         'systemd',
         'systemd-sysv',
+        'libpam-systemd',
     ])
 
     if $::operatingsystem == 'Ubuntu' {
