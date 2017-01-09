@@ -5,6 +5,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.10.1]
 - Added installation of libpam-systemd to workaround sshd session issues
+- Fixed to properly disable puppet/mcollective/pxp-agent
 
 ## [0.10.0]
 - Fixed to allow ntp connection to localhost for internal purposes
@@ -204,6 +205,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
+[0.10.1]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.10.1
 [0.10.0]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.10.0
 [0.9.35]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.35
 [0.9.34]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.9.34

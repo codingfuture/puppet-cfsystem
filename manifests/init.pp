@@ -177,6 +177,11 @@ class cfsystem (
     }
 
     #---
+    exec { 'cfsystem-systemd-reload':
+        command     => '/bin/systemctl daemon-reload',
+        refreshonly => true,
+    }
+
     ensure_resource('service', 'puppet', {
         ensure => $agent,
         enable => $agent,
@@ -185,6 +190,26 @@ class cfsystem (
         ensure => $mcollective,
         enable => $mcollective,
     })
+
+    $systemd_wants_dir = '/etc/systemd/system/multi-user.target.wants'
+
+    if !$agent {
+        file { "${systemd_wants_dir}/puppet.service":
+            ensure => absent,
+            notify => Exec['cfsystem-systemd-reload'],
+        }
+        file { "${systemd_wants_dir}/pxp-agent.service":
+            ensure => absent,
+            notify => Exec['cfsystem-systemd-reload'],
+        }
+    }
+
+    if !$mcollective {
+        file { "${systemd_wants_dir}/mcollective.service":
+            ensure => absent,
+            notify => Exec['cfsystem-systemd-reload'],
+        }
+    }
 
     #---
     if $random_feed {
