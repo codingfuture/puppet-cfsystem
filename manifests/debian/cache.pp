@@ -25,7 +25,7 @@ class cfsystem::debian::cache(
             'SV' => [],
             'W' => [],
         }
-        $acng_content = ($acng_patterns_def.map |$k, $v| {
+        $acng_content = delete_undef_values($acng_patterns_def.map |$k, $v| {
             $va = ($v + pick_default($acng_patterns[$k], [])).join('|')
 
             if size($va) > 0 {
@@ -33,7 +33,7 @@ class cfsystem::debian::cache(
             } else {
                 undef
             }
-        }.filter |$v| { $v != undef }) + [
+        }) + [
             'PassThroughPattern: .*:443$'
         ]
 
