@@ -13,6 +13,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed BASE_PORT redifinition warnings
 - Fixed not to add backports for testing
 - puppet_release apt-key looping update issues
+- Added aptitude, psmisc and dnsutils to the list of essential packages
 
 ## [0.10.0]
 - Fixed to allow ntp connection to localhost for internal purposes

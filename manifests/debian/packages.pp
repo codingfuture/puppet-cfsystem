@@ -59,6 +59,9 @@ LANG=\"${cfsystem::locale}\"
     # Handy tools
     #---
     ensure_packages([
+        'aptitude',
+        'dnsutils',
+        'psmisc',
         'curl',
         'wget',
         'htop',
