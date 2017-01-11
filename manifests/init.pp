@@ -56,7 +56,7 @@ class cfsystem (
 
     Integer[0] $reserve_ram = 128,
 
-    String[1] $key_server = 'hkp://pgp.mit.edu:80',
+    String[1] $key_server = 'hkp://keyserver.ubuntu.com:80',
 
     Boolean $random_feed = true,
 ) {

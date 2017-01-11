@@ -9,6 +9,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed Stretch apt-key issues
 - Fixed to support Debian "testing" target
 - Converted to support Debian/Ubuntu based on LSB versions, but not codenames
+- Switched default keyserver to keyserver.ubuntu.com due to issues with pgp.mit.edu
 
 ## [0.10.0]
 - Fixed to allow ntp connection to localhost for internal purposes
