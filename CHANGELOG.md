@@ -14,6 +14,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed not to add backports for testing
 - puppet_release apt-key looping update issues
 - Added aptitude, psmisc and dnsutils to the list of essential packages
+- Added "Debian Old" repos for testing to help migration of external repos
 
 ## [0.10.0]
 - Fixed to allow ntp connection to localhost for internal purposes
