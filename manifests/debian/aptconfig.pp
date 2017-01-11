@@ -5,6 +5,16 @@
 
 # Please see README
 class cfsystem::debian::aptconfig {
+    # Use for temporary mapping with new releases
+    #---
+    if versioncmp($::facts['operatingsystemrelease'], '9') >= 0 {
+        $puppet_release = 'jessie'
+        $add_backports = false
+    } else {
+        $puppet_release = $::facts['lsbdistcodename']
+        $add_backports = true
+    }
+
     class {'apt':
         proxy  => $::cfsystem::repo_proxy_cond,
         update => $::cfsystem::apt_update,
@@ -30,24 +40,23 @@ class cfsystem::debian::aptconfig {
         include  => { src        => false },
         pin      => $cfsystem::apt_pin,
     }
-    apt::source { 'debian-backports':
-        location => $::cfsystem::debian::apt_url,
-        release  => "${release}-backports",
-        repos    => 'main contrib non-free',
-        include  => { src        => false },
-        pin      => $cfsystem::apt_backports_pin,
+
+    if $add_backports {
+        apt::source { 'debian-backports':
+            location => $::cfsystem::debian::apt_url,
+            release  => "${release}-backports",
+            repos    => 'main contrib non-free',
+            include  => { src        => false },
+            pin      => $cfsystem::apt_backports_pin,
+        }
     }
+
     apt::source { 'debian-security':
         location => $::cfsystem::debian::security_apt_url,
         release  => "${release}/updates",
         repos    => 'main contrib non-free',
         include  => { src        => false },
         pin      => $cfsystem::apt_pin,
-    }
-
-    $puppet_release = (versioncmp($::facts['operatingsystemrelease'], '9') >= 0) ? {
-        true    => 'jessie',
-        default => $::facts['lsbdistcodename']
     }
 
     include cfsystem::debian::puppetkey
@@ -68,4 +77,7 @@ class cfsystem::debian::aptconfig {
 
     package { 'puppetlabs-release': ensure => absent }
     package { 'puppetlabs-release-pc1': ensure => absent }
+    file { '/etc/apt/trusted.gpg.d/puppetlabs-pc1-keyring.gpg':
+        ensure => absent
+    }
 }

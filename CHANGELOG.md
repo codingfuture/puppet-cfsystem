@@ -10,6 +10,9 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed to support Debian "testing" target
 - Converted to support Debian/Ubuntu based on LSB versions, but not codenames
 - Switched default keyserver to keyserver.ubuntu.com due to issues with pgp.mit.edu
+- Fixed BASE_PORT redifinition warnings
+- Fixed not to add backports for testing
+- puppet_release apt-key looping update issues
 
 ## [0.10.0]
 - Fixed to allow ntp connection to localhost for internal purposes

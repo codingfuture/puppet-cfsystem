@@ -16,7 +16,7 @@ module PuppetX::CfSystem::Util
         Puppet::Util.logmethods(self, true)
     end
     
-    BASE_PORT = 1025
+    BASE_PORT = 1025 unless defined? BASE_PORT
     
     #---
     def self.cf_stable_cmp(a, b)

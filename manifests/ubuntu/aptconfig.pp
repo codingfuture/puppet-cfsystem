@@ -82,4 +82,7 @@ class cfsystem::ubuntu::aptconfig {
 
     package { 'puppetlabs-release': ensure => absent }
     package { 'puppetlabs-release-pc1': ensure => absent }
+    file { '/etc/apt/trusted.gpg.d/puppetlabs-pc1-keyring.gpg':
+        ensure => absent
+    }
 }
