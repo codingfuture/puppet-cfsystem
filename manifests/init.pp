@@ -183,12 +183,19 @@ class cfsystem (
     }
 
     ensure_resource('service', 'puppet', {
-        ensure => $agent,
-        enable => $agent,
+        ensure   => $agent,
+        enable   => $agent,
+        provider => 'systemd',
+    })
+    ensure_resource('service', 'pxp-agent', {
+        ensure   => $agent,
+        enable   => $agent,
+        provider => 'systemd',
     })
     ensure_resource('service', 'mcollective', {
-        ensure => $mcollective,
-        enable => $mcollective,
+        ensure   => $mcollective,
+        enable   => $mcollective,
+        provider => 'systemd',
     })
 
     $systemd_wants_dir = '/etc/systemd/system/multi-user.target.wants'

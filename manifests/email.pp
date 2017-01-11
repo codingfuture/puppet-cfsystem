@@ -114,7 +114,11 @@ class cfsystem::email (
     }
 
     package { $exim_package: notify => Exec['update-exim4.conf'] }
-    service { $exim_service: ensure => running }
+    service { $exim_service:
+        ensure   => running,
+        enable   => true,
+        provider => 'systemd',
+    }
 
     # Admin email setup
     #---

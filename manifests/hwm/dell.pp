@@ -20,9 +20,13 @@ class cfsystem::hwm::dell(
                 'syscfg',
             ])
             service { 'dataeng':
-                ensure  => running,
-                enable  => true,
-                require => Package['srvadmin-base'],
+                ensure   => running,
+                enable   => true,
+                provider => 'systemd',
+                require  => [
+                    Package['srvadmin-base'],
+                    Package['srvadmin-omcommon'],
+                ]
             }
         }
         default : {

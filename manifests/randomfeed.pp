@@ -18,8 +18,9 @@ class cfsystem::randomfeed(
                 notify  => Service[$type],
             } ->
             service { $type:
-                ensure => running,
-                enable => true,
+                ensure   => running,
+                enable   => true,
+                provider => 'systemd',
             }
         }
         default : {

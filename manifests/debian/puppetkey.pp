@@ -14,7 +14,7 @@ class cfsystem::debian::puppetkey(
 
     $key_ids.each |$key_name, $key_id| {
         cfsystem::debian::aptkey { "puppetlabs_${key_name}":
-            id      => $key_id,
+            id => $key_id,
         }
     }
 }

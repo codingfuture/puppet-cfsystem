@@ -39,8 +39,9 @@ class cfsystem::haproxy(
 
     if $disable_standard {
         service { 'haproxy':
-            ensure => stopped,
-            enable => false,
+            ensure   => stopped,
+            enable   => false,
+            provider => 'systemd',
         }
     }
 }

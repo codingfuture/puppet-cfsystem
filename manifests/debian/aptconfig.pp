@@ -12,30 +12,34 @@ class cfsystem::debian::aptconfig {
     }
 
     #---
+    $release = $::cfsystem::debian::release ? {
+        'testing' => 'stretch',
+        default   => $::cfsystem::debian::release
+    }
     apt::source { 'debian':
         location => $::cfsystem::debian::apt_url,
-        release  => $::cfsystem::debian::release,
+        release  => $release,
         repos    => 'main contrib non-free',
         include  => { src        => false },
         pin      => $cfsystem::apt_pin,
     }
     apt::source { 'debian-updates':
         location => $::cfsystem::debian::apt_url,
-        release  => "${::cfsystem::debian::release}-updates",
+        release  => "${release}-updates",
         repos    => 'main contrib non-free',
         include  => { src        => false },
         pin      => $cfsystem::apt_pin,
     }
     apt::source { 'debian-backports':
         location => $::cfsystem::debian::apt_url,
-        release  => "${::cfsystem::debian::release}-backports",
+        release  => "${release}-backports",
         repos    => 'main contrib non-free',
         include  => { src        => false },
         pin      => $cfsystem::apt_backports_pin,
     }
     apt::source { 'debian-security':
         location => $::cfsystem::debian::security_apt_url,
-        release  => "${::cfsystem::debian::release}/updates",
+        release  => "${release}/updates",
         repos    => 'main contrib non-free',
         include  => { src        => false },
         pin      => $cfsystem::apt_pin,

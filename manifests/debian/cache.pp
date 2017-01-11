@@ -39,8 +39,9 @@ class cfsystem::debian::cache(
 
         package { 'apt-cacher-ng': } ->
         service { 'apt-cacher-ng':
-            ensure => running,
-            enable => true,
+            ensure   => running,
+            enable   => true,
+            provider => 'systemd',
         }
 
         file { '/etc/apt-cacher-ng/cfsystem.conf':

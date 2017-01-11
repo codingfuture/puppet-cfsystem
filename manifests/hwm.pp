@@ -34,9 +34,10 @@ class cfsystem::hwm(
         ])
 
         ensure_resource('service', 'ipmievd', {
-            ensure  => running,
-            enable  => true,
-            require => Package['ipmitool'],
+            ensure   => running,
+            enable   => true,
+            provider => 'systemd',
+            require  => Package['ipmitool'],
         })
     }
 }
