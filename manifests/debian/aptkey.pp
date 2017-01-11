@@ -8,13 +8,20 @@ define cfsystem::debian::aptkey(
     $id,
     $extra_opts = {}
 ){
+    $key_options = empty($cfsystem::http_proxy) ? {
+        false   => "http-proxy=${cfsystem::http_proxy}",
+        default => ''
+    }
+
+    ensure_packages(['dirmngr'])
     create_resources(
         'apt::key',
         {
             "cfsystem_${title}" => {
                 id      => $id,
                 server  => $cfsystem::key_server,
-                options => "http-proxy=${cfsystem::http_proxy}",
+                options => $key_options,
+                require => Package['dirmngr'],
             }
         },
         $extra_opts
@@ -24,6 +31,9 @@ define cfsystem::debian::aptkey(
     exec { "cf_apt_key_updater ${title}":
         command => '/bin/true',
         unless  => "${cf_apt_key_updater} ${id} puppet",
-        require => File[$cf_apt_key_updater],
+        require => [
+            File[$cf_apt_key_updater],
+            Package['dirmngr'],
+        ]
     }
 }

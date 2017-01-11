@@ -6,6 +6,9 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.10.1]
 - Added installation of libpam-systemd to workaround sshd session issues
 - Fixed to properly disable puppet/mcollective/pxp-agent
+- Fixed Stretch apt-key issues
+- Fixed to support Debian "testing" target
+- Converted to support Debian/Ubuntu based on LSB versions, but not codenames
 
 ## [0.10.0]
 - Fixed to allow ntp connection to localhost for internal purposes

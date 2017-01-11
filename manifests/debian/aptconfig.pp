@@ -41,14 +41,9 @@ class cfsystem::debian::aptconfig {
         pin      => $cfsystem::apt_pin,
     }
 
-    # Use for temporary mapping with new releases
-    case $::cfsystem::debian::release {
-        'stretch': {
-            $puppet_release = 'jessie'
-        }
-        default: {
-            $puppet_release = $::cfsystem::debian::release
-        }
+    $puppet_release = (versioncmp($::facts['operatingsystemrelease'], '9') >= 0) ? {
+        true    => 'jessie',
+        default => $::facts['lsbdistcodename']
     }
 
     include cfsystem::debian::puppetkey

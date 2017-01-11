@@ -7,12 +7,17 @@
 class cfsystem::hwm::dell::aptrepo {
     assert_private();
 
-    $release = $::operatingsystem ? {
-        'Debian' => $::cfsystem::debian::release ? {
-            'stretch' => 'jessie',
-            default => $::cfsystem::debian::release,
+    $lsbdistcodename = $::facts['lsbdistcodename']
+    $release = $::facts['operatingsystem'] ? {
+        'Debian' => (versioncmp($::facts['operatingsystemrelease'], '9') >= 0) ? {
+            true    => 'jessie',
+            default => $lsbdistcodename
         },
-        'Ubuntu' => $::cfsystem::ubuntu::release,
+        'Ubuntu' => (versioncmp($::facts['operatingsystemrelease'], '16.04') >= 0) ? {
+            true    => 'xenial',
+            default => $lsbdistcodename
+        },
+        default  => $lsbdistcodename
     }
 
     apt::key { 'dell':

@@ -5,6 +5,12 @@
 #!/bin/sh
 
 key_id=$1
+http_proxy="<%= $http_proxy %>"
+key_options=
+
+if [ -n "${http_proxy}" ]; then
+    key_options="--keyserver-options http-proxy=${http_proxy}"
+fi
 
 if test -z "${key_id}"; then
     echo "Usage: $0 <gpg_key_id>"
@@ -14,7 +20,7 @@ fi
 if /usr/bin/apt-key adv --list-keys "${key_id}" | /bin/grep -q expired; then
     set -e
     /usr/bin/apt-key adv \
-            --keyserver-options http-proxy='<%= $http_proxy %>' \
+            $key_options \
             --keyserver '<%= $key_server %>' \
             --recv-keys "${key_id}"
 

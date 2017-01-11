@@ -7,15 +7,12 @@
 class cfsystem::ubuntu::aptconfig {
     # Use for temporary mapping with new releases
     #---
-    case $::cfsystem::ubuntu::release {
-        'yakkety', 'xenial': {
-            $puppet_release = 'xenial'
-            $add_backports = false
-        }
-        default: {
-            $puppet_release = $::cfsystem::ubuntu::release
-            $add_backports = true
-        }
+    if versioncmp($::facts['operatingsystemrelease'], '16.10') >= 0 {
+        $puppet_release = 'xenial'
+        $add_backports = false
+    } else {
+        $puppet_release = $::facts['lsbdistcodename']
+        $add_backports = true
     }
 
     #---
