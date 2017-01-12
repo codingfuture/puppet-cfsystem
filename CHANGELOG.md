@@ -18,6 +18,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed puppetlabs apt::key update issues & minor refactoring
 - Changed to use puppetlabs-release-pc1 as the only up-to-date source of
     PuppetLabs signing keys
+- Updated to cfnetwork:0.10.1, cfauth:0.10.1
 
 ## [0.10.0]
 - Fixed to allow ntp connection to localhost for internal purposes
