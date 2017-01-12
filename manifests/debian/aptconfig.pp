@@ -61,28 +61,6 @@ class cfsystem::debian::aptconfig {
         pin      => $cfsystem::apt_pin,
     }
 
-    include cfsystem::debian::puppetkey
-    apt::source { 'puppetlabs':
-        location => 'http://apt.puppetlabs.com',
-        release  => $puppet_release,
-        repos    => 'PC1',
-        pin      => $cfsystem::apt_pin + 1,
-    }
-
-    apt::conf { 'local-thin':
-        content => [
-            'APT::Install-Recommends "0";',
-            'APT::Install-Suggests "0";',
-            'Acquire::Languages "none";'
-        ].join("\n"),
-    }
-
-    package { 'puppetlabs-release': ensure => absent }
-    package { 'puppetlabs-release-pc1': ensure => absent }
-    file { '/etc/apt/trusted.gpg.d/puppetlabs-pc1-keyring.gpg':
-        ensure => absent
-    }
-
     if $prevrelease {
         apt::source { 'debian-old':
             location => $::cfsystem::debian::apt_url,
@@ -98,5 +76,9 @@ class cfsystem::debian::aptconfig {
             include  => { src        => false },
             pin      => 110,
         }
+    }
+
+    class { 'cfsystem::apt::common':
+        puppet_release => $puppet_release,
     }
 }

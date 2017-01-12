@@ -4,7 +4,7 @@
 
 
 # Please see README
-define cfsystem::debian::aptkey(
+define cfsystem::apt::key(
     $id,
     $extra_opts = {}
 ){

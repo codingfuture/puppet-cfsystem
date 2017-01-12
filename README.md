@@ -215,7 +215,7 @@ Ubuntu-specific configuration.
 * `ensure = present` - passed to `package ensure`
 * `config = []` - config entries for `debconf-set-selections`
 
-## `cfsystem::debian::aptkey` type
+## `cfsystem::apt::key` type
 
 Configure APT key & add automatic update of expired keys
 
