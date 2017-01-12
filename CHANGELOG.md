@@ -16,6 +16,8 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Added aptitude, psmisc and dnsutils to the list of essential packages
 - Added "Debian Old" repos for testing to help migration of external repos
 - Fixed puppetlabs apt::key update issues & minor refactoring
+- Changed to use puppetlabs-release-pc1 as the only up-to-date source of
+    PuppetLabs signing keys
 
 ## [0.10.0]
 - Fixed to allow ntp connection to localhost for internal purposes

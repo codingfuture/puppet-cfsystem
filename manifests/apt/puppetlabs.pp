@@ -9,12 +9,13 @@ class cfsystem::apt::puppetlabs(
     assert_private()
 
     package { 'puppetlabs-release': ensure => absent } ->
-    package { 'puppetlabs-release-pc1': ensure => absent } ->
-    class { 'cfsystem::apt::puppetkey':
-        notify => Exec['cf-apt-update'],
-    }
+    package { 'puppetlabs-release-pc1': ensure => latest }
+    # ->
+    #class { 'cfsystem::apt::puppetkey':
+    #    notify => Exec['cf-apt-update'],
+    #}
 
-    apt::source { 'puppetlabs':
+    apt::source { 'puppetlabs-pc1':
         location      => 'http://apt.puppetlabs.com',
         release       => $release,
         repos         => 'PC1',
