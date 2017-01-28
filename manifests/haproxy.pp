@@ -30,7 +30,7 @@ class cfsystem::haproxy(
         } ->
         package{ $package_name:
             ensure  => latest,
-            require => Package['libssl1.0.0']
+            require => Package[$libssl_name],
         }
 
     } else {
