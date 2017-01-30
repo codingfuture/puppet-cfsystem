@@ -290,7 +290,7 @@ module PuppetX::CfSystem
     
     def self.createSlice(options)
         slice_name = options[:slice_name]
-        slice_file = "#{SYSTEMD_DIR}/#{slice_name}.service"
+        slice_file = "#{SYSTEMD_DIR}/#{slice_name}.slice"
         
         content_ini = options.fetch(:content_ini, {})
         

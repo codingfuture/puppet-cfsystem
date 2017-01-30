@@ -6,6 +6,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.10.2]
 - Minor fix for HAProxy setup @ jessie
 - Fixed to also pin libssl-dev @ jessie
+- Fixed to properly create slice extension
 
 ## [0.10.1]
 - Added installation of libpam-systemd to workaround sshd session issues
