@@ -28,6 +28,11 @@ class cfsystem::haproxy(
             packages => $package_name,
             priority => $cfsystem::apt_pin + 1,
         } ->
+        apt::pin{ 'libssl-dev':
+            codename => 'jessie-backports',
+            packages => 'libssl-dev',
+            priority => $cfsystem::apt_pin + 1,
+        } ->
         package{ $package_name:
             ensure  => latest,
             require => Package[$libssl_name],
