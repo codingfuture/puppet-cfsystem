@@ -7,6 +7,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Minor fix for HAProxy setup @ jessie
 - Fixed to also pin libssl-dev @ jessie
 - Fixed to properly create slice extension
+- Updated to new 'cf_get_bind_address' API
 
 ## [0.10.1]
 - Added installation of libpam-systemd to workaround sshd session issues

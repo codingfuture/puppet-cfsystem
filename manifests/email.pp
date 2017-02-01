@@ -23,7 +23,7 @@ class cfsystem::email (
     #---
     if $listen_ifaces {
         $listen_iface_ips = any2array($listen_ifaces).map |$iface| {
-            cf_get_iface_address(Cfnetwork::Iface[$iface])[0]
+            cf_get_bind_address($iface)
         }
 
         any2array($listen_ifaces).each |$iface| {
