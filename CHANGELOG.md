@@ -9,6 +9,9 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed to properly create slice extension
 - Updated to new 'cf_get_bind_address' API
 - Added cf_ntpdate wrapper & cron job
+- Changed not to run apt-update only when require, but not daily
+    - Solves cases of failed APT update during catalog deploy
+    - Added second attempt on failure
 
 ## [0.10.1]
 - Added installation of libpam-systemd to workaround sshd session issues

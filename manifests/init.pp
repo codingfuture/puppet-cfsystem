@@ -36,8 +36,9 @@ class cfsystem (
         'preferences.d'  => true,
     },
     Hash $apt_update = {
-        frequency => 'daily',
+        frequency => 'reluctantly',
         timeout   => 300,
+        tries     => 2,
     },
     Integer $apt_pin = 1001,
     Integer $apt_backports_pin = 600,
