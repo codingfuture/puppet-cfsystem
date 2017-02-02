@@ -16,7 +16,7 @@ What it does:
 * Adds firewall rules as required
 * Setups special location/pool facts for hiera lookup (see cfsystem::hierapool below)
 * Setups email system
-* Setups NTP
+* Setups NTP daemon and command line client for large gap sync
 * Setup all locales and the default locale (configurable)
 * Installs many handy system tools which almost any admin would expect
 * Forces noop scheduler on SSDs and virtual devices (in guests)
@@ -35,6 +35,7 @@ What it does:
     * `cf_kernel_version_check` - check if kernel version mismatch the latest installed one
     * `cf_auto_block_scheduler` - setup auto-detected I/O scheduler per block device
     * `cf_apt_key_updater <key_id>` - run GPG key re-import, if expired
+    * `cf_ntpdate` - run pre-configured ntpdate
 * Public API for Puppet parser:
     * `cf_query_facts` - wrapper around `query_facts`
     * `cf_query_nodes` - wrapper around `query_nodes`

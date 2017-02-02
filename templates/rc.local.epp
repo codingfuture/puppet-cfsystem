@@ -19,7 +19,10 @@
 /sbin/sysctl -p
 
 # Setup block device schedulers with auto-detect
-<%= $cfsystem::custombin::bin_dir %>/cf_auto_block_scheduler
+<%= $cfsystem::custombin::cf_auto_block_scheduler %>
+
+# Force NTP sync on startup
+<%= $cfsystem::custombin::cf_ntpdate %>
 
 # Add user-defined rc.local commands
 <% if $cfsystem::rc_local { any2array($cfsystem::rc_local).each |$cmd| { -%>

@@ -1,0 +1,5 @@
+<% |
+    Array[String[1]] $servers, 
+| -%>
+#!/bin/sh,
+/usr/sbin/ntpdate -u <%= $servers.join(' ') %> "$@"

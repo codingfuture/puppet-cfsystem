@@ -35,7 +35,7 @@ set path = (\$path ${bin_dir})
     #---
     $cf_kernel_version_check = "${bin_dir}/cf_kernel_version_check"
     file { $cf_kernel_version_check:
-        mode    => '0755',
+        mode    => '0555',
         content => file('cfsystem/cf_kernel_version_check'),
     } ->
     cron { $cf_kernel_version_check:
@@ -46,21 +46,33 @@ set path = (\$path ${bin_dir})
 
     # Auto-scheduler
     #---
-    file { "${bin_dir}/cf_auto_block_scheduler":
-        mode    => '0755',
+    $cf_auto_block_scheduler = "${bin_dir}/cf_auto_block_scheduler"
+
+    file { $cf_auto_block_scheduler:
+        mode    => '0500',
         content => file('cfsystem/cf_auto_block_scheduler'),
     }
 
     # PGP key updater
     #---
-    $cf_apt_key_updater = "${cfsystem::custombin::bin_dir}/cf_apt_key_updater"
+    $cf_apt_key_updater = "${bin_dir}/cf_apt_key_updater"
 
     file { $cf_apt_key_updater:
-        mode    => '0700',
+        mode    => '0500',
         content => epp('cfsystem/cf_apt_key_updater.epp', {
             http_proxy => $cfsystem::http_proxy,
             key_server => $cfsystem::key_server,
         })
     }
 
+    # NTP date
+    #---
+    $cf_ntpdate = "${bin_dir}/cf_ntpdate"
+
+    file { $cf_ntpdate:
+        mode    => '0500',
+        content => epp('cfsystem/cf_ntpdate.epp', {
+            servers => any2array($cfsystem::ntp_servers)
+        }),
+    }
 }

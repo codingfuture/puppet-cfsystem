@@ -4,7 +4,10 @@
 
 
 # Please see README
-class cfsystem::ntp {
+class cfsystem::ntp(
+    String[1] $cron_hour = '*',
+    String[1] $cron_minute = '*/10',
+) {
     include stdlib
     assert_private();
 
@@ -81,7 +84,19 @@ class cfsystem::ntp {
         provider => 'systemd',
     }
 
-    package { 'ntpdate': }
+    #
+    include cfsystem::custombin
+
+    package { 'ntpdate': } ->
+    cron { 'cf_ntpdate':
+        command => $cfsystem::custombin::cf_ntpdate,
+        hour    => $cron_hour,
+        minute  => $cron_minute,
+    }
+    cfauth::sudoentry { "${cfauth::admin_user}_ntpdate":
+        command => $cfsystem::custombin::cf_ntpdate,
+        user    => $cfauth::admin_user,
+    }
 
     #
     cfnetwork::client_port { 'any:ntp:cfsystem':
