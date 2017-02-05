@@ -8,6 +8,9 @@ Puppet::Type.newtype(:cfsystem_info) do
     autorequire(:cfsystem_flush_config) do
         ['begin']
     end
+    autonotify(:cfsystem_flush_config) do
+        ['commit']
+    end    
     
     ensurable do
         defaultvalues

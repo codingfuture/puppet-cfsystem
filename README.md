@@ -253,6 +253,25 @@ Setup random entropy generating tools
 * `$type = 'haveged'` - tools type
 * `$threshold = 2048` - minimal random entropy level
 
+## `cfsystem::clusterssh` type
+
+This feature is trade-off between SSH setup in cluster and security. This functionality
+creates a single SSH client key and shares across all nodes in cluster. It helps to
+get rid of puppet facts processing for target-generated secrets.
+
+Besides shared private key, another problem is clear-text private key getting into
+puppet catalog (which should be secured as well).
+
+* `$namespace` - cluster namespace, e.g. 'cfdb'
+* `$cluster` - cluster identifier
+* `$is_primary` - controls if a new key can be generated
+* `$user` - system user with 'home' parameter
+* `$group = $user` - the user's group
+* `$key_type = 'ed25519'` - SSH key type
+* `$key_bits = 2048` - SSH key bits (for RSA)
+* `$peers = []` - list of other cluster nodes for firewall (cfnetwork::ipset is strongly suggested)
+
+
 ## `cfsystem::hwm` class
 
 Generic class for HardWare Management

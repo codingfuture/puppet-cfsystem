@@ -6,15 +6,15 @@
 # Done this way due to some weird behavior in tests also ignoring $LOAD_PATH
 require File.expand_path( '../../../../puppet_x/cf_system', __FILE__ )
 
-Puppet::Type.type(:cfsystem_info).provide(
+Puppet::Type.type(:cfsystem_persist).provide(
     :cfprovider,
     :parent => PuppetX::CfSystem::ProviderBase
 ) do
-    desc "Provider for cfsystem_info"
+    desc "Provider for cfsystem_persist"
     
     
     def self.get_config_index
-        'info'
+        'persistent'
     end
     
     def self.get_generator_version
@@ -27,15 +27,19 @@ Puppet::Type.type(:cfsystem_info).provide(
     def self.instances
         debug('self.instances')
         instances = []
-        type = get_config_index()
-        config_type = cf_system().config.get_old(type)
+
+        persistent = cf_system().config.get_persistent_all
                 
-        config_type.each do |k, v|
-            instances << self.new({
-                :name => k,
-                :ensure => :present,
-                :info => v,
-            })
+        persistent.each do |section, subsection|
+            subsection.each do |k, v|
+                instances << self.new({
+                    :name => "#{section}:#{k}",
+                    :ensure => :present,
+                    :section => section,
+                    :key => k,
+                    :value => v,
+                })
+            end
         end
         
         debug('Instances:' + instances.to_s)
@@ -48,9 +52,12 @@ Puppet::Type.type(:cfsystem_info).provide(
             
         case ensure_val 
         when :absent
-            write_config(@resource[:name], nil)
         when :present
-            write_config(@resource[:name], @resource[:info])
+            persistent = cf_system().config.get_persistent_all
+            section = @resource[:section]
+            key = @resource[:key]
+            persistent[section] ||= {}
+            persistent[section][key] = @resource[:value]
         else
             warning(@resource)
             warning(@property_hash)

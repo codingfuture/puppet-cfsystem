@@ -7,6 +7,7 @@ require 'puppet/util/logging'
 require 'puppet/util/diff'
 require 'puppet/util/execution'
 require 'fileutils'
+require 'tempfile'
 require 'securerandom'
 
 
@@ -140,6 +141,44 @@ module PuppetX::CfSystem::Util
     end
     
     #---
+    def self.genKeyCommon(secrets, assoc_id, gen_opts, set)
+        return secrets[assoc_id] if secrets.has_key? assoc_id
+        
+        key_type = gen_opts['type']
+        key_bits = gen_opts['bits']
+        
+        tmp_dir = '/tmp/cfsystem'
+        FileUtils.mkdir_p(tmp_dir)
+        FileUtils.chmod(0700, tmp_dir)
+        
+        tmp_obj = Tempfile.new('id', tmp_dir)
+        tmp_file = "#{tmp_obj.path}key"
+        tmp_pub_file = "#{tmp_file}.pub"
+        
+        # Unfortunately, PuppetServer's JRuby is very limited on installed gems
+        # it's safer and simpler to use official keygen
+        Puppet::Util::Execution.execute([
+            '/usr/bin/ssh-keygen',
+            '-q',
+            '-b', key_bits,
+            '-t', key_type,
+            '-P', '',
+            '-f', tmp_file,
+        ])
+
+        key_info = gen_opts.dup
+        key_info['private'] = File.read(tmp_file)
+        key_info['public'] = File.read(tmp_pub_file).split(' ')[1]
+
+        tmp_obj.close!
+        FileUtils.rm_f tmp_file
+        FileUtils.rm_f tmp_pub_file
+
+        secrets[assoc_id] = key_info
+        return key_info
+    end
+    
+    #---
     def self.mutableFact(scope, fact_name, &block)
         catalog = scope.catalog
         
@@ -158,5 +197,20 @@ module PuppetX::CfSystem::Util
         end
         
         mutable_fact[fact_name]
-    end    
+    end
+    
+    #---
+    def self.mutablePersistence(scope, section)
+        persist = mutableFact(scope, 'cf_persistent') do |v|
+            res = scope.lookupvar('::facts').fetch(v, {})
+            res = res.dup
+            res.each do |ik, iv|
+                res[ik] = iv.dup
+            end
+            res
+        end
+        
+        persist[section] ||= {}
+        persist[section]
+    end
 end

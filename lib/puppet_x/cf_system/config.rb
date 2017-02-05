@@ -140,6 +140,10 @@ class Config
             
         return persistent[type]
     end
+    
+    def get_persistent_all
+        @new_config['persistent']
+    end
 end
 
 end

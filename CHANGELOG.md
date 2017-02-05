@@ -12,6 +12,11 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Changed not to run apt-update only when require, but not daily
     - Solves cases of failed APT update during catalog deploy
     - Added second attempt on failure
+- Fixed a long standing issues with "exists" in ensure processing
+- Refactor persistent handling and added internal cfsystem_persist type
+    to minimize dependency on facts
+- Implemented generic cfsystem::clusterssh to aid cluster deployment
+    with tradeoff for security
 
 ## [0.10.1]
 - Added installation of libpam-systemd to workaround sshd session issues
