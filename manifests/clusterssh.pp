@@ -36,7 +36,7 @@ define cfsystem::clusterssh(
     if getparam(User[$user], 'purge_ssh_keys') != true {
         fail("User ${user} must be defined with purge_ssh_keys=true")
     }
-    
+
     $key_gen_opts = {
         type => $key_type,
         bits => $key_bits
@@ -46,16 +46,16 @@ define cfsystem::clusterssh(
         $key_info = cf_genkey($title, $key_gen_opts)
     } else {
         $cluster_q = "cfsystem::clusterssh[${title}]{ is_primary = true }"
-        $resource_q = "cfsystem_persist[$persist_title]"
+        $resource_q = "cfsystem_persist[${persist_title}]"
         $cluster_info = cf_query_resources($cluster_q, $resource_q, false)
 
         if size($cluster_info) != 1 {
             fail("Failed to fetch primary node info for clusterssh[${title}]")
         }
-        
+
         $key_info = $cluster_info[0]['parameters']['value']
     }
-    
+
     # TODO: see security notes below
     cfsystem_persist { "keys:${title}":
         section => 'keys',
