@@ -8,7 +8,7 @@ load File.expand_path( '../../../../puppet_x/cf_system/util.rb', __FILE__ )
 
 module Puppet::Parser::Functions
     newfunction(:cf_genport,  :type => :rvalue) do |args|
-        fail('Not enough arguments') if args.size < 2
+        fail('Not enough arguments') if args.size < 1
         
         assoc_id, forced_port = args
         
