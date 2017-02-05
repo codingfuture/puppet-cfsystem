@@ -101,7 +101,7 @@ class Config
         
         #---
         content = JSON.pretty_generate(conf)
-        PuppetX::CfSystem.atomicWrite(@file, content)
+        PuppetX::CfSystem.atomicWrite(@file, content, { :show_diff => false })
         
         if not exceptions.empty?
             fail(exceptions.join("\n"))
