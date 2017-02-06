@@ -17,6 +17,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
     to minimize dependency on facts
 - Implemented generic cfsystem::clusterssh to aid cluster deployment
     with tradeoff for security
+- Changed NTPd "server" to "pool" directive
 
 ## [0.10.1]
 - Added installation of libpam-systemd to workaround sshd session issues

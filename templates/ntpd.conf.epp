@@ -18,7 +18,7 @@ filegen clockstats file clockstats type day enable
 tinker panic 0
 
 <% any2array($cfsystem::ntp_servers).each |$srv| { -%>
-server <%= $srv %> iburst
+pool <%= $srv %> iburst
 <% } -%>
 
 
