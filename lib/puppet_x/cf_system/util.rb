@@ -191,25 +191,29 @@ module PuppetX::CfSystem::Util
         end
         
         mutable_fact = catalog.cf_mutable_fact
-        
-        if not mutable_fact.has_key? fact_name
-            mutable_fact[fact_name] = block.call(fact_name).dup
-        end
-        
+        mutable_fact[fact_name] ||= block.call(fact_name).dup
         mutable_fact[fact_name]
     end
     
     #---
     def self.mutablePersistence(scope, section)
-        persist = mutableFact(scope, 'cf_persistent') do |v|
-            res = scope.lookupvar('::facts').fetch(v, {})
-            res = res.dup
-            res.each do |ik, iv|
-                res[ik] = iv.dup
+        catalog = scope.catalog
+        
+        if not catalog.respond_to? :cf_mutable_persist
+            class << catalog
+                attr_accessor :cf_mutable_persist
             end
-            res
+            
+            fact = scope.lookupvar('::facts').fetch('cf_persistent', {})
+            mutable = {}
+            fact.each do |ik, iv|
+                mutable[ik] = iv.dup
+            end
+            
+            catalog.cf_mutable_persist = mutable
         end
         
+        persist = catalog.cf_mutable_persist
         persist[section] ||= {}
         persist[section]
     end
