@@ -18,7 +18,7 @@ module Puppet::Parser::Functions
         Puppet::Parser::Functions.function(:ensure_resource)
         function_ensure_resource([
             'cfsystem_persist',
-            "secrets:#{assoc_id}",
+            "ports:#{assoc_id}",
             {
                 :key   => assoc_id,
                 :value => PuppetX::CfSystem::Util.cf_stable_sort(value),
