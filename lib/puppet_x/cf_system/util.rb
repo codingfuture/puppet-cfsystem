@@ -18,6 +18,8 @@ module PuppetX::CfSystem::Util
     end
     
     BASE_PORT = 1025 unless defined? BASE_PORT
+    NETSTAT = '/bin/netstat' unless defined? NETSTAT
+    JAVA = '/usr/bin/java' unless defined? JAVA
     
     #---
     def self.cf_stable_cmp(a, b)
@@ -208,4 +210,45 @@ module PuppetX::CfSystem::Util
         persist[section] ||= {}
         persist[section]
     end
+    
+    #---
+    def self.wait_sock(service_name, service_port, timeout=180, initial_wait=0, interval=1)
+        sleep initial_wait if initial_wait > 0
+        timeout = (timeout / interval).to_i
+        
+        for i in 1..timeout
+            if service_port.is_a? String
+                return true if File.exists? service_port
+            else
+                res = Puppet::Util::Execution.execute(
+                    [NETSTAT, '-tln'],
+                    {
+                        :failonfail => false,
+                    }
+                )
+                return true if res.include?(":#{service_port}")
+            end
+            
+            
+            warning("Waiting #{service_name} startup (#{i})!")
+            sleep interval
+        end
+        
+        fail("Failed to wait for #{service_name} startup")
+    end
+    
+    #---
+    def self.is_jvm_metaspace
+        res = Puppet::Util::Execution.execute(
+            [JAVA, '-XX:MaxMetaspaceSize=8m', '-version'],
+            {
+                :failonfail => false,
+                :squelch => true,
+                :uid => 'puppet',
+                :gid => 'puppet',
+            }
+        )
+        
+        res.exitstatus == 0
+    end    
 end

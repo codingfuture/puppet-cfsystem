@@ -18,6 +18,9 @@ module PuppetX::CfSystem
     CUSTOM_BIN_DIR = '/opt/codingfuture/bin'
     SYSTEMD_DIR = '/etc/systemd/system'
     SYSTEMD_CTL = '/bin/systemctl'
+    SUDO = '/usr/bin/sudo'
+    WAIT_SOCKET_BIN = "#{CUSTOM_BIN_DIR}/cf_wait_socket"
+    
     
     #---
     BASE_DIR = File.expand_path('../', __FILE__)

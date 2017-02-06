@@ -75,4 +75,13 @@ set path = (\$path ${bin_dir})
             servers => any2array($cfsystem::ntp_servers)
         }),
     }
+
+    # Wait socket tools (useful for systemd ExecStartPost)
+    #---
+    $cf_wait_socket = "${bin_dir}/cf_wait_socket"
+
+    file { $cf_wait_socket:
+        mode    => '0500',
+        content => file('cfsystem/cf_wait_socket.sh'),
+    }
 }
