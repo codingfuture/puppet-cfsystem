@@ -47,5 +47,20 @@ Puppet::Type.newtype(:cfsystem_persist) do
         validate do |value|
             value.is_a? Hash
         end
+        
+        def is_to_s(value)
+            return '<old_secret>' if resource.secret?
+            value
+        end
+
+        def should_to_s(value)
+            return '<new_secret>' if resource.secret?
+            value
+        end        
+    end
+    
+    newparam(:secret, :boolean => true) do
+        newvalues(:true, :false)
+        defaultto false
     end
 end

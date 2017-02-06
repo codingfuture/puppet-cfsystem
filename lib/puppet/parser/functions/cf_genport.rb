@@ -13,6 +13,18 @@ module Puppet::Parser::Functions
         assoc_id, forced_port = args
         
         ports = PuppetX::CfSystem::Util.mutablePersistence(self, 'ports')
-        PuppetX::CfSystem::Util.genPortCommon(ports, assoc_id, forced_port)
+        value = PuppetX::CfSystem::Util.genPortCommon(ports, assoc_id, forced_port)
+
+        Puppet::Parser::Functions.function(:ensure_resource)
+        function_ensure_resource([
+            'cfsystem_persist',
+            "secrets:#{assoc_id}",
+            {
+                :key   => assoc_id,
+                :value => PuppetX::CfSystem::Util.cf_stable_sort(value),
+            }
+        ])
+
+        value
     end
 end

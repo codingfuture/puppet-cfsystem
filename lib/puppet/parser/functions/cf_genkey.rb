@@ -13,6 +13,21 @@ module Puppet::Parser::Functions
         assoc_id, gen_opts, forced_key = args
         
         keys = PuppetX::CfSystem::Util.mutablePersistence(self, 'keys')
-        PuppetX::CfSystem::Util.genKeyCommon(keys, assoc_id, gen_opts, forced_key)
+        value = PuppetX::CfSystem::Util.genKeyCommon(keys, assoc_id, gen_opts, forced_key)
+
+        # TODO: YES, it's insecure as the private key gets stored in catalog
+        # in clear text. Need some sort of host-specific encryption.
+        Puppet::Parser::Functions.function(:ensure_resource)
+        function_ensure_resource([
+            'cfsystem_persist',
+            "keys:#{assoc_id}",
+            {
+                :key    => assoc_id,
+                :value  => value,
+                :secret => true,
+            }
+        ])
+        
+        value
     end
 end

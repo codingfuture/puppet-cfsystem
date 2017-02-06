@@ -12,6 +12,19 @@ module Puppet::Parser::Functions
         assoc_id, len, set = args
         
         secrets = PuppetX::CfSystem::Util.mutablePersistence(self, 'secrets')
-        PuppetX::CfSystem::Util.genSecretCommon(secrets, assoc_id, len, set)
+        value = PuppetX::CfSystem::Util.genSecretCommon(secrets, assoc_id, len, set)
+        
+        Puppet::Parser::Functions.function(:ensure_resource)
+        function_ensure_resource([
+            'cfsystem_persist',
+            "secrets:#{assoc_id}",
+            {
+                :key    => assoc_id,
+                :value  => value,
+                :secret => true,
+            }
+        ])
+        
+        value
     end
 end

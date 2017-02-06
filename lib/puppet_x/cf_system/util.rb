@@ -143,6 +143,7 @@ module PuppetX::CfSystem::Util
     #---
     def self.genKeyCommon(secrets, assoc_id, gen_opts, set)
         return secrets[assoc_id] if secrets.has_key? assoc_id
+        fail("#{assoc_id} is missing from #{secrets}")
         
         key_type = gen_opts['type']
         key_bits = gen_opts['bits']
@@ -179,41 +180,31 @@ module PuppetX::CfSystem::Util
     end
     
     #---
-    def self.mutableFact(scope, fact_name, &block)
-        catalog = scope.catalog
-        
-        if not catalog.respond_to? :cf_mutable_fact
-            class << catalog
-                attr_accessor :cf_mutable_fact
-            end
-            
-            catalog.cf_mutable_fact = {}
-        end
-        
-        mutable_fact = catalog.cf_mutable_fact
-        mutable_fact[fact_name] ||= block.call(fact_name).dup
-        mutable_fact[fact_name]
-    end
-    
-    #---
     def self.mutablePersistence(scope, section)
         catalog = scope.catalog
         
-        if not catalog.respond_to? :cf_mutable_persist
+        if !catalog.respond_to? :cf_fact or !catalog.respond_to? :cf_mutable
             class << catalog
-                attr_accessor :cf_mutable_persist
+                attr_accessor :cf_fact
+                attr_accessor :cf_mutable
             end
-            
-            fact = scope.lookupvar('::facts').fetch('cf_persistent', {})
+        end
+        
+        fact = scope.lookupvar('::facts').fetch('cf_persistent', {})
+
+        if catalog.cf_fact.object_id != fact.object_id
             mutable = {}
             fact.each do |ik, iv|
                 mutable[ik] = iv.dup
             end
             
-            catalog.cf_mutable_persist = mutable
+            catalog.cf_mutable = mutable
+            catalog.cf_fact = fact
+        else
+            mutable = catalog.cf_mutable
         end
         
-        persist = catalog.cf_mutable_persist
+        persist = catalog.cf_mutable
         persist[section] ||= {}
         persist[section]
     end

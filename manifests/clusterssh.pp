@@ -43,7 +43,7 @@ define cfsystem::clusterssh(
     }
 
     if $is_primary {
-        $key_info = cf_genkey($title, $key_gen_opts)
+        $key_tune = undef
     } else {
         $cluster_q = "cfsystem::clusterssh[${title}]{ is_primary = true }"
         $resource_q = "cfsystem_persist[${persist_title}]"
@@ -53,15 +53,10 @@ define cfsystem::clusterssh(
             fail("Failed to fetch primary node info for clusterssh[${title}]")
         }
 
-        $key_info = $cluster_info[0]['parameters']['value']
+        $key_tune = $cluster_info[0]['parameters']['value']
     }
 
-    # TODO: see security notes below
-    cfsystem_persist { "keys:${title}":
-        section => 'keys',
-        key     => $title,
-        value   => cf_stable_sort($key_info),
-    }
+    $key_info = cf_genkey($title, $key_gen_opts, $key_tune)
 
     User[$user] ->
     file { $ssh_dir:
