@@ -147,8 +147,7 @@ module PuppetX::CfSystem::Util
     #---
     def self.genKeyCommon(secrets, assoc_id, gen_opts, set)
         return secrets[assoc_id] if secrets.has_key? assoc_id
-        fail("#{assoc_id} is missing from #{secrets}")
-        
+
         key_type = gen_opts['type']
         key_bits = gen_opts['bits']
         
