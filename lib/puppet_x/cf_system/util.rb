@@ -20,6 +20,7 @@ module PuppetX::CfSystem::Util
     BASE_PORT = 1025 unless defined? BASE_PORT
     NETSTAT = '/bin/netstat' unless defined? NETSTAT
     JAVA = '/usr/bin/java' unless defined? JAVA
+    DPKG = '/usr/bin/dpkg' unless defined? DPKG    
     
     #---
     def self.cf_stable_cmp(a, b)
@@ -250,5 +251,23 @@ module PuppetX::CfSystem::Util
         )
         
         res.exitstatus == 0
-    end    
+    end
+    
+    #---
+    def self.get_package_version(package)
+        res = Puppet::Util::Execution.execute(
+            [DPKG, '--status', package],
+            {
+                :uid => 'puppet',
+                :gid => 'puppet',
+            }
+        )
+
+        res.split("\n").each do |v|
+            vs = v.split(': ')
+            return vs[1] if vs[0] == 'Version'
+        end
+
+        fail("Unknown package version: #{package}")
+    end
 end
