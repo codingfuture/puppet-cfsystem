@@ -93,7 +93,11 @@ module PuppetX::CfSystem
         #---
         if opts.fetch(:show_diff, true)
             if File.exists?(file)
-                notice("File[#{file}]/content:\n" + Puppet::Util::Diff.diff(file, tmpfile))
+                diff = Puppet::Util::Diff.diff(file, tmpfile)
+                opts.fetch(:mask_diff, []).each do |v|
+                    diff.gsub!(v, '<secret>')
+                end
+                notice("File[#{file}]/content:\n" + diff)
             else
                 notice("File[#{file}]/content:\n" + content)
             end
