@@ -21,6 +21,7 @@ module PuppetX::CfSystem::Util
     NETSTAT = '/bin/netstat' unless defined? NETSTAT
     JAVA = '/usr/bin/java' unless defined? JAVA
     DPKG = '/usr/bin/dpkg' unless defined? DPKG    
+    DPKG_QUERY = '/usr/bin/dpkg-query' unless defined? DPKG_QUERY    
     
     #---
     def self.cf_stable_cmp(a, b)
@@ -245,8 +246,6 @@ module PuppetX::CfSystem::Util
             {
                 :failonfail => false,
                 :squelch => true,
-                :uid => 'puppet',
-                :gid => 'puppet',
             }
         )
         
@@ -256,18 +255,13 @@ module PuppetX::CfSystem::Util
     #---
     def self.get_package_version(package)
         res = Puppet::Util::Execution.execute(
-            [DPKG, '--status', package],
-            {
-                :uid => 'puppet',
-                :gid => 'puppet',
-            }
+            [DPKG_QUERY, '-W', '--showformat', '${Version}', package]
         )
 
-        res.split("\n").each do |v|
-            vs = v.split(': ')
-            return vs[1] if vs[0] == 'Version'
+        if res.empty?
+            fail("Unknown package version: #{package}")
         end
-
-        fail("Unknown package version: #{package}")
+        
+        res
     end
 end
