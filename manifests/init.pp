@@ -121,10 +121,10 @@ class cfsystem (
 
     #---
     class { 'cfsystem::custombin': stage => 'setup' }
-    cfsystem::binpath { 'cfsystem_bindir':
+    cfsystem::binpath { 'cfsystem_paths':
         bin_dir => $cfsystem::custombin::bin_dir,
     }
-    cfsystem::binpath { 'puppet_bindir':
+    cfsystem::binpath { 'puppet_paths':
         bin_dir => '/opt/puppetlabs/bin',
     }
 

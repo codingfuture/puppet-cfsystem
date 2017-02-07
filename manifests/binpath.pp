@@ -16,10 +16,5 @@ fi
         content => "
 set path = (\$path ${bin_dir})
 "
-    } ->
-    cfauth::sudoentry { $title:
-        custom_config => [
-            "Defaults secure_path+=\":${bin_dir}\"",
-        ],
     }
 }
