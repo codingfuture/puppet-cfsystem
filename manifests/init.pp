@@ -121,11 +121,23 @@ class cfsystem (
 
     #---
     class { 'cfsystem::custombin': stage => 'setup' }
+
     cfsystem::binpath { 'cfsystem_paths':
         bin_dir => $cfsystem::custombin::bin_dir,
     }
     cfsystem::binpath { 'puppet_paths':
         bin_dir => '/opt/puppetlabs/bin',
+    }
+
+    file { '/etc/sudoers.d/secure_path':
+        ensure  => present,
+        mode    => '0440',
+        replace => false,
+        content => '',
+    } ->
+    cfsystem_secure_path { '!default':
+        ensure => present,
+        path   => $cfauth::secure_path,
     }
 
     #---

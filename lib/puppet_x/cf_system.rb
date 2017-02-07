@@ -97,6 +97,8 @@ module PuppetX::CfSystem
             else
                 notice("File[#{file}]/content:\n" + content)
             end
+        else
+            notice("File[#{file}] hidden content change")
         end
 
         # Atomically move config file to its location

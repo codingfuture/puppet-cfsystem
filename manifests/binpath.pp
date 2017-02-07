@@ -16,5 +16,9 @@ fi
         content => "
 set path = (\$path ${bin_dir})
 "
+    } ->
+    cfsystem_secure_path { $title:
+        ensure => present,
+        path   => $bin_dir,
     }
 }
