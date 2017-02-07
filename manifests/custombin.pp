@@ -18,17 +18,16 @@ class cfsystem::custombin {
         ensure => directory,
         mode   => '0755',
     } ->
-    file { '/etc/profile.d/codingfuture.sh':
-        content => "
-if ! echo \$PATH | grep -q ${bin_dir}; then
-  export PATH=\"\$PATH:${bin_dir}\"
-fi
-"
+    file { '/etc/profile.d':
+        ensure  => directory,
+        mode    => '0755',
+        purge   => true,
+        recurse => true,
     } ->
-    file { '/etc/profile.d/codingfuture.csh':
-        content => "
-set path = (\$path ${bin_dir})
-"
+    file { '/etc/profile.d/bash_completion.sh':
+        ensure  => present,
+        mode    => '0644',
+        replace => false,
     }
 
     # Kernel version checker

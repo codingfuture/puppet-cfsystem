@@ -18,6 +18,7 @@ What it does:
 * Setups email system
 * Setups NTP daemon and command line client for large gap sync
 * Setup all locales and the default locale (configurable)
+* Manages /etc/profile.d/ & adds allowed bin paths to sudo search_paths
 * Installs many handy system tools which almost any admin would expect
 * Forces noop scheduler on SSDs and virtual devices (in guests)
 * Forces custom I/O scheduler for real spinning HDDs (deadline by default)
@@ -149,6 +150,13 @@ cfnetwork::client_ports:
 * `reserve_ram` = 64 - amount of ram to reserve for system in automatic calculations
 * `$key_server = 'hkp://pgp.mit.edu:80'` - default PGP key server
 * `$random_feed = true` - enable random entropy generating daemon
+
+## `cfsystem::bindir` type
+
+Setup /etc/profile.d/ & /etc/sudoers.d/ entries for trusted global bin paths. It should not be
+configured by user. It's API for other modules.
+
+* `bin_dir` - absolute path to directory for global search path
 
 ## `cfsystem::hierapool` class
 

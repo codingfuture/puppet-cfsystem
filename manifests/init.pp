@@ -121,7 +121,14 @@ class cfsystem (
 
     #---
     class { 'cfsystem::custombin': stage => 'setup' }
+    cfsystem::binpath { 'cfsystem_bindir':
+        bin_dir => $cfsystem::custombin::bin_dir,
+    }
+    cfsystem::binpath { 'puppet_bindir':
+        bin_dir => '/opt/puppetlabs/bin',
+    }
 
+    #---
     case $::operatingsystem {
         'Debian': { include cfsystem::debian }
         'Ubuntu': { include cfsystem::ubuntu }
