@@ -22,9 +22,10 @@ module Puppet::Parser::Functions
             'cfsystem_persist',
             "keys:#{assoc_id}",
             {
-                :key    => assoc_id,
-                :value  => value,
-                :secret => true,
+                :section => 'keys',
+                :key     => assoc_id,
+                :value   => PuppetX::CfSystem::Util.cf_stable_sort(value),
+                :secret  => true,
             }
         ])
         

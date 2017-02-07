@@ -20,8 +20,9 @@ module Puppet::Parser::Functions
             'cfsystem_persist',
             "ports:#{assoc_id}",
             {
-                :key   => assoc_id,
-                :value => PuppetX::CfSystem::Util.cf_stable_sort(value),
+                :section => 'ports',
+                :key     => assoc_id,
+                :value   => value,
             }
         ])
 

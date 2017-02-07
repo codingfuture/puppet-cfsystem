@@ -19,9 +19,10 @@ module Puppet::Parser::Functions
             'cfsystem_persist',
             "secrets:#{assoc_id}",
             {
-                :key    => assoc_id,
-                :value  => value,
-                :secret => true,
+                :section => 'secrets',
+                :key     => assoc_id,
+                :value   => value,
+                :secret  => true,
             }
         ])
         
