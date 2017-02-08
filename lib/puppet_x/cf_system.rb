@@ -410,8 +410,19 @@ module PuppetX::CfSystem
                             map { |v| File.basename(v, ".#{ext}") }
         old_files -= new_files
         old_files.each do |s|
-            warning("Removing old sytemd file: #{s}.#{ext}")
-            FileUtils.rm_f "#{SYSTEMD_DIR}/#{s}.#{ext}"
+            file = "#{s}.#{ext}"
+            
+            if ext == 'service'
+                begin
+                    warning("Stopping old systemd file: #{file}")
+                    Puppet::Util::Execution.execute([SYSTEMD_CTL, 'stop', file])
+                rescue => e
+                    err("Fail on stop: #{e}")
+                end
+            end
+            
+            warning("Removing old systemd file: #{file}")
+            FileUtils.rm_f "#{SYSTEMD_DIR}/#{file}"
         end
         
         if old_files.size
