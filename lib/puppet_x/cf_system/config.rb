@@ -25,7 +25,7 @@ class Config
         }
         
         @old_config = conf
-        @new_config = conf.clone
+        @new_config = JSON.parse(JSON.generate(conf)) # deep copy
         
         return conf if not File.exist?(file)
 

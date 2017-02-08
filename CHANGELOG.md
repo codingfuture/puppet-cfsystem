@@ -22,6 +22,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Added cf_wait_sock utility & refactored internal API
 - Added /etc/profile.d management through cfsystem::binpath
 - Added cfsystem::binpath to sudo search_path
+- Fixed old problem of not processed providers on first run
 
 ## [0.10.1]
 - Added installation of libpam-systemd to workaround sshd session issues
