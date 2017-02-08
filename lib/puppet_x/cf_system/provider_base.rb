@@ -48,7 +48,7 @@ class ProviderBase < Puppet::Provider
             end
         end
         
-        debug('Instances:' + instances.to_s)
+        #debug('Instances:' + instances.to_s)
         instances
     end
     
@@ -80,7 +80,7 @@ class ProviderBase < Puppet::Provider
             config_type.delete(name)
         end
 
-        debug(config_type)
+        #debug(config_type)
     end
     
     def flush

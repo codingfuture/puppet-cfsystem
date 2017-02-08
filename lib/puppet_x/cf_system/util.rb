@@ -99,9 +99,10 @@ module PuppetX::CfSystem::Util
             old_assoc_id = ports.key(forced_port)
             if not old_assoc_id.nil?
                 ports.delete(old_assoc_id)
-                warning(" > deassociated #{forced_port} from #{old_assoc_id} in favor of #{assoc_id}")
+                warning("Deaassociated #{forced_port} from #{old_assoc_id} in favor of #{assoc_id}")
             end
             ports[assoc_id] = forced_port
+            #warning("Forced port #{forced_port} for #{assoc_id} in: #{ports}")
         end
         
         return ports[assoc_id] if ports[assoc_id].to_i > 0
@@ -123,6 +124,8 @@ module PuppetX::CfSystem::Util
             end
         end
         
+        #warning("Generating new port #{next_port} for #{assoc_id} in: #{ports}")
+        
         ports[assoc_id] = next_port
         return next_port
     end
@@ -135,8 +138,13 @@ module PuppetX::CfSystem::Util
                 if len < 4
                     fail("Requested secret length is too short #{len} for #{assoc_id}")
                 end
-                secrets[assoc_id] = SecureRandom.urlsafe_base64((len * 3 / 4).to_i)
+
+                secret = SecureRandom.urlsafe_base64((len * 3 / 4).to_i)
+
+                #warning("Generating new secret #{secret} for #{assoc_id} in: #{secrets}")
+                secrets[assoc_id] = secret
             else
+                #warning("Forcing new secret #{set} for #{assoc_id} in: #{secrets}")
                 secrets[assoc_id] = set
             end
         end
@@ -145,40 +153,47 @@ module PuppetX::CfSystem::Util
     end
     
     #---
-    def self.genKeyCommon(secrets, assoc_id, gen_opts, set)
-        return secrets[assoc_id] if secrets.has_key? assoc_id
+    def self.genKeyCommon(keys, assoc_id, gen_opts, set)
+        return keys[assoc_id] if keys.has_key? assoc_id
 
         key_type = gen_opts['type']
         key_bits = gen_opts['bits']
         
-        tmp_dir = '/tmp/cfsystem'
-        FileUtils.mkdir_p(tmp_dir)
-        FileUtils.chmod(0700, tmp_dir)
-        
-        tmp_obj = Tempfile.new('id', tmp_dir)
-        tmp_file = "#{tmp_obj.path}key"
-        tmp_pub_file = "#{tmp_file}.pub"
-        
-        # Unfortunately, PuppetServer's JRuby is very limited on installed gems
-        # it's safer and simpler to use official keygen
-        Puppet::Util::Execution.execute([
-            '/usr/bin/ssh-keygen',
-            '-q',
-            '-b', key_bits,
-            '-t', key_type,
-            '-P', '',
-            '-f', tmp_file,
-        ])
+        if set.nil? or set.empty?
+            tmp_dir = '/tmp/cfsystem'
+            FileUtils.mkdir_p(tmp_dir)
+            FileUtils.chmod(0700, tmp_dir)
+            
+            tmp_obj = Tempfile.new('id', tmp_dir)
+            tmp_file = "#{tmp_obj.path}key"
+            tmp_pub_file = "#{tmp_file}.pub"
+            
+            # Unfortunately, PuppetServer's JRuby is very limited on installed gems
+            # it's safer and simpler to use official keygen
+            Puppet::Util::Execution.execute([
+                '/usr/bin/ssh-keygen',
+                '-q',
+                '-b', key_bits,
+                '-t', key_type,
+                '-P', '',
+                '-f', tmp_file,
+            ])
 
-        key_info = gen_opts.dup
-        key_info['private'] = File.read(tmp_file)
-        key_info['public'] = File.read(tmp_pub_file).split(' ')[1]
+            key_info = gen_opts.dup
+            key_info['private'] = File.read(tmp_file)
+            key_info['public'] = File.read(tmp_pub_file).split(' ')[1]
 
-        tmp_obj.close!
-        FileUtils.rm_f tmp_file
-        FileUtils.rm_f tmp_pub_file
+            tmp_obj.close!
+            FileUtils.rm_f tmp_file
+            FileUtils.rm_f tmp_pub_file
 
-        secrets[assoc_id] = key_info
+            #warning("Generating new key #{key_info} for #{assoc_id} in: #{keys}")
+        else
+            key_info = set
+            #warning("Forced key #{key_info} for #{assoc_id} in: #{keys}")
+        end
+
+        keys[assoc_id] = key_info
         return key_info
     end
     
@@ -186,30 +201,34 @@ module PuppetX::CfSystem::Util
     def self.mutablePersistence(scope, section)
         catalog = scope.catalog
         
-        if !catalog.respond_to? :cf_fact or !catalog.respond_to? :cf_mutable
+        if !catalog.respond_to? :cf_mutable_fp or !catalog.respond_to? :cf_mutable
             class << catalog
-                attr_accessor :cf_fact
+                attr_accessor :cf_mutable_fp
                 attr_accessor :cf_mutable
             end
         end
         
-        fact = scope.lookupvar('::facts').fetch('cf_persistent', {})
-
-        if catalog.cf_fact.object_id != fact.object_id
+        facts = scope.lookupvar('::facts')
+        fp = "#{facts['fqdn']}:#{facts.object_id}"
+        
+        if catalog.cf_mutable_fp != fp
             mutable = {}
-            fact.each do |ik, iv|
+            facts.fetch('cf_persistent', {}).each do |ik, iv|
                 mutable[ik] = iv.dup
             end
             
+            #warning("Catalog fingerprint change: #{catalog.cf_mutable_fp} vs #{fp}")
+            #warning("Mutable base: #{mutable}")
+            
             catalog.cf_mutable = mutable
-            catalog.cf_fact = fact
+            catalog.cf_mutable_fp = fp
         else
             mutable = catalog.cf_mutable
+            #warning("Mutable tmp: #{mutable}")
         end
         
-        persist = catalog.cf_mutable
-        persist[section] ||= {}
-        persist[section]
+        mutable[section] ||= {}
+        mutable[section]
     end
     
     #---

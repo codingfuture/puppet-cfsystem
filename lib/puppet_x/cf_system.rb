@@ -52,6 +52,7 @@ module PuppetX::CfSystem
     def self.begin
         debug('cfsystem::begin')
         self.config = Config.new(CFSYSTEM_CONFIG)
+        File.exists?(CFSYSTEM_CONFIG)
     end
     
     def self.commit

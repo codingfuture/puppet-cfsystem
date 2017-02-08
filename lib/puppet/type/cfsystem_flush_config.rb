@@ -7,7 +7,7 @@ Puppet::Type.newtype(:cfsystem_flush_config) do
 
     ensurable do
         defaultvalues
-        defaultto :absent
+        defaultto :present
     end
 
     newparam(:name) do
@@ -15,7 +15,7 @@ Puppet::Type.newtype(:cfsystem_flush_config) do
         
         validate do |value|
             unless ['begin', 'commit'].include? value
-                raise ArgumentError, "The only title allowed is 'total'"
+                raise ArgumentError, "Invalid title"
             end
         end
     end

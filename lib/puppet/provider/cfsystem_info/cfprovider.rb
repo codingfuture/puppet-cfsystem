@@ -38,7 +38,7 @@ Puppet::Type.type(:cfsystem_info).provide(
             })
         end
         
-        debug('Instances:' + instances.to_s)
+        #debug('Instances:' + instances.to_s)
         instances
     end
     

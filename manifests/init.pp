@@ -65,8 +65,9 @@ class cfsystem (
     include cfauth
 
     #---
-    cfsystem_flush_config { 'begin': ensure => present }
-    cfsystem_flush_config { 'commit': ensure => present }
+    cfsystem_flush_config { 'begin': } ->
+    cfsystem_flush_config { 'commit': }
+
     cfsystem_memory_weight { 'cfsystem':
         ensure => present,
         weight => 1,

@@ -13,7 +13,9 @@ Puppet::Type.type(:cfsystem_flush_config).provide(
     desc "Provider for cfsystem_flush_config"
     
     def self.instances
-        cf_system().begin()
+        have_conf = cf_system().begin()
+        return [] if not have_conf
+
         [
             self.new({
                 :name => 'begin',
@@ -31,7 +33,7 @@ Puppet::Type.type(:cfsystem_flush_config).provide(
         name = @resource[:name]
         
         if name == 'begin'
-            #cf_system().begin()
+            # noop
         elsif name == 'commit'
             cf_system().commit()
         else

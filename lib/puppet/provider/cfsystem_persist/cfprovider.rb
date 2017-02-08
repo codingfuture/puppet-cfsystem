@@ -12,11 +12,6 @@ Puppet::Type.type(:cfsystem_persist).provide(
 ) do
     desc "Provider for cfsystem_persist"
     
-    
-    def self.get_config_index
-        'persistent'
-    end
-    
     def self.get_generator_version
         cf_system().makeVersion(__FILE__)
     end
@@ -42,7 +37,7 @@ Puppet::Type.type(:cfsystem_persist).provide(
             end
         end
         
-        debug('Instances:' + instances.to_s)
+        #debug('Instances:' + instances.to_s)
         instances
     end
     
