@@ -24,6 +24,9 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Added cfsystem::binpath to sudo search_path
 - Fixed old problem of not processed providers on first run
 - Fixed to stop service prior to cleanup
+- Dropped dependency on dalen-puppetdbquery in favor of native puppetdb_query
+- Removed old cf_query_*() API
+- Added cfsystem::query() API with catalog-specific caching
 
 ## [0.10.1]
 - Added installation of libpam-systemd to workaround sshd session issues

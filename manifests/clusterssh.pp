@@ -45,9 +45,25 @@ define cfsystem::clusterssh(
     if $is_primary {
         $key_tune = undef
     } else {
-        $cluster_q = "cfsystem::clusterssh[${title}]{ is_primary = true }"
-        $resource_q = "cfsystem_persist[${persist_title}]"
-        $cluster_info = cf_query_resources($cluster_q, $resource_q, false)
+        $cluster_info = cfsystem::query([
+            'from', 'resources', ['extract', ['parameters'],
+                ['and',
+                    ['in', 'certname',
+                        ['extract', 'certname',
+                            ['select_resources',
+                                ['and',
+                                    ['=', 'type', 'Cfsystem::Clusterssh'],
+                                    ['=', 'title', $title],
+                                    ['=', ['parameter', 'is_primary'], true],
+                                ]
+                            ],
+                        ],
+                    ],
+                    ['=', 'type', 'Cfsystem_persist'],
+                    ['=', 'title', $persist_title],
+                ]
+            ],
+        ])
 
         if size($cluster_info) != 1 {
             fail("Failed to fetch primary node info for clusterssh[${title}]")

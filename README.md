@@ -38,9 +38,7 @@ What it does:
     * `cf_apt_key_updater <key_id>` - run GPG key re-import, if expired
     * `cf_ntpdate` - run pre-configured ntpdate
 * Public API for Puppet parser:
-    * `cf_query_facts` - wrapper around `query_facts`
-    * `cf_query_nodes` - wrapper around `query_nodes`
-    * `cf_query_resources` - wrapper around `query_resources`
+    * `cfsystem::query` - caching wrapper around `puppetdb_query` (cached per catalog)
     * `cf_stable_sort(arg)` - deep sort of Hash/Array to avoid isomorphic configuration "change"
 
 
