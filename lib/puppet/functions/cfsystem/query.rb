@@ -1,3 +1,7 @@
+#
+# Copyright 2017 (c) Andrey Galkin
+#
+
 Puppet::Functions.create_function(:'cfsystem::query') do
     dispatch :cf_cached_query do
         param 'Array', :query
