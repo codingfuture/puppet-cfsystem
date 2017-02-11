@@ -13,9 +13,9 @@ define cfsystem::clusterssh(
         $user,
     String[1]
         $group = $user,
-    Enum['rsa', 'ed25519']
+    Cfsystem::Keytype
         $key_type = 'ed25519',
-    Integer[2048]
+    Cfsystem::Rsabits
         $key_bits = 2048, # for rsa
     Array[String[1]]
         $peers = [],
@@ -35,11 +35,6 @@ define cfsystem::clusterssh(
 
     if getparam(User[$user], 'purge_ssh_keys') != true {
         fail("User ${user} must be defined with purge_ssh_keys=true")
-    }
-
-    $key_gen_opts = {
-        type => $key_type,
-        bits => $key_bits
     }
 
     if $is_primary {
@@ -72,7 +67,11 @@ define cfsystem::clusterssh(
         $key_tune = $cluster_info[0]['parameters']['value']
     }
 
-    $key_info = cf_genkey($title, $key_gen_opts, $key_tune)
+    $key_gen_opts = {
+        type => $key_type,
+        bits => $key_bits
+    }
+    $key_info = cfsystem::gen_key($title, $key_gen_opts, $key_tune)
 
     User[$user] ->
     file { $ssh_dir:

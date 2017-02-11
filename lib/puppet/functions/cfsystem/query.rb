@@ -4,7 +4,7 @@
 
 Puppet::Functions.create_function(:'cfsystem::query') do
     dispatch :cf_cached_query do
-        param 'Array', :query
+        param 'Variant[Array,String[1]]', :query
     end
     
     def cf_cached_query(query)

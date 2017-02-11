@@ -7,7 +7,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Minor fix for HAProxy setup @ jessie
 - Fixed to also pin libssl-dev @ jessie
 - Fixed to properly create slice extension
-- Updated to new 'cf_get_bind_address' API
+- Updated to new 'cfnetwork::bind_address' API
 - Added cf_ntpdate wrapper & cron job
 - Changed not to run apt-update only when require, but not daily
     - Solves cases of failed APT update during catalog deploy
@@ -28,6 +28,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Removed old cf_query_*() API
 - Added cfsystem::query() API with catalog-specific caching
 - Removed deprecated calls to try_get_value()
+- Refactored and exposes 'cfsystem::gen_*()' API
 
 ## [0.10.1]
 - Added installation of libpam-systemd to workaround sshd session issues

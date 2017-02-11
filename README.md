@@ -38,8 +38,15 @@ What it does:
     * `cf_apt_key_updater <key_id>` - run GPG key re-import, if expired
     * `cf_ntpdate` - run pre-configured ntpdate
 * Public API for Puppet parser:
+    * `Cfsystem::CpuWeight` - cgroup CPU weight
+    * `Cfsystem::IoWeight` - cgroup I/O weight
+    * `Cfsystem::Keytype` - ssh key types
+    * `Cfsystem::Rsabit` - RSA key bits
     * `cfsystem::query` - caching wrapper around `puppetdb_query` (cached per catalog)
-    * `cf_stable_sort(arg)` - deep sort of Hash/Array to avoid isomorphic configuration "change"
+    * `cfsystem::stable_sort(arg)` - deep sort of Hash/Array to avoid isomorphic configuration "change"
+    * `cfsystem::gen_key(name, params, forced_key)` - generate or save persistent SSH key
+    * `cfsystem::gen_pass(name, length, forced_pass)` - generate or save persistent password
+    * `cfsystem::gen_port(name, forced_port)` - allocate or save persistent network port
 
 
 ## Technical Support

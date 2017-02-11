@@ -5,15 +5,23 @@
 
 # Please see README
 class cfsystem::email (
-    Optional[String[1]] $smarthost = undef,
-    Optional[String[1]] $smarthost_login = undef,
-    Optional[String[1]] $smarthost_password = undef,
-    Variant[ Array[String[1]], String[1]] $relay_nets = [
-        '10.0.0.0/8',
-        '192.168.0.0/16',
-        '172.16.0.0/12',
-    ],
-    Optional[Variant[Array[String[1]], String[1]]] $listen_ifaces = undef,
+    Optional[String[1]]
+        $smarthost = undef,
+    Optional[String[1]]
+        $smarthost_login = undef,
+    Optional[String[1]]
+        $smarthost_password = undef,
+    Variant[Array[String[1]], String[1]]
+        $relay_nets = [
+            '10.0.0.0/8',
+            '192.168.0.0/16',
+            '172.16.0.0/12',
+        ],
+    Optional[Variant[
+        Array[Cfnetwork::Bindface],
+        Cfnetwork::Bindface
+    ]]
+        $listen_ifaces = undef,
     Boolean $disable_ipv6 = true,
 ) {
     include stdlib
@@ -22,12 +30,15 @@ class cfsystem::email (
 
     #---
     if $listen_ifaces {
-        $listen_iface_ips = any2array($listen_ifaces).map |$iface| {
-            cf_get_bind_address($iface)
+        $listen_iface_ips = any2array($listen_ifaces).map |$bindface| {
+            cfnetwork::bind_address($bindface)
         }
 
-        any2array($listen_ifaces).each |$iface| {
-            cfnetwork::service_port { "${iface}:smtp:cfsystem": }
+        any2array($listen_ifaces).each |$bindface| {
+            $iface = cfnetwork::fw_face($bindface)
+            cfnetwork::service_port { "${iface}:smtp:cfsystem":
+                dst => $listen_iface_ips,
+            }
         }
     } else {
         $listen_iface_ips = undef

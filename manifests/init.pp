@@ -11,7 +11,7 @@ class cfsystem (
 
     Optional[Struct[{
         host => String[1],
-        port => Integer[1,65535],
+        port => Cfnetwork::Port,
     }]] $repo_proxy = undef, # proxy host
     Boolean $add_repo_cacher = false, # enable repo cacher service
 
