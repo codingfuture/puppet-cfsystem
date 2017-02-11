@@ -12,10 +12,10 @@ class cfsystem::hwm(
     if $type != 'auto' {
         $actual_type = $type
     } else {
-        $manufacturer = try_get_value($::facts, 'dmi/manufacturer', '')
+        $manufacturer = pick_default($::facts.dig('dmi', 'manufacturer'), '')
 
         if ($manufacturer =~ /Dell/ and
-            try_get_value($::facts, 'dmi/product/name', '') =~ /PowerEdge/
+            pick_default($::facts.dig('dmi', 'product', 'name'), '') =~ /PowerEdge/
         ) {
             $actual_type = 'dell'
         } elsif $manufacturer =~ 'Supermicro' {

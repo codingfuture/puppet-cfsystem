@@ -27,6 +27,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Dropped dependency on dalen-puppetdbquery in favor of native puppetdb_query
 - Removed old cf_query_*() API
 - Added cfsystem::query() API with catalog-specific caching
+- Removed deprecated calls to try_get_value()
 
 ## [0.10.1]
 - Added installation of libpam-systemd to workaround sshd session issues
