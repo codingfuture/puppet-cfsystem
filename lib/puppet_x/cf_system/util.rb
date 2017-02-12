@@ -241,7 +241,7 @@ module PuppetX::CfSystem::Util
             end
 
             #warning("Catalog fingerprint change: #{catalog.cf_mutable_fp} vs #{fp}")
-            warning("Mutable base: #{mutable}")
+            #warning("Mutable base: #{mutable}")
             
             catalog.cf_mutable = mutable
             catalog.cf_mutable_fp = fp
