@@ -10,6 +10,8 @@ define cfsystem::clusterssh(
     Boolean
         $is_primary,
     String[1]
+        $peer_ipset,
+    String[1]
         $user,
     String[1]
         $group = $user,
@@ -17,8 +19,6 @@ define cfsystem::clusterssh(
         $key_type = 'ed25519',
     Cfsystem::Rsabits
         $key_bits = 2048, # for rsa
-    Array[String[1]]
-        $peers = [],
 ) {
     if $title != "${namespace}:${cluster}" {
         file("Invalid clusterssh title = ${title}")
@@ -113,13 +113,11 @@ define cfsystem::clusterssh(
         require => File[$ssh_dir],
     }
 
-    if size($peers) > 0 {
-        cfnetwork::client_port { "any:cfssh:${namespace}_${cluster}":
-            dst  => $peers,
-            user => $user,
-        }
-        cfnetwork::service_port { "any:cfssh:${namespace}_${cluster}":
-            src => $peers,
-        }
+    cfnetwork::client_port { "any:cfssh:${namespace}_${cluster}":
+        dst  => "ipset:${peer_ipset}",
+        user => $user,
+    }
+    cfnetwork::service_port { "any:cfssh:${namespace}_${cluster}":
+        src => "ipset:${peer_ipset}",
     }
 }

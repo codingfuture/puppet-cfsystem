@@ -278,11 +278,11 @@ puppet catalog (which should be secured as well).
 * `$namespace` - cluster namespace, e.g. 'cfdb'
 * `$cluster` - cluster identifier
 * `$is_primary` - controls if a new key can be generated
+* `$peer_ipset` - name of pre-defined cfnetwork::ipset
 * `$user` - system user with 'home' parameter
 * `$group = $user` - the user's group
 * `$key_type = 'ed25519'` - SSH key type
 * `$key_bits = 2048` - SSH key bits (for RSA)
-* `$peers = []` - list of other cluster nodes for firewall (cfnetwork::ipset is strongly suggested)
 
 
 ## `cfsystem::hwm` class
