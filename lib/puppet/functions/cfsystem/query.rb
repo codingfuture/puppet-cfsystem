@@ -8,7 +8,7 @@ Puppet::Functions.create_function(:'cfsystem::query') do
     end
     
     def cf_cached_query(query)
-        cache = PuppetX::CfSystem::Util.mutablePersistence(closure_scope, 'query_cache')
+        cache = PuppetX::CfSystem::Util.mutablePersistence(self, 'query_cache')
         cache_key = query.to_s
         res = cache[cache_key]
         

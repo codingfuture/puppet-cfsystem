@@ -198,7 +198,8 @@ module PuppetX::CfSystem::Util
     end
     
     #---
-    def self.mutablePersistence(scope, section)
+    def self.mutablePersistence(function, section)
+        scope = function.closure_scope
         catalog = scope.catalog
         
         if !catalog.respond_to? :cf_mutable_fp or !catalog.respond_to? :cf_mutable
@@ -208,17 +209,39 @@ module PuppetX::CfSystem::Util
             end
         end
         
-        facts = scope.lookupvar('::facts')
+        facts = scope['::facts']
         fp = "#{facts['fqdn']}:#{facts.object_id}"
         
         if catalog.cf_mutable_fp != fp
-            mutable = {}
-            facts.fetch('cf_persistent', {}).each do |ik, iv|
-                mutable[ik] = iv.dup
-            end
+            mutable ={}
+            cf_persistent = facts['cf_persistent']
             
+            # A workaround for #PUP-7198
+            if cf_persistent.nil?
+                warning('No cf_persistent facts #PUP-7198, quering resources')
+                certname = scope['::trusted']['certname']
+                function.call_function(
+                    'puppetdb_query',
+                    [ 'from', 'resources', ['extract', ['parameters'],
+                        [ 'and',
+                            ['=', 'certname', certname ],
+                            ['=', 'type', 'Cfsystem_persist'],
+                        ]
+                    ] ]
+                ).each do |v|
+                    params = v['parameters']
+                    section = params['section']
+                    mutable[section] ||= {}
+                    mutable[section][ params['key'] ] = params['value']
+                end
+            else
+                cf_persistent.each do |ik, iv|
+                    mutable[ik] = iv.dup
+                end
+            end
+
             #warning("Catalog fingerprint change: #{catalog.cf_mutable_fp} vs #{fp}")
-            #warning("Mutable base: #{mutable}")
+            warning("Mutable base: #{mutable}")
             
             catalog.cf_mutable = mutable
             catalog.cf_mutable_fp = fp

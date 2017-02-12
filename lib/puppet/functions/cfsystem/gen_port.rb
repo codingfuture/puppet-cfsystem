@@ -12,7 +12,7 @@ Puppet::Functions.create_function(:'cfsystem::gen_port') do
     end
     
     def cf_gen_port(assoc_id, set=nil)
-        ports = PuppetX::CfSystem::Util.mutablePersistence(closure_scope, 'ports')
+        ports = PuppetX::CfSystem::Util.mutablePersistence(self, 'ports')
         value = PuppetX::CfSystem::Util.genPortCommon(ports, assoc_id, set)
 
         call_function(

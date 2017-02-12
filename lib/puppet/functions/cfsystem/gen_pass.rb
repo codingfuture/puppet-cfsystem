@@ -13,7 +13,7 @@ Puppet::Functions.create_function(:'cfsystem::gen_pass') do
     end
     
     def cf_gen_pass(assoc_id, len, set=nil)
-        secrets = PuppetX::CfSystem::Util.mutablePersistence(closure_scope, 'secrets')
+        secrets = PuppetX::CfSystem::Util.mutablePersistence(self, 'secrets')
         value = PuppetX::CfSystem::Util.genSecretCommon(secrets, assoc_id, len, set)
 
         call_function(

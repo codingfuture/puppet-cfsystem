@@ -13,7 +13,7 @@ Puppet::Functions.create_function(:'cfsystem::gen_key') do
     end
     
     def cf_gen_key(assoc_id, gen_opts, forced_key=nil)
-        keys = PuppetX::CfSystem::Util.mutablePersistence(closure_scope, 'keys')
+        keys = PuppetX::CfSystem::Util.mutablePersistence(self, 'keys')
         value = PuppetX::CfSystem::Util.genKeyCommon(keys, assoc_id, gen_opts, forced_key)
 
         call_function(
