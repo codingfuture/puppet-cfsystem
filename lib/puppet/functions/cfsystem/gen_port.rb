@@ -16,7 +16,7 @@ Puppet::Functions.create_function(:'cfsystem::gen_port') do
         value = PuppetX::CfSystem::Util.genPortCommon(ports, assoc_id, set)
 
         call_function(
-            :create_resources,
+            :ensure_resources,
             'cfsystem_persist',
             {
                 "ports:#{assoc_id}" => {

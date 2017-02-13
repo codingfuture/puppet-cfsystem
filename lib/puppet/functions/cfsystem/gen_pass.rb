@@ -17,7 +17,7 @@ Puppet::Functions.create_function(:'cfsystem::gen_pass') do
         value = PuppetX::CfSystem::Util.genSecretCommon(secrets, assoc_id, len, set)
 
         call_function(
-            :create_resources,
+            :ensure_resources,
             'cfsystem_persist',
             {
                 "secrets:#{assoc_id}" => {
