@@ -89,7 +89,10 @@ class cfsystem::ntp(
 
     package { 'ntpdate': } ->
     cron { 'cf_ntpdate':
-        command => $cfsystem::custombin::cf_ntpdate,
+        command => [
+            $cfsystem::custombin::cf_ntpdate,
+            ' | /bin/egrep \'offset [0-9]*[1-9]\.[0-9]+ sec\'',
+        ].join(''),
         hour    => $cron_hour,
         minute  => $cron_minute,
     }

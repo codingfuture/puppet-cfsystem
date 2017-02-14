@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.11.1]
+- Changed ntpdate cron to mail output only if |time offset| >= 1
+
 ## [0.11.0]
 - Minor fix for HAProxy setup @ jessie
 - Fixed to also pin libssl-dev @ jessie
@@ -245,6 +248,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 Initial release
 
+[0.11.1]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.11.1
 [0.11.0]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.11.0
 [0.10.1]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.10.1
 [0.10.0]: https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.10.0
