@@ -47,6 +47,7 @@ What it does:
     * `cfsystem::gen_key(name, params, forced_key)` - generate or save persistent SSH key
     * `cfsystem::gen_pass(name, length, forced_pass)` - generate or save persistent password
     * `cfsystem::gen_port(name, forced_port)` - allocate or save persistent network port
+    * `cfsystem::pretty_json(data)` - return pretty formatted JSON string
 
 
 ## Technical Support
