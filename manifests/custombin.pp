@@ -80,7 +80,7 @@ class cfsystem::custombin {
     $cf_wait_socket = "${bin_dir}/cf_wait_socket"
 
     file { $cf_wait_socket:
-        mode    => '0500',
+        mode    => '0555',
         content => file('cfsystem/cf_wait_socket.sh'),
     }
 }

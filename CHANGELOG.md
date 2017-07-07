@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.11.2](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.11.2)
+- FIXED: to allow execute cf_wait_socket helper by any user
 - NEW: Puppet 5.x support
 - NEW: Ubuntu Zesty support
 - NEW: cfsystem::pretty_json
