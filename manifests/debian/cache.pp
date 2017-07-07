@@ -46,6 +46,7 @@ class cfsystem::debian::cache(
 
         file { '/etc/apt-cacher-ng/cfsystem.conf':
             content => $acng_content.join("\n"),
+            require => Package['apt-cacher-ng'],
             notify  => Service['apt-cacher-ng'],
         }
 

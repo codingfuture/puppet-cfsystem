@@ -41,7 +41,7 @@ class cfsystem (
         tries     => 2,
     },
     Integer $apt_pin = 1001,
-    Integer $apt_backports_pin = 600,
+    Integer $apt_backports_pin = 1001,
     String[1] $real_hdd_scheduler = 'deadline',
     Optional[Variant[ String[1], Array[String[1]] ]] $rc_local = undef,
 
