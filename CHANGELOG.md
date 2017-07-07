@@ -7,6 +7,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - FIXED: to allow execute cf_wait_socket helper by any user
 - CHANGED: to use http://deb.debian.org/debian as default for Debian
 - CHANGED: to use $apt_backports_pin = 1001 by default for old system
+- CHANGED: updated to APT module >= 4.1
 - NEW: Puppet 5.x support
 - NEW: Ubuntu Zesty support
 - NEW: cfsystem::pretty_json
