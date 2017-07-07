@@ -71,14 +71,14 @@ class cfsystem::ntp(
         }
     }
 
-    package { $absent: ensure => absent } ->
-    package { $type: ensure => present } ->
-    file { $conf:
+    package { $absent: ensure => absent }
+    -> package { $type: ensure => present }
+    -> file { $conf:
         mode    => '0644',
         content => epp($tpl),
         notify  => Service[$type],
-    } ->
-    service { $type:
+    }
+    -> service { $type:
         ensure   => running,
         enable   => true,
         provider => 'systemd',
@@ -87,8 +87,8 @@ class cfsystem::ntp(
     #
     include cfsystem::custombin
 
-    package { 'ntpdate': } ->
-    cron { 'cf_ntpdate':
+    package { 'ntpdate': }
+    -> cron { 'cf_ntpdate':
         command => [
             $cfsystem::custombin::cf_ntpdate,
             ' | /bin/egrep \'offset [0-9]*[1-9]\.[0-9]+ sec\'',

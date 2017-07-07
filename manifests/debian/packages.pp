@@ -14,8 +14,8 @@ class cfsystem::debian::packages {
         owner  => 'root',
         group  => 'root',
         mode   => '0755',
-    } ->
-    file { '/etc/cfsystem/debconf':
+    }
+    -> file { '/etc/cfsystem/debconf':
         ensure => directory,
         owner  => 'root',
         group  => 'root',
@@ -52,8 +52,8 @@ LANG=\"${cfsystem::locale}\"
                 "locales locales/locales_to_be_generated multiselect ${cfsystem::locale}",
                 "locales locales/default_environment_locale select ${cfsystem::locale}",
             ],
-        } ->
-        package { 'locales-all': }
+        }
+        -> package { 'locales-all': }
     }
 
     # Handy tools

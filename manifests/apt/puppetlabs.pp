@@ -8,9 +8,9 @@ class cfsystem::apt::puppetlabs(
 ) {
     assert_private()
 
-    Exec['cf-apt-update'] ->
-    package { 'puppetlabs-release': ensure => absent } ->
-    package { 'puppetlabs-release-pc1': ensure => latest }
+    Exec['cf-apt-update']
+    -> package { 'puppetlabs-release': ensure => absent }
+    -> package { 'puppetlabs-release-pc1': ensure => latest }
     # ->
     #class { 'cfsystem::apt::puppetkey':
     #    notify => Exec['cf-apt-update'],

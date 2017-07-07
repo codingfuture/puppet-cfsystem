@@ -73,14 +73,14 @@ define cfsystem::clusterssh(
     }
     $key_info = cfsystem::gen_key($title, $key_gen_opts, $key_tune)
 
-    User[$user] ->
-    file { $ssh_dir:
+    User[$user]
+    -> file { $ssh_dir:
         ensure => directory,
         owner  => $user,
         group  => $group,
         mode   => '0700',
-    } ->
-    file { "${ssh_dir}/config":
+    }
+    -> file { "${ssh_dir}/config":
         owner   => $user,
         group   => $group,
         mode    => '0600',

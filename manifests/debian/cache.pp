@@ -37,8 +37,8 @@ class cfsystem::debian::cache(
             'PassThroughPattern: .*:443$'
         ]
 
-        package { 'apt-cacher-ng': } ->
-        service { 'apt-cacher-ng':
+        package { 'apt-cacher-ng': }
+        -> service { 'apt-cacher-ng':
             ensure   => running,
             enable   => true,
             provider => 'systemd',

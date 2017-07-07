@@ -11,13 +11,13 @@ if ! echo \$PATH | grep -q ${bin_dir}; then
   export PATH=\"\$PATH:${bin_dir}\"
 fi
 "
-    } ->
-    file { "/etc/profile.d/${title}.csh":
+    }
+    -> file { "/etc/profile.d/${title}.csh":
         content => "
 set path = (\$path ${bin_dir})
 "
-    } ->
-    cfsystem_secure_path { $title:
+    }
+    -> cfsystem_secure_path { $title:
         ensure => present,
         path   => $bin_dir,
     }

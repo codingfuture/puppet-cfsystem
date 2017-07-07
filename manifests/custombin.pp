@@ -13,18 +13,18 @@ class cfsystem::custombin {
     file { $root_dir:
         ensure => directory,
         mode   => '0755',
-    } ->
-    file { $bin_dir:
+    }
+    -> file { $bin_dir:
         ensure => directory,
         mode   => '0755',
-    } ->
-    file { '/etc/profile.d':
+    }
+    -> file { '/etc/profile.d':
         ensure  => directory,
         mode    => '0755',
         purge   => true,
         recurse => true,
-    } ->
-    file { '/etc/profile.d/bash_completion.sh':
+    }
+    -> file { '/etc/profile.d/bash_completion.sh':
         ensure  => present,
         mode    => '0644',
         replace => false,
@@ -36,8 +36,8 @@ class cfsystem::custombin {
     file { $cf_kernel_version_check:
         mode    => '0555',
         content => file('cfsystem/cf_kernel_version_check'),
-    } ->
-    cron { $cf_kernel_version_check:
+    }
+    -> cron { $cf_kernel_version_check:
         command => $cf_kernel_version_check,
         hour    => 12,
         minute  => 0,

@@ -10,14 +10,14 @@ class cfsystem::randomfeed(
 ) {
     case $type {
         'haveged' : {
-            package{ $type: } ->
-            file {"/etc/default/${type}":
+            package{ $type: }
+            -> file {"/etc/default/${type}":
                 content => [
                     "DAEMON_ARGS=\"-w ${threshold}\""
                 ].join("\n"),
                 notify  => Service[$type],
-            } ->
-            service { $type:
+            }
+            -> service { $type:
                 ensure   => running,
                 enable   => true,
                 provider => 'systemd',

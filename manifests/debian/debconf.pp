@@ -17,12 +17,12 @@ define cfsystem::debian::debconf (
             group   => 'root',
             mode    => '0644',
             content => join($config, "\n"),
-        } ->
-        exec { "cfsystem_debconf_${package}":
+        }
+        -> exec { "cfsystem_debconf_${package}":
             command     => "/usr/bin/debconf-set-selections <${cfg_file}",
             refreshonly => true,
-        } ->
-        package { $package:
+        }
+        -> package { $package:
             ensure => $ensure,
         }
 
