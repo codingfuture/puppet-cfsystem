@@ -213,7 +213,7 @@ Setup sysctl entries.
 
 Debian-specific configuration.
 
-* `apt_url = 'http://httpredir.debian.org/debian'` - APT base URL for Debian repos
+* `apt_url = 'http://deb.debian.org/debian'` - APT base URL for Debian repos
 * `security_apt_url = 'http://security.debian.org/'` - APT base URL for Debian security repo
 * `release` = 'jessie' - Debian release name to configure
 
