@@ -21,7 +21,7 @@ class cfsystem::hwm::dell::aptrepo {
     }
 
     apt::key { 'dell':
-        key     => '42550ABD1E80D7C1BC0BAD851285491434D8786F',
+        id      => '42550ABD1E80D7C1BC0BAD851285491434D8786F',
         content => '
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v1
