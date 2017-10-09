@@ -274,28 +274,53 @@ module PuppetX::CfSystem
         io_weight = options.fetch(:io_weight, nil)
         mem_limit = options.fetch(:mem_limit, nil)
         mem_lock = options.fetch(:mem_lock, false)
+        cgroups_v2 = false
         
-        unless cpu_weight.nil?
-            section_ini['CPUAccounting'] = 'true'
-            cpu_shares = (1024 * cpu_weight.to_i / 100).to_i
-            section_ini['CPUShares'] = fitRange(2, 262144, cpu_shares)
-        end
+        mem_limit = "#{mem_limit}M" if mem_limit.is_a? Integer
         
-        unless io_weight.nil?
-            io_weight = (500 * io_weight.to_i / 100).to_i
-            section_ini['BlockIOAccounting'] = 'true'
-            section_ini['BlockIOWeight'] = fitRange(10, 1000, io_weight)
-        end
-        
-        unless mem_limit.nil?
-            section_ini['MemoryAccounting'] = 'true'
-            section_ini['MemoryLimit'] = "#{mem_limit}M"
-                    
-            if mem_lock
-                mem_lock = mem_limit * 1024 * 1024
-                section_ini['LimitMEMLOCK'] = "#{mem_lock}"
+        if cgroups_v2
+            unless cpu_weight.nil?
+                section_ini['CPUAccounting'] = 'true'
+                cpu_shares = (10000 * cpu_weight.to_i / 100).to_i
+                section_ini['CPUWeight'] = fitRange(1, 10000, cpu_shares)
             end
-        end        
+            
+            unless io_weight.nil?
+                io_weight = (10000 * io_weight.to_i / 100).to_i
+                section_ini['IOAccounting'] = 'true'
+                section_ini['IOWeight'] = fitRange(1, 10000, io_weight)
+            end
+            
+            unless mem_limit.nil?
+                section_ini['MemoryAccounting'] = 'true'
+                section_ini['MemoryMax'] = mem_limit
+                        
+                if mem_lock
+                    section_ini['LimitMEMLOCK'] = "infinity"
+                end
+            end
+        else
+            unless cpu_weight.nil?
+                section_ini['CPUAccounting'] = 'true'
+                cpu_shares = (1024 * cpu_weight.to_i / 100).to_i
+                section_ini['CPUShares'] = fitRange(2, 262144, cpu_shares)
+            end
+            
+            unless io_weight.nil?
+                io_weight = (500 * io_weight.to_i / 100).to_i
+                section_ini['BlockIOAccounting'] = 'true'
+                section_ini['BlockIOWeight'] = fitRange(10, 1000, io_weight)
+            end
+            
+            unless mem_limit.nil?
+                section_ini['MemoryAccounting'] = 'true'
+                section_ini['MemoryLimit'] = mem_limit
+                        
+                if mem_lock
+                    section_ini['LimitMEMLOCK'] = "infinity"
+                end
+            end
+        end
     end
     
     def self.createSlice(options)
