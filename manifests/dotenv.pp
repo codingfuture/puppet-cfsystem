@@ -16,15 +16,22 @@ define cfsystem::dotenv(
         fail("User ${user} must be defined with explicit 'home' parameter")
     }
 
-    $dotenv_file = "${home}/${env_file}"
+    if $env_file[0] == '/' {
+        $dotenv_file = $env_file
+    } else {
+        $dotenv_file = "${home}/${env_file}"
+    }
 
-    ensure_resource('file', $dotenv_file, {
-        ensure  => present,
-        owner   => $user,
-        mode    => '0400',
-        content => '',
-        replace => false,
-    })
+    if !defined(File[$dotenv_file]) {
+        # NOTE: do not use ensure_resource
+        file { $dotenv_file:
+            ensure  => present,
+            owner   => $user,
+            mode    => '0400',
+            content => '',
+            replace => false,
+        }
+    }
 
     file_line { "${dotenv_file}/${variable}":
         ensure   => present,

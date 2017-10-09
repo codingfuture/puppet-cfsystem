@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.11.3](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.11.3)
+- NEW: absolute cfsystem::dotenv filename support
+
 ## [0.11.2](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.11.2)
 - FIXED: to allow execute cf_wait_socket helper by any user
 - CHANGED: to use http://deb.debian.org/debian as default for Debian
