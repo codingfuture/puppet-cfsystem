@@ -6,6 +6,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.11.3](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.11.3)
 - CHANGED: LimitMEMLOCK is set to "infinity" instead of MemoryMax size, if requested
 - NEW: absolute cfsystem::dotenv filename support
+- NEW: string support to systemd memory limits (internal API)
 
 ## [0.11.2](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.11.2)
 - FIXED: to allow execute cf_wait_socket helper by any user

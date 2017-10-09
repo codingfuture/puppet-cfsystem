@@ -3,7 +3,7 @@
 #
 
 
-require 'JSON'
+require 'json'
 
 Puppet::Functions.create_function(:'cfsystem::pretty_json') do
     dispatch :cf_pretty_json do
