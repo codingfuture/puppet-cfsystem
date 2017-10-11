@@ -21,7 +21,7 @@ define cfsystem::clusterssh(
         $key_bits = 2048, # for rsa
 ) {
     if $title != "${namespace}:${cluster}" {
-        file("Invalid clusterssh title = ${title}")
+        fail("Invalid clusterssh title = ${title}")
     }
 
     $home = getparam(User[$user], 'home')
