@@ -1,0 +1,11 @@
+{
+  "name": "codingfuture-cfsystem",
+  "version": "0.11.3",
+  "vcs": "git",
+  "package": [
+    "pkg"
+  ],
+  "tools": {
+    "puppet": "*"
+  }
+}
