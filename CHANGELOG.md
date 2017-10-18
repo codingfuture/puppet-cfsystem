@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.11.4](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.11.4)
+- CHANGED: to use now available Stretch repository
+
 ## [0.11.3](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.11.3)
 - CHANGED: LimitMEMLOCK is set to "infinity" instead of MemoryMax size, if requested
 - NEW: absolute cfsystem::dotenv filename support

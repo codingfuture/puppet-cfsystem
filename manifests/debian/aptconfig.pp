@@ -7,9 +7,9 @@
 class cfsystem::debian::aptconfig {
     # Use for temporary mapping with new releases
     #---
-    if versioncmp($::facts['operatingsystemrelease'], '9') >= 0 {
-        $puppet_release = 'jessie'
-        $prevrelease = 'jessie'
+    if versioncmp($::facts['operatingsystemrelease'], '10') >= 0 {
+        $puppet_release = 'stretch'
+        $prevrelease = 'stretch'
         $add_backports = false
     } else {
         $puppet_release = $::facts['lsbdistcodename']
