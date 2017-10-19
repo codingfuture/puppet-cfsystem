@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## [0.11.5](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.11.5)
+- FIXED: kernel version check to use natural sorting
+
 ## [0.11.4](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.11.4)
 - CHANGED: to use now available Stretch repository
 
