@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [0.11.7](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.11.7)
+- FIXED: kernel version check to filter out only installed versions
+
 ## [0.11.6](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.11.6)
 - FIXED: kernel version check to use natural sorting after version extraction
 

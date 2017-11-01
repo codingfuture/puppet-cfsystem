@@ -1,7 +1,7 @@
 #!/bin/sh
 
 latest_kernel=$(/usr/bin/dpkg -l 'linux-image-*' \
-    | /usr/bin/awk '/linux-image-[0-9]/ { print $3 }' \
+    | /usr/bin/awk '/^ii  linux-image-[0-9]/ { print $3 }' \
     | /usr/bin/sort -V \
     | tail -n 1)
 
