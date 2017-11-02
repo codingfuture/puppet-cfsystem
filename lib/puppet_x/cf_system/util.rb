@@ -154,12 +154,12 @@ module PuppetX::CfSystem::Util
     
     #---
     def self.genKeyCommon(keys, assoc_id, gen_opts, set)
-        return keys[assoc_id] if keys.has_key? assoc_id
-
-        key_type = gen_opts['type']
-        key_bits = gen_opts['bits']
-        
         if set.nil? or set.empty?
+            return keys[assoc_id] if keys.has_key? assoc_id
+
+            key_type = gen_opts['type']
+            key_bits = gen_opts['bits']
+
             tmp_dir = '/tmp/cfsystem'
             FileUtils.mkdir_p(tmp_dir)
             FileUtils.chmod(0700, tmp_dir)
