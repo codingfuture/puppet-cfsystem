@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.11.9](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.11.9)
+- NEW: cfsystem::clusterssh adds also public key file for convenience
+
 ## [0.11.8](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.11.8)
 - FIXED: clusterssh / PuppetX::CfSystem::Util.genKeyCommon to force new keys
     on secondary instances when old one is already set

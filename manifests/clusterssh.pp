@@ -102,6 +102,13 @@ define cfsystem::clusterssh(
         content   => $key_info['private'],
         show_diff => false,
     }
+    file { "${ssh_idkey}.pub":
+        owner     => $user,
+        group     => $group,
+        mode      => '0600',
+        content   => "ssh-${key_info['type']} ${key_info['public']}\n",
+        show_diff => false,
+    }
 
     # TODO: options from=
     # It required hostname to be resolved to IPs due to UseDNS=no
