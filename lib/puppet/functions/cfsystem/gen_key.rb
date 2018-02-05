@@ -17,7 +17,7 @@ Puppet::Functions.create_function(:'cfsystem::gen_key') do
         value = PuppetX::CfSystem::Util.genKeyCommon(keys, assoc_id, gen_opts, forced_key)
 
         call_function(
-            :ensure_resources,
+            'ensure_resources',
             'cfsystem_persist',
             {
                 "keys:#{assoc_id}" => {

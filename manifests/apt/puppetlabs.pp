@@ -10,7 +10,8 @@ class cfsystem::apt::puppetlabs(
 
     Exec['cf-apt-update']
     -> package { 'puppetlabs-release': ensure => absent }
-    -> package { 'puppetlabs-release-pc1': ensure => latest }
+    -> package { 'puppetlabs-release-pc1': ensure => absent }
+    -> package { 'puppet5-release': ensure => latest }
     # ->
     #class { 'cfsystem::apt::puppetkey':
     #    notify => Exec['cf-apt-update'],
@@ -19,7 +20,7 @@ class cfsystem::apt::puppetlabs(
     apt::source { 'puppetlabs-pc1':
         location      => 'http://apt.puppetlabs.com',
         release       => $release,
-        repos         => 'PC1',
+        repos         => 'puppet5',
         pin           => $cfsystem::apt_pin + 1,
         notify_update => false,
         notify        => Exec['cf-apt-update'],

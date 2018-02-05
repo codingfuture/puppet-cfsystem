@@ -13,7 +13,7 @@ Puppet::Functions.create_function(:'cfsystem::query') do
         res = cache[cache_key]
         
         if res.nil?
-            res = call_function(:puppetdb_query, query)
+            res = call_function('puppetdb_query', query)
             cache[cache_key] = res
         end
         
