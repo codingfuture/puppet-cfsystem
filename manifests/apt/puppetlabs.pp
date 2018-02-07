@@ -17,7 +17,7 @@ class cfsystem::apt::puppetlabs(
     #    notify => Exec['cf-apt-update'],
     #}
 
-    apt::source { 'puppetlabs-pc1':
+    apt::source { 'puppet5':
         location      => 'http://apt.puppetlabs.com',
         release       => $release,
         repos         => 'puppet5',
