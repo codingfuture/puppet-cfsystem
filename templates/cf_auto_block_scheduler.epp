@@ -10,7 +10,7 @@ if test -e /sys/block/xvda/queue/; then
         fi
 
         echo $scheduler > $dq/scheduler
-        echo "Setting noop scheduler for $(basename $(dirname $dq))"
+        echo "Setting ${scheduler} scheduler for $(basename $(dirname $dq))"
     done
 fi
 
@@ -31,6 +31,6 @@ if test -e /sys/block/sda/queue/; then
         fi
 
         echo $scheduler > $dq/scheduler
-        echo "Setting $scheduler scheduler for $(basename $(dirname $dq))"
+        echo "Setting ${scheduler} scheduler for $(basename $(dirname $dq))"
     done
 fi
