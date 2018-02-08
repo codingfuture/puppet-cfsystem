@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Force NOOP on Xen PV disks
-if test -e /sys/block/xvd?/queue/; then
+if test -e /sys/block/xvda/queue/; then
     for dq in /sys/block/xvd?/queue/; do
         echo noop > $dq/scheduler
         echo "Setting noop scheduler for $(basename $(dirname $dq))"
@@ -11,21 +11,21 @@ fi
 # Force NOOP on SSD and virtualized hosts
 # Otherwise, force cfsystem configured default scheduler
 virtdetect=$(systemd-detect-virt)
-if test -e /sys/block/sd?/queue/; then
+if test -e /sys/block/sda/queue/; then
     scheduler="<%= $cfsystem::real_hdd_scheduler %>"
 
     for dq in /sys/block/sd?/queue/; do
         scheduler=noop
-        
+
         if test "$(cat $dq/rotational)" -ne 1; then
             scheduler=noop
         fi
-    
+
         # Disable scheduler for virtualized hosts
         if test "$virtdetect" != noop; then
             scheduler=noop
         fi
-        
+
         echo "Setting $scheduler scheduler for $(basename $(dirname $dq))"
     done
 fi

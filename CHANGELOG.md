@@ -6,6 +6,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.12.0](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.12.0)
 - CHANGED: to use Puppet 5 by default
 - FIXED: Puppet 5 runtime issues
+- FIXED: cf_auto_block_scheduler to work with stricter "test"
 
 ## [0.11.9](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.11.9)
 - NEW: cfsystem::clusterssh adds also public key file for convenience
