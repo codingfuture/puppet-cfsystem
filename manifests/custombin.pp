@@ -49,7 +49,7 @@ class cfsystem::custombin {
 
     file { $cf_auto_block_scheduler:
         mode    => '0500',
-        content => file('cfsystem/cf_auto_block_scheduler'),
+        content => epp('cfsystem/cf_auto_block_scheduler.epp'),
     }
 
     # PGP key updater
