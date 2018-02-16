@@ -18,7 +18,7 @@ filegen clockstats file clockstats type day enable
 tinker panic 0
 
 <% any2array($cfsystem::ntp_servers).each |$srv| { -%>
-pool <%= $srv %> iburst
+server <%= $srv %>
 <% } -%>
 
 
@@ -35,5 +35,5 @@ restrict -4 default kod notrap nomodify nopeer noquery
 restrict -6 default kod notrap nomodify nopeer noquery
 
 # Local users may interrogate the ntp server more closely.
-restrict 127.0.0.1
-restrict ::1
+restrict 127.0.0.1 default
+restrict ::1 default
