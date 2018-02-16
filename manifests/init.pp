@@ -15,9 +15,14 @@ class cfsystem (
     }]] $repo_proxy = undef, # proxy host
     Boolean $add_repo_cacher = false, # enable repo cacher service
 
-    String[1] $service_face = 'any',
+    String[1] $service_face = $cfsystem::defaults::service_face,
 
-    Variant[ Array[String[1]], String[1] ] $ntp_servers = [ 'pool.ntp.org' ],
+    Variant[ Array[String[1]], String[1] ] $ntp_servers = [
+        '0.pool.ntp.org',
+        '1.pool.ntp.org',
+        '2.pool.ntp.org',
+        '3.pool.ntp.org',
+    ],
     Boolean $add_ntp_server = false,
     Enum['ntp', 'openntpd', 'chrony'] $ntpd_type = 'ntp',
 
@@ -60,7 +65,7 @@ class cfsystem (
     String[1] $key_server = 'hkp://keyserver.ubuntu.com:80',
 
     Boolean $random_feed = true,
-) {
+) inherits cfsystem::defaults {
     include cfnetwork
     include cfauth
 
