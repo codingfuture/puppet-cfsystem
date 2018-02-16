@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.12.2](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.12.2)
+- FIXED: minor ntp.conf configuration issues
+
 ## [0.12.1](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.12.1)
 - CHANGED: cfsystem::service_face to default to cfnetwork::service_face
 - FIXED/CHANGED: ntpd configuration to use "server" instead of "pool"

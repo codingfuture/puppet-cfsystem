@@ -31,9 +31,9 @@ server <%= $srv %>
 # up blocking replies from your own upstream servers.
 
 # By default, exchange time with everybody, but don't allow configuration.
-restrict -4 default kod notrap nomodify nopeer noquery
-restrict -6 default kod notrap nomodify nopeer noquery
+restrict -4 default limited kod notrap nomodify nopeer noquery
+restrict -6 default limited kod notrap nomodify nopeer noquery
 
 # Local users may interrogate the ntp server more closely.
-restrict 127.0.0.1 default
-restrict ::1 default
+restrict 127.0.0.1
+restrict ::1
