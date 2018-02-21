@@ -208,6 +208,7 @@ is not intended to accept internet traffic.**
 Setup sysctl entries.
 
 * `vm_swappiness = 1` - 0-100 (%) minimize swap activity by default
+* `vm_mmax_map_count = 262144` - increased by default
 
 ## `cfsystem::debian` class
 
