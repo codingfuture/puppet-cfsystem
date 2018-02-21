@@ -385,6 +385,7 @@ module PuppetX::CfSystem
         #---
         service_ini = content_ini['Service']
         service_ini.replace({
+            'SyslogIdentifier' => service_name,
             'Type' => 'simple',
             'Restart' => 'always',
             'RestartSec' => 5,

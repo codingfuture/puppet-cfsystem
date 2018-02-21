@@ -5,6 +5,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.12.3](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.12.3)
 NEW: cfsystem::sysctl::vm_mmax_map_count
+NEW: custom systemd services to use service name for syslog tagging
 
 ## [0.12.2](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.12.2)
 - FIXED: minor ntp.conf configuration issues
