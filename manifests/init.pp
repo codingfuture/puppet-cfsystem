@@ -24,7 +24,7 @@ class cfsystem (
         '3.pool.ntp.org',
     ],
     Boolean $add_ntp_server = false,
-    Enum['ntp', 'openntpd', 'chrony'] $ntpd_type = 'ntp',
+    Enum['ntp', 'openntpd', 'chrony', 'systemd'] $ntpd_type = 'systemd',
 
     String[1] $timezone = 'Etc/UTC',
     Boolean $xen_pv = false, # enable PV/PVH config changes TODO: facter

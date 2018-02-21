@@ -1,0 +1,9 @@
+<%
+    $ntp_list = any2array($cfsystem::ntp_servers).join(',')
+%>
+[Time]
+NTP=<%= $ntp_list %>
+FallbackNTP=<%= $ntp_list %>
+RootDistanceMaxSec=10
+PollIntervalMinSec=64
+PollIntervalMaxSec=1024

@@ -42,9 +42,24 @@ class cfsystem::ntp(
         target => "/usr/share/zoneinfo/${cfsystem::timezone}"
     }
 
-    $type = $cfsystem::ntpd_type
+    if $cfsystem::add_ntp_server and $cfsystem::ntpd_type == 'systemd'  {
+        $type = 'ntp'
+
+        notify { 'cfsystem::ntp::fallback':
+            message  => 'systemd-timesyncd can not act as server, fallback to ntp',
+            loglevel => warning,
+        }
+    } else {
+        $type = $cfsystem::ntpd_type
+    }
 
     case $type {
+        'systemd': {
+            $absent =  ['openntpd', 'chrony', 'ntp']
+            $conf = '/etc/systemd/timesyncd.conf'
+            $tpl = 'cfsystem/timesyncd.conf.epp'
+            $user = 'systemd-timesync'
+        }
         'ntp': {
             $absent =  ['openntpd', 'chrony']
             $conf = '/etc/ntp.conf'
@@ -72,16 +87,27 @@ class cfsystem::ntp(
     }
 
     package { $absent: ensure => absent }
-    -> package { $type: ensure => present }
-    -> file { $conf:
-        mode    => '0644',
-        content => epp($tpl),
-        notify  => Service[$type],
-    }
-    -> service { $type:
-        ensure   => running,
-        enable   => true,
-        provider => 'systemd',
+
+    if $type == 'systemd' {
+        Package[$absent]
+        -> file { $conf:
+            mode    => '0644',
+            content => epp($tpl),
+        }
+        ~> Exec['cfsystem-systemd-reload']
+    } else {
+        Package[$absent]
+        -> package { $type: ensure => present }
+        -> file { $conf:
+            mode    => '0644',
+            content => epp($tpl),
+            notify  => Service[$type],
+        }
+        -> service { $type:
+            ensure   => running,
+            enable   => true,
+            provider => 'systemd',
+        }
     }
 
     #
@@ -112,4 +138,11 @@ class cfsystem::ntp(
         cfnetwork::service_port { "${cfsystem::service_face}:ntp": }
     }
 
+    #---
+    $systemd_ntp = $type ? { 'systemd' => 'yes', default => 'no' }
+
+    exec { 'systemd-timesyncd ntp':
+        command => "/usr/bin/timedatectl set-ntp ${systemd_ntp}",
+        unless  => "/usr/bin/timedatectl status | /bin/grep -q 'Network time on: ${systemd_ntp}'"
+    }
 }

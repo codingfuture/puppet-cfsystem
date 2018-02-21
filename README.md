@@ -136,9 +136,9 @@ cfnetwork::client_ports:
     * `port` - TCP port
 * `add_repo_cacher = false` - if true, install apt-cacher-ng and accept clients on `$service_face`
 * `service_face = 'any'` - interface to accept client for NTP and HTTP proxy, if enabled separately
-* `ntp_servers = [ 'pool.ntp.org' ]` - upstream NTP server
+* `ntp_servers = [ '0.pool.ntp.org', '1.pool.ntp.org', '2.pool.ntp.org', '3.pool.ntp.org' ]` - upstream NTP server
 * `add_ntp_server = false` - if true, accept NTP service clients on `$service_face`
-* `Enum['ntp', 'openntpd', 'chrony'] $ntpd_type = 'ntp'` - NTP implementation to use
+* `Enum['ntp', 'openntpd', 'chrony', 'systemd'] $ntpd_type = 'systemd'` - NTP implementation to use
 * `timezone = 'Etc/UTC'` - setup system timezone
 * `apt_purge` - passed to apt::purge, purge all sources and preferences by default
 * `apt_update` - passed to apt::update, update daily with 300 second timeout by default
