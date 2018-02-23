@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.12.5](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.12.5)
+- CHANGED: to mask instead of just disable agent/mcollective, if required
+
 ## [0.12.4](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.12.4)
 - FIXED: support systemd 236+ timesyncd setup
 

@@ -210,17 +210,17 @@ class cfsystem (
 
     ensure_resource('service', 'puppet', {
         ensure   => $agent,
-        enable   => $agent,
+        enable   => $agent ? { false => mask, default => $agent },
         provider => 'systemd',
     })
     ensure_resource('service', 'pxp-agent', {
         ensure   => $agent,
-        enable   => $agent,
+        enable   => $agent ? { false => mask, default => $agent },
         provider => 'systemd',
     })
     ensure_resource('service', 'mcollective', {
         ensure   => $mcollective,
-        enable   => $mcollective,
+        enable   => $mcollective ? { false => mask, default => $mcollective },
         provider => 'systemd',
     })
 
