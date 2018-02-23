@@ -139,10 +139,23 @@ class cfsystem::ntp(
     }
 
     #---
-    $systemd_ntp = $type ? { 'systemd' => 'yes', default => 'no' }
+    if $type == 'systemd' {
+        $systemd_ntp = 'yes'
+        $systemd_ensure = true
+    } else {
+        $systemd_ntp = 'no'
+        $systemd_ensure = false
+    }
 
     exec { 'systemd-timesyncd ntp':
         command => "/usr/bin/timedatectl set-ntp ${systemd_ntp}",
-        unless  => "/usr/bin/timedatectl status | /bin/grep -q 'Network time on: ${systemd_ntp}'"
+        unless  => [
+            '/usr/bin/timedatectl status',
+            "/bin/egrep -q '(Network time on|systemd-timesyncd.service active): ${systemd_ntp}'"
+        ].join(' | '),
+    }
+    -> service { 'systemd-timesyncd.service':
+        ensure => $systemd_ensure,
+        enable => $systemd_ensure,
     }
 }
