@@ -140,20 +140,22 @@ class cfsystem::ntp(
 
     #---
     if $type == 'systemd' {
-        $systemd_ntp = 'yes'
         $systemd_ensure = true
+
+        exec { 'systemd-timesyncd ntp':
+            command => '/usr/bin/timedatectl set-ntp yes',
+            unless  => '/bin/systemctl is-enabled systemd-timesyncd.service',
+        }
     } else {
-        $systemd_ntp = 'no'
         $systemd_ensure = false
+
+        exec { 'systemd-timesyncd ntp':
+            command => '/usr/bin/timedatectl set-ntp no',
+            onlyif  => '/bin/systemctl is-enabled systemd-timesyncd.service',
+        }
     }
 
-    exec { 'systemd-timesyncd ntp':
-        command => "/usr/bin/timedatectl set-ntp ${systemd_ntp}",
-        unless  => [
-            '/usr/bin/timedatectl status',
-            "/bin/egrep -q '(Network time on|systemd-timesyncd.service active): ${systemd_ntp}'"
-        ].join(' | '),
-    }
+    Exec['systemd-timesyncd ntp']
     -> service { 'systemd-timesyncd.service':
         ensure => $systemd_ensure,
         enable => $systemd_ensure,
