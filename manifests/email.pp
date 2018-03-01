@@ -38,6 +38,7 @@ class cfsystem::email (
             $iface = cfnetwork::fw_face($bindface)
             cfnetwork::service_port { "${iface}:smtp:cfsystem":
                 dst => $listen_iface_ips,
+                src => 'ipset:localnet',
             }
         }
     } else {

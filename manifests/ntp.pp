@@ -135,7 +135,9 @@ class cfsystem::ntp(
     }
 
     if $cfsystem::add_ntp_server {
-        cfnetwork::service_port { "${cfsystem::service_face}:ntp": }
+        cfnetwork::service_port { "${cfsystem::service_face}:ntp":
+            src => 'ipset:localnet',
+        }
     }
 
     #---

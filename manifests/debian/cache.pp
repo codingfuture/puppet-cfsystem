@@ -52,8 +52,11 @@ class cfsystem::debian::cache(
 
 
         cfnetwork::describe_service{ 'apcng':
-            server => 'tcp/3142' }
-        cfnetwork::service_port{ "${cfsystem::service_face}:apcng:cfsystem": }
+            server => 'tcp/3142'
+        }
+        cfnetwork::service_port{ "${cfsystem::service_face}:apcng:cfsystem":
+            src => 'ipset:localnet',
+        }
         case $cfsystem::service_face {
         'any', 'local': {}
         default: { cfnetwork::service_port{ 'local:apcng:cfsystem': } }
