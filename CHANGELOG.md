@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.12.7](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.12.7)
+- FIXED: internal API to allow custom EnvironmentFile for systemd unit
+
 ## [0.12.6](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.12.6)
 - CHANGED: improved APT cache, Email & NTP service security with ipset:localnet
 

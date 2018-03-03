@@ -395,7 +395,18 @@ module PuppetX::CfSystem
             'RuntimeDirectory' => service_name,
         }.merge service_ini)
 
-        service_ini['EnvironmentFile'] = env_file unless content_env.empty?        
+        unless content_env.empty?
+            if !service_ini['EnvironmentFile']
+                service_ini['EnvironmentFile'] = env_file
+            elsif service_ini['EnvironmentFile'].is_a? Array
+                service_ini['EnvironmentFile'] << env_file
+            else
+                service_ini['EnvironmentFile'] = [
+                    service_ini['EnvironmentFile'],
+                    env_file,
+                ]
+            end
+        end
         
         self.createLimitsCommon(service_ini, options)
         
