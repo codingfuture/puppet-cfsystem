@@ -250,5 +250,12 @@ class cfsystem (
     }
 
     #---
+    $location = pick(
+        $cfsystem::hierapool::location,
+        $::facts['cf_location'],
+        ''
+    )
+
+    #---
     include cfsystem::hwm
 }
