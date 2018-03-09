@@ -9,6 +9,7 @@ require 'puppet/util/diff'
 require 'puppet/util/execution'
 require 'fileutils'
 require 'securerandom'
+require 'find'
 
 # Done this way due to some weird behavior in tests also ignoring $LOAD_PATH
 require File.expand_path( '../cf_system/config', __FILE__ )
@@ -35,18 +36,28 @@ module PuppetX::CfSystem
         Puppet::Util.logmethods(self, true)
     end
     
-    def self.makeVersion(file)
+    def self.fileVersionTraverse(digest, file)
         if file.is_a? Array
-            content = []
             file.each do |f|
-                content << File.read(f)
+                fileVersionTraverse(digest, f)
             end
-            content = content.join()
+        elsif FileTest.directory?(file)
+            Find.find(file) do |p|
+                if FileTest.directory?(p)
+                    next
+                else
+                    digest << File.read(p)
+                end
+            end
         else
-            content = File.read(file)
+            digest << File.read(file)
         end
-        
-        Digest::MD5.hexdigest(content)
+    end
+
+    def self.makeVersion(file)
+        digest =Digest::MD5.new
+        fileVersionTraverse(digest, file)    
+        digest.hexdigest
     end
     
     def self.begin
