@@ -46,11 +46,11 @@ module PuppetX::CfSystem
                 if FileTest.directory?(p)
                     next
                 else
-                    digest << File.read(p)
+                    digest.file(p)
                 end
             end
         else
-            digest << File.read(file)
+            digest.file(file)
         end
     end
 
