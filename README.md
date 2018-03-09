@@ -286,6 +286,9 @@ puppet catalog (which should be secured as well).
 * `$key_type = 'ed25519'` - SSH key type
 * `$key_bits = 2048` - SSH key bits (for RSA)
 
+## `cfsystem::netsyslog` class
+
+Adds local UDP & TCP syslog sockets.
 
 ## `cfsystem::hwm` class
 
