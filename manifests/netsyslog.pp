@@ -18,8 +18,5 @@ class cfsystem::netsyslog {
         mode    => '0640',
         content => file('cfsystem/netsyslog.conf'),
     }
-    ~> exec { 'cfsystem:rsyslog:refresh':
-        command     => '/bin/systemctl reload-or-restart rsyslog.service',
-        refreshonly => true,
-    }
+    ~> Exec['cfsystem:rsyslog:refresh']
 }

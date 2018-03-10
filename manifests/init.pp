@@ -257,5 +257,11 @@ class cfsystem (
     )
 
     #---
+    exec { 'cfsystem:rsyslog:refresh':
+        command     => '/bin/systemctl reload-or-restart rsyslog.service',
+        refreshonly => true,
+    }
+
+    #---
     include cfsystem::hwm
 }

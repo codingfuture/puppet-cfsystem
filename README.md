@@ -24,6 +24,9 @@ What it does:
 * Forces custom I/O scheduler for real spinning HDDs (deadline by default)
 * Adds custom rc.local commands, if needed
 * Adds cron job to check if running kernel version matches the latest installed (reboot reminder)
+* Syslog
+    * Supports UDP & TCP local receive (suitable for JVM services)
+    * Heavy duty `/dev/hdlog` skipping systemd
 * Auto-detect hardware nodes with IPMI
     * Install generic IPMI tools
     * Install Dell-specific tools
@@ -87,6 +90,16 @@ cfnetwork::describe_services:
     # if $cfsystem::repo_proxy
     'aptproxy':
         server: "tcp/${proxy_port}"
+    # if cfnetwork::netsyslog
+    netsyslog:
+        server:
+            - 'tcp/514'
+            - 'udp/514'
+    # if cfnetwork::hdsyslog
+    netsyslog:
+        server:
+            - 'tcp/${port}'
+            - 'udp/${port}'
 cfnetwork::service_ports:
     # foreach $cfsystem::email::listen_ifaces
     "${listen_ifaces}:smtp:cfsystem": {}
@@ -97,6 +110,10 @@ cfnetwork::service_ports:
     "${cfsystem::service_face}:apcng:cfsystem": {}
     # if ${cfsystem::service_face} not in ['any', 'local']
     'local:apcng:cfsystem': {}
+    # if cfnetwork::netsyslog
+    'local:netsyslog': {}
+    # if cfnetwork::hdsyslog
+    'local:hdsyslog': {}
 cfnetwork::client_ports:
     'any:puppet:cfsystem':
         user: 'root'
@@ -289,6 +306,14 @@ puppet catalog (which should be secured as well).
 ## `cfsystem::netsyslog` class
 
 Adds local UDP & TCP syslog sockets.
+
+## `cfsystem::hdsyslog` class
+
+Heavy Duty syslog provided through /dev/hdlog. Sutiable for nginx and others.
+This functionality skips systemd and is designed to work in pair with cflogsink::client.
+
+* `$tune = {}` - allow rsyslog ruleset queue tuning
+* `$port = 515` - port to use for UDP & TCP
 
 ## `cfsystem::hwm` class
 

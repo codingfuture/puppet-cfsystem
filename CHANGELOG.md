@@ -7,6 +7,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - FIXED: internal API to allow custom EnvironmentFile for systemd unit
 - NEW: cfsystem::location variable
 - NEW: cfsystem::netsyslog functionality
+- NEW: cfsystem::hdsyslog functionality
 - NEW: CfSystem.makeVersion now supports directory traversal
 
 ## [0.12.6](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.12.6)
