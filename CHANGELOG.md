@@ -9,6 +9,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - NEW: cfsystem::netsyslog functionality
 - NEW: cfsystem::hdsyslog functionality
 - NEW: CfSystem.makeVersion now supports directory traversal
+- NEW: show amount of unused RAM in memory distribution
 
 ## [0.12.6](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.12.6)
 - CHANGED: improved APT cache, Email & NTP service security with ipset:localnet

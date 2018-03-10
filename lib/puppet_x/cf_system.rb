@@ -250,6 +250,8 @@ module PuppetX::CfSystem
             alloc_ram += calc_mem
             mem_distrib[k] += calc_mem
         end
+
+        mem_distrib['free'] = unalloc_ram if alloc_ram < total_ram
         
         #---
         self.memory_distribution = mem_distrib
