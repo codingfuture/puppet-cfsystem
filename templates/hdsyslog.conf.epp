@@ -22,16 +22,16 @@ input(
     FlowControl="on"
 )
 
-input
+input(
     type="imudp"
-    device="lo"
+    address="127.0.0.1"
     port="<%= $port %>"
     Ruleset="hd"
 )
 
-input
+input(
     type="imtcp"
-    device="lo"
+    address="127.0.0.1"
     port="<%= $port %>"
     Ruleset="hd"
     FlowControl="on"
