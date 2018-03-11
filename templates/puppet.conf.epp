@@ -13,3 +13,5 @@ use_srv_records = true
 <% } else { -%>
 use_srv_records = false
 <% } -%>
+
+preferred_serialization_format = pson
