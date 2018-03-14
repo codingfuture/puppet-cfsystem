@@ -3,19 +3,17 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
-## [0.12.8](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.12.8)
+## [0.12.7](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.12.7)
 - CHANGED: to always prefer PSON serialization to avoid retries
 
-## [0.12.7](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.12.7)
+## [0.12.6](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.12.6)
+- CHANGED: improved APT cache, Email & NTP service security with ipset:localnet
 - FIXED: internal API to allow custom EnvironmentFile for systemd unit
 - NEW: cfsystem::location variable
 - NEW: cfsystem::netsyslog functionality
 - NEW: cfsystem::hdsyslog functionality
 - NEW: CfSystem.makeVersion now supports directory traversal
 - NEW: show amount of unused RAM in memory distribution
-
-## [0.12.6](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.12.6)
-- CHANGED: improved APT cache, Email & NTP service security with ipset:localnet
 
 ## [0.12.5](https://github.com/codingfuture/puppet-cfsystem/releases/tag/v0.12.5)
 - CHANGED: to mask instead of just disable agent/mcollective, if required
