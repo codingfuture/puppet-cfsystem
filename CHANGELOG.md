@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
-## (next)
+## 0.12.7 (2018-03-15)
 - CHANGED: to always prefer PSON serialization to avoid retries
 - CHANGED: moved syslog related stuff solely to cflogsink
 
