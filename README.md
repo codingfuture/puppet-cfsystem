@@ -48,6 +48,7 @@ What it does:
     * `cfsystem::gen_pass(name, length, forced_pass)` - generate or save persistent password
     * `cfsystem::gen_port(name, forced_port)` - allocate or save persistent network port
     * `cfsystem::pretty_json(data)` - return pretty formatted JSON string
+    * `cf_notify` - replacement of standard notify to avoid refresh side-effects
 
 
 ## Technical Support
@@ -306,6 +307,15 @@ Support for Dell PowerEdge family.
 ## `cfsystem::hwm::smc` class
 
 Placeholder for SuperMicro support. Not implemented yet.
+
+## `cf_notify` type
+
+The standard `notify` type has a side effect - it generates refresh event
+what may harm automation which expects 0 exit code on no resource changes.
+Therefore, this drop-in replacement has been provided.
+
+* `message = $title` - message to show
+* `loglevel = info` - log level to use for the message
 
 [cfnetwork]: https://github.com/codingfuture/puppet-cfnetwork
 [cfauth]: https://github.com/codingfuture/puppet-cfauth

@@ -45,7 +45,7 @@ class cfsystem::ntp(
     if $cfsystem::add_ntp_server and $cfsystem::ntpd_type == 'systemd'  {
         $type = 'ntp'
 
-        notify { 'cfsystem::ntp::fallback':
+        cf_notify { 'cfsystem::ntp::fallback':
             message  => 'systemd-timesyncd can not act as server, fallback to ntp',
             loglevel => warning,
         }
