@@ -77,6 +77,7 @@ LANG=\"${cfsystem::locale}\"
         'debconf-utils',
         'diffutils',
         'strace',
+        'tshark',
     ])
 
     # Misc tools which may generate noise

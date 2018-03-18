@@ -5,6 +5,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## (next)
 - NEW: cf_notify as replacement for standard notify to avoid its refresh side effects
+- NEW: added tshark package for standard installation
 
 ## 0.12.7 (2018-03-15)
 - CHANGED: to always prefer PSON serialization to avoid retries
