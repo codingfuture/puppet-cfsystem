@@ -90,7 +90,14 @@ define cfsystem::clusterssh(
             'StrictHostKeyChecking no',
             "IdentityFile ${ssh_idkey}",
             'ConnectTimeout 5',
+            'Include config_*',
         ].join("\n")
+    }
+    -> file { "${ssh_dir}/config_dummy":
+        owner   => $user,
+        group   => $group,
+        mode    => '0600',
+        content => '',
     }
 
     # TODO: YES, it's insecure as the private key gets stored in catalog
