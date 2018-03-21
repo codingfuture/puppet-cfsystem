@@ -269,6 +269,12 @@ Setup random entropy generating tools
 * `$type = 'haveged'` - tools type
 * `$threshold = 2048` - minimal random entropy level
 
+## `cfsystem::sshdir` type
+
+Create a basic `~/.ssh/` directory for unattended user account.
+
+* `$user = $title` - system user with 'home' parameter
+
 ## `cfsystem::clusterssh` type
 
 This feature is trade-off between SSH setup in cluster and security. This functionality

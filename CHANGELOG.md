@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
 ## (next)
-- NEW: optional config file support in cfsystem::clusterssh
+- NEW: generic cfsystem::sshdir with custom configuration extension support
 
 ## 0.12.8 (2018-03-19)
 - NEW: cf_notify as replacement for standard notify to avoid its refresh side effects
