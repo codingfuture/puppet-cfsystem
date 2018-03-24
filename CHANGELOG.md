@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
-## (next)
+## 0.12.9 (2018-03-24)
 - NEW: generic cfsystem::sshdir with custom configuration extension support
 
 ## 0.12.8 (2018-03-19)
