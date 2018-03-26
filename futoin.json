@@ -1,6 +1,6 @@
 {
   "name": "codingfuture-cfsystem",
-  "version": "0.12.9",
+  "version": "1.0.0",
   "vcs": "git",
   "package": [
     "pkg"
