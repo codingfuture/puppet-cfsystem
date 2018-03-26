@@ -59,7 +59,7 @@ What it does:
 ## Setup
 
 Please use [librarian-puppet](https://rubygems.org/gems/librarian-puppet/) or
-[cfpuppetserver module](https://forge.puppetlabs.com/codingfuture/cfpuppetserver) to deal with dependencies.
+[cfpuppetserver module](https://codingfuture.net/docs/cfpuppetserver) to deal with dependencies.
 
 There is a known r10k issue [RK-3](https://tickets.puppetlabs.com/browse/RK-3) which prevents
 automatic dependencies of dependencies installation.
@@ -323,6 +323,6 @@ Therefore, this drop-in replacement has been provided.
 * `message = $title` - message to show
 * `loglevel = info` - log level to use for the message
 
-[cfnetwork]: https://github.com/codingfuture/puppet-cfnetwork
-[cfauth]: https://github.com/codingfuture/puppet-cfauth
-[cffirehol]: https://github.com/codingfuture/puppet-cffirehol
+[cfnetwork]: https://codingfuture.net/docs/cfnetwork
+[cfauth]: https://codingfuture.net/docs/cfauth
+[cffirehol]: https://codingfuture.net/docs/cffirehol
