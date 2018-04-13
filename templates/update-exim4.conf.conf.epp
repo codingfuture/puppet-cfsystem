@@ -48,11 +48,16 @@ if $cfsystem::email::disable_ipv6 {
 }
 -%>
 
-dc_eximconfig_configtype="<%= $dc_eximconfig_configtype %>"
-dc_hide_mailname="false"
+dc_eximconfig_configtype='<%= $dc_eximconfig_configtype %>'
+dc_hide_mailname='false'
 dc_local_interfaces='<%= $local_ips %> ; <%= $listen_iface_ips %>'
 dc_minimaldns='false'
 dc_relay_nets='<%= $relay_nets %>'
 dc_use_split_config='false'
 dc_smarthost='<%= $smarthost %>'
 dc_localdelivery='mail_spool'
+dc_other_hostnames=''
+dc_readhost='<%= $::facts['fqdn'] %>'
+dc_relay_domains=''
+CFILEMODE='644'
+dc_mailname_in_oh='true'

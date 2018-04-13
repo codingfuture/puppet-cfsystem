@@ -5,6 +5,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## (next)
 - FIXED: Metaspace JVM parameter detection with JRE 1.8.0_162+
+- FIXED: updated exim4 config template
 
 ## 0.12.9 (2018-03-24)
 - NEW: generic cfsystem::sshdir with custom configuration extension support
