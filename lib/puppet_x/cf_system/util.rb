@@ -283,7 +283,7 @@ module PuppetX::CfSystem::Util
     #---
     def self.is_jvm_metaspace
         res = Puppet::Util::Execution.execute(
-            [JAVA, '-XX:MaxMetaspaceSize=8m', '-version'],
+            [JAVA, '-XX:MaxMetaspaceSize=32m', '-version'],
             {
                 :failonfail => false,
                 :squelch => true,
