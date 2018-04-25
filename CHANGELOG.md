@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## (next)
+- NEW: cfsystem::pip class for latest pip setup in /usr/local
+
 ## 1.0.1 (2018-04-13)
 - FIXED: Metaspace JVM parameter detection with JRE 1.8.0_162+
 - FIXED: updated exim4 config template

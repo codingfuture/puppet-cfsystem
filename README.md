@@ -316,6 +316,10 @@ Support for Dell PowerEdge family.
 
 Placeholder for SuperMicro support. Not implemented yet.
 
+## `cfsystem::pip` class
+
+Setup latest pip for Python 2&3 into /usr/local.
+
 ## `cf_notify` type
 
 The standard `notify` type has a side effect - it generates refresh event
