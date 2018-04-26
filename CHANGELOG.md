@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
 ## (next)
+- CHANGED: to allow zero min/max memory requirements
 - NEW: cfsystem::pip class for latest pip setup in /usr/local
 
 ## 1.0.1 (2018-04-13)

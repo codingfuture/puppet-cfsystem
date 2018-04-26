@@ -38,7 +38,7 @@ Puppet::Type.newtype(:cfsystem_memory_weight) do
         desc "Minimum size to reserve"
         
         validate do |value|
-            unless value.nil? or (value.is_a? Integer and value > 0)
+            unless value.nil? or (value.is_a? Integer and value >= 0)
                 raise ArgumentError, "%s is not nil or a valid positive integer" % value
             end
         end
@@ -48,7 +48,7 @@ Puppet::Type.newtype(:cfsystem_memory_weight) do
         desc "Maximum size to reserve"
         
         validate do |value|
-            unless value.nil? or (value.is_a? Integer and value > 0)
+            unless value.nil? or (value.is_a? Integer and value >= 0)
                 raise ArgumentError, "%s is not nil or a valid positive integer" % value
             end
         end
