@@ -68,6 +68,7 @@ class cfsystem::ntp(
 
             # for internal NTPd connections
             cfnetwork::service_port { 'local:ntp': }
+            cfsystem::metric { 'ntpd': }
         }
         'openntpd': {
             $absent =  ['ntp', 'chrony']
@@ -80,6 +81,7 @@ class cfsystem::ntp(
             $conf = '/etc/chrony/chrony.conf'
             $tpl = 'cfsystem/chrony.conf.epp'
             $user = '_chrony'
+            cfsystem::metric { 'chrony': }
         }
         default: {
             fail("Not implemented NTPd type: ${type}")

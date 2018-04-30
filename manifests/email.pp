@@ -131,6 +131,7 @@ class cfsystem::email (
         enable   => true,
         provider => 'systemd',
     }
+    cfsystem::metric { 'exim': }
 
     # Admin email setup
     #---
