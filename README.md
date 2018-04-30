@@ -320,6 +320,10 @@ Placeholder for SuperMicro support. Not implemented yet.
 
 Setup latest pip for Python 2&3 into /usr/local.
 
+## `cfsystem::metric` type
+
+Mostly for internal purposes to declare items for cfmetrics monitoring.
+
 ## `cf_notify` type
 
 The standard `notify` type has a side effect - it generates refresh event

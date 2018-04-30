@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## (next)
+- NEW: cfsystem::metric type as a sort of IoC to integrate cfmetrics
+
 ## 1.0.2 (2018-04-29)
 - CHANGED: to allow zero min/max memory requirements
 - NEW: cfsystem::pip class for latest pip setup in /usr/local
