@@ -286,10 +286,11 @@ module PuppetX::CfSystem
         cpu_weight = options.fetch(:cpu_weight, nil)
         io_weight = options.fetch(:io_weight, nil)
         mem_limit = options.fetch(:mem_limit, nil)
+        cow_reserve = options.fetch(:cow_reserve, 0)
         mem_lock = options.fetch(:mem_lock, false)
         cgroups_v2 = false
         
-        mem_limit = "#{mem_limit}M" if mem_limit.is_a? Integer
+        mem_limit = "#{mem_limit + cow_reserve}M" if mem_limit.is_a? Integer
         
         if cgroups_v2
             unless cpu_weight.nil?

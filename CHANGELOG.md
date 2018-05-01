@@ -5,6 +5,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## (next)
 - NEW: cfsystem::metric type as a sort of IoC to integrate cfmetrics
+- NEW: Copy-on-Write reserve feature for service definition (overcommit)
 
 ## 1.0.2 (2018-04-29)
 - CHANGED: to allow zero min/max memory requirements
