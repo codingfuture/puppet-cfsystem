@@ -44,6 +44,7 @@ What it does:
     * `Cfsystem::Rsabit` - RSA key bits
     * `cfsystem::query` - caching wrapper around `puppetdb_query` (cached per catalog)
     * `cfsystem::stable_sort(arg)` - deep sort of Hash/Array to avoid isomorphic configuration "change"
+    * `cfsystem::add_group($user, $group) >> Resource` - make sure user is part of the group
     * `cfsystem::gen_key(name, params, forced_key)` - generate or save persistent SSH key
     * `cfsystem::gen_pass(name, length, forced_pass)` - generate or save persistent password
     * `cfsystem::gen_port(name, forced_port)` - allocate or save persistent network port
