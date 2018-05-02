@@ -1,6 +1,6 @@
 {
   "name": "codingfuture-cfsystem",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "author": "Andrey Galkin",
   "summary": "Configure a bare minimal production system regardless of its purpose",
   "license": "Apache-2.0",
