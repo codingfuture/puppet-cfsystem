@@ -13,8 +13,8 @@ class cfsystem::hwm::dell::aptrepo {
             true    => 'jessie',
             default => $lsbdistcodename
         },
-        'Ubuntu' => (versioncmp($::facts['operatingsystemrelease'], '16.04') >= 0) ? {
-            true    => 'xenial',
+        'Ubuntu' => (versioncmp($::facts['operatingsystemrelease'], '18.04') >= 0) ? {
+            true    => 'bionic',
             default => $lsbdistcodename
         },
         default  => $lsbdistcodename

@@ -7,8 +7,8 @@
 class cfsystem::ubuntu::aptconfig {
     # Use for temporary mapping with new releases
     #---
-    if versioncmp($::facts['operatingsystemrelease'], '16.10') >= 0 {
-        $puppet_release = 'xenial'
+    if versioncmp($::facts['operatingsystemrelease'], '18.10') >= 0 {
+        $puppet_release = 'bionic'
         $add_backports = false
     } else {
         $puppet_release = $::facts['lsbdistcodename']

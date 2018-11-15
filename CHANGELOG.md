@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## (next)
+- CHANGED: updated for Ubuntu 18.04 Bionic support
+
 ## 1.1.0 (2018-05-02)
 - NEW: cfsystem::metric type as a sort of IoC to integrate cfmetrics
 - NEW: Copy-on-Write reserve feature for service definition (overcommit)
