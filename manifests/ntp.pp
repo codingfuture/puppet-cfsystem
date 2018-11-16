@@ -59,6 +59,17 @@ class cfsystem::ntp(
             $conf = '/etc/systemd/timesyncd.conf'
             $tpl = 'cfsystem/timesyncd.conf.epp'
             $user = 'systemd-timesync'
+
+            # Newer systemd uses DynamicUser what is problematic for firewall
+            group { $user: ensure => present }
+            -> user { $user:
+                ensure => present,
+                gid    => $user,
+                home   => '/run/systemd',
+                shell  => '/bin/false',
+                system => true,
+            }
+            -> Anchor['cfnetwork:pre-firewall']
         }
         'ntp': {
             $absent =  ['openntpd', 'chrony']
@@ -97,6 +108,11 @@ class cfsystem::ntp(
             content => epp($tpl),
         }
         ~> Exec['cfsystem-systemd-reload']
+        -> service { 'systemd-timesyncd':
+            ensure   => running,
+            enable   => true,
+            provider => 'systemd',
+        }
     } else {
         Package[$absent]
         -> package { $type: ensure => present }
@@ -104,6 +120,11 @@ class cfsystem::ntp(
             mode    => '0644',
             content => epp($tpl),
             notify  => Service[$type],
+        }
+        -> service { 'systemd-timesyncd':
+            ensure   => stopped,
+            enable   => false,
+            provider => 'systemd',
         }
         -> service { $type:
             ensure   => running,
