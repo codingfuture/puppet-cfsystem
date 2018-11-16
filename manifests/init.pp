@@ -65,6 +65,7 @@ class cfsystem (
     String[1] $key_server = 'hkp://keyserver.ubuntu.com:80',
 
     Boolean $random_feed = true,
+    Boolean $add_handy_tools = true,
 ) inherits cfsystem::defaults {
     include cfnetwork
     include cfauth

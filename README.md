@@ -160,6 +160,7 @@ cfnetwork::client_ports:
 * `reserve_ram` = 64 - amount of ram to reserve for system in automatic calculations
 * `$key_server = 'hkp://pgp.mit.edu:80'` - default PGP key server
 * `$random_feed = true` - enable random entropy generating daemon
+* `$add_handy_tools = true` - install additional tools
 
 ## `cfsystem::bindir` type
 

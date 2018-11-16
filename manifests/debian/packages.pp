@@ -56,36 +56,42 @@ LANG=\"${cfsystem::locale}\"
         -> package { 'locales-all': }
     }
 
-    # Handy tools
+    # Causes slowdown
     #---
-    ensure_packages([
-        'aptitude',
-        'dnsutils',
-        'psmisc',
-        'curl',
-        'wget',
-        'htop',
-        'tree',
-        'ethtool',
-        'iftop',
-        'iotop',
-        'netcat-traditional',
-        'netstat-nat',
-        'conntrack',
-        'telnet',
-        'screen',
-        'debconf-utils',
-        'diffutils',
-        'strace',
-        'tshark',
-    ])
+    ensure_packages(['update-notifier-common'], { ensure => absent })
 
-    # Misc tools which may generate noise
-    #---
-    ensure_packages([
-        'apticron',
-        'chkrootkit',
-        'rkhunter',
-        'debsums',
-    ])
+    if $cfsystem::add_handy_tools {
+        # Handy tools
+        #---
+        ensure_packages([
+            'aptitude',
+            'dnsutils',
+            'psmisc',
+            'curl',
+            'wget',
+            'htop',
+            'tree',
+            'ethtool',
+            'iftop',
+            'iotop',
+            'netcat-traditional',
+            'netstat-nat',
+            'conntrack',
+            'telnet',
+            'screen',
+            'debconf-utils',
+            'diffutils',
+            'strace',
+            'tshark',
+        ])
+
+        # Misc tools which may generate noise
+        #---
+        ensure_packages([
+            'apticron',
+            'chkrootkit',
+            'rkhunter',
+            'debsums',
+        ])
+    }
 }
