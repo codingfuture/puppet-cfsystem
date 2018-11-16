@@ -3,15 +3,34 @@
 #
 
 class cfsystem::pip {
-    package { [ 'python-pip', 'python3-pip']:
-        ensure => absent,
+    if ($::facts['operatingsystem'] == 'Ubuntu' and
+        versioncmp($::facts['operatingsystemrelease'], '18.04') >= 0)
+    {
+        $easy_install2 = '/usr/bin/pip install'
+        $easy_install3 = '/usr/bin/pip3 install'
+
+        package { [
+            'python-setuptools', 'python3-setuptools',
+            'python-pip', 'python3-pip',
+        ]: }
+        -> Anchor['cfsystem-pip-install']
+    } else {
+        $easy_install2 = '/usr/bin/easy_install'
+        $easy_install3 = '/usr/bin/easy_install3'
+
+        package { [ 'python-pip', 'python3-pip']:
+            ensure => absent,
+        }
+        -> package { [ 'python-setuptools', 'python3-setuptools' ]: }
+        -> Anchor['cfsystem-pip-install']
     }
-    -> package { [ 'python-setuptools', 'python3-setuptools' ]: }
+
     # just in case
-    -> exec { '/usr/bin/easy_install pip':
+    anchor { 'cfsystem-pip-install': }
+    -> exec { "${easy_install2} pip":
         creates => '/usr/local/bin/pip2',
     }
-    -> exec { '/usr/bin/easy_install3 pip':
+    -> exec { "${easy_install3} pip":
         creates => '/usr/local/bin/pip3',
     }
     -> package { 'pip':
