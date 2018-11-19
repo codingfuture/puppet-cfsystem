@@ -42,7 +42,14 @@ class cfsystem::ntp(
         target => "/usr/share/zoneinfo/${cfsystem::timezone}"
     }
 
-    if $cfsystem::add_ntp_server and $cfsystem::ntpd_type == 'systemd'  {
+    if $cfauth::freeipa and $cfsystem::ntpd_type != 'chrony' {
+        $type = 'chrony'
+
+        cf_notify { 'cfsystem::chrony::fallback':
+            message  => 'Forcing chrony NTP due to FreeIPA requirement',
+            loglevel => warning,
+        }
+    } elsif $cfsystem::add_ntp_server and $cfsystem::ntpd_type == 'systemd'  {
         $type = 'ntp'
 
         cf_notify { 'cfsystem::ntp::fallback':
@@ -61,7 +68,11 @@ class cfsystem::ntp(
             $user = 'systemd-timesync'
 
             # Newer systemd uses DynamicUser what is problematic for firewall
-            group { $user: ensure => present }
+            exec { 'Cfsystem stop systemd-timesyncd':
+                command => '/bin/systemctl stop systemd-timesyncd.service',
+                unless  => "/usr/bin/id -Gnz ${user}",
+            }
+            -> group { $user: ensure => present }
             -> user { $user:
                 ensure => present,
                 gid    => $user,
