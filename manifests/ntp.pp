@@ -11,7 +11,9 @@ class cfsystem::ntp(
     include stdlib
     assert_private();
 
-    case $::operatingsystem {
+    $opsystem = $::facts['operatingsystem']
+
+    case $opsystem {
         'Debian', 'Ubuntu': {
             $zonecomp = split($cfsystem::timezone, '/')
 
@@ -29,7 +31,7 @@ class cfsystem::ntp(
                 ],
             }
         }
-        default: { fail("Not supported OS ${::operatingsystem}") }
+        default: { fail("Not supported OS ${opsystem}") }
     }
 
     file {'/etc/timezone':
@@ -43,10 +45,14 @@ class cfsystem::ntp(
     }
 
     if $cfauth::freeipa and $cfsystem::ntpd_type != 'chrony' {
-        $type = 'chrony'
+        if ($opsystem == 'Ubuntu' and versioncmp($::facts['operatingsystemrelease'], '18.04') < 0) {
+            $type = 'ntp'
+        } else {
+            $type = 'chrony'
+        }
 
         cf_notify { 'cfsystem::chrony::fallback':
-            message  => 'Forcing chrony NTP due to FreeIPA requirement',
+            message  => "Forcing '${type}' NTP due to FreeIPA requirement",
             loglevel => warning,
         }
     } elsif $cfsystem::add_ntp_server and $cfsystem::ntpd_type == 'systemd'  {
