@@ -7,6 +7,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - CHANGED: updated for Ubuntu 18.04 Bionic support
 - NEW: cfsystem::add_handy_tools to control additional package setup
 - NEW: FreeIPA NTP support
+- NEW: cfsystem_service type
 
 ## 1.1.0 (2018-05-02)
 - NEW: cfsystem::metric type as a sort of IoC to integrate cfmetrics

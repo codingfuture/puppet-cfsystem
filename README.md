@@ -338,3 +338,7 @@ Therefore, this drop-in replacement has been provided.
 [cfnetwork]: https://codingfuture.net/docs/cfnetwork
 [cfauth]: https://codingfuture.net/docs/cfauth
 [cffirehol]: https://codingfuture.net/docs/cffirehol
+
+## `cfsystem_service` type
+
+Helper type to create cfsystem-integrated services.
