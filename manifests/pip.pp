@@ -46,10 +46,7 @@ class cfsystem::pip {
     }
 
     # Allow pip global setup
-    cfnetwork::client_port { 'any:http:root-pip':
-        user => 'root',
-    }
-    cfnetwork::client_port { 'any:https:root-pip':
+    cfnetwork::client_port { 'any:cfhttp:root-pip':
         user => 'root',
     }
 }

@@ -61,8 +61,7 @@ class cfsystem::debian::cache(
         'any', 'local': {}
         default: { cfnetwork::service_port{ 'local:apcng:cfsystem': } }
         }
-        cfnetwork::client_port{ 'any:http:apcng': user=>['apt-cacher-ng', 'root', '_apt'] }
-        cfnetwork::client_port{ 'any:https:apcng': user=>['apt-cacher-ng', 'root', '_apt'] }
+        cfnetwork::client_port{ 'any:cfhttp:apcng': user=>['apt-cacher-ng', 'root', '_apt'] }
 
         cfsystem_memory_weight { 'cfsystem::acng':
             ensure => present,
@@ -83,7 +82,6 @@ class cfsystem::debian::cache(
             user => ['root', '_apt'],
         }
     } else {
-        cfnetwork::client_port{ 'any:http:cfsystem': user => ['root', '_apt'] }
-        cfnetwork::client_port{ 'any:https:cfsystem': user => ['root', '_apt'] }
+        cfnetwork::client_port{ 'any:cfhttp:cfsystem': user => ['root', '_apt'] }
     }
 }
