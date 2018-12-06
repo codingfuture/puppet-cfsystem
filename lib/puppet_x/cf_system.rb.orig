@@ -282,54 +282,6 @@ module PuppetX::CfSystem
         return (((val + to) / to).to_i * to).to_i
     end
 
-    def self.createTimer(options)
-        timer_name = options[:service_name]
-        timer_file = "#{SYSTEMD_DIR}/#{timer_name}.timer"
-        period = options[:period]
-        calendar = options[:calendar]
-
-        content_ini = options.fetch(:content_ini, {})
-
-        # Unit
-        #---
-        content_ini['Unit'] = {} unless content_ini.has_key? 'Unit'
-        unit_ini = content_ini['Unit']
-        unit_ini['Description'] ||= timer_name
-        #unit_ini['DefaultDependencies'] ||= 'no'
-
-        # Install
-        #---
-        content_ini['Install'] = {
-            'WantedBy' => 'multi-user.target',
-        } unless content_ini.has_key? 'Install'
-
-        # Timer
-        #---
-        content_ini['Timer'] = {} unless content_ini.has_key? 'Timer'
-        timer_ini = content_ini['Timer']
-
-        unless period.nil?
-            timer_ini['OnBootSec'] = period
-            timer_ini['OnUnitActiveSec'] = period
-        end
-
-        unless calendar.nil?
-            timer_init['OnCalendar'] = calendar
-        end
-
-        reload = atomicWriteIni(timer_file, content_ini,
-                                {:mode => 0644,
-                                 :dry_run => options[:dry_run]})
-
-        # reload on demand
-        #---
-        if reload
-            Puppet::Util::Execution.execute([SYSTEMD_CTL, 'daemon-reload'])
-        end
-
-        return reload
-    end
-
     def self.createLimitsCommon(section_ini, options)
         cpu_weight = options.fetch(:cpu_weight, nil)
         io_weight = options.fetch(:io_weight, nil)
@@ -439,9 +391,9 @@ module PuppetX::CfSystem
         
         # Install
         #---
-        content_ini['Install'] = {
+        content_ini['Install'] ||= {
             'WantedBy' => 'multi-user.target',
-        } unless content_ini.has_key? 'Install'
+        }
 
         # Service
         #---

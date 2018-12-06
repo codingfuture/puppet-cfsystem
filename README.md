@@ -342,3 +342,7 @@ Therefore, this drop-in replacement has been provided.
 ## `cfsystem_service` type
 
 Helper type to create cfsystem-integrated services.
+
+## `cfsystem_timer` type
+
+Helper type to create cfsystem-integrated cron-like services.

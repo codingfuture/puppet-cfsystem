@@ -2,7 +2,7 @@
 # Copyright 2018 (c) Andrey Galkin
 #
 
-Puppet::Type.newtype(:cfsystem_service) do
+Puppet::Type.newtype(:cfsystem_timer) do
     desc "DO NOT USE DIRECTLY."
     
     autorequire(:cfsystem_flush_config) do
@@ -25,7 +25,7 @@ Puppet::Type.newtype(:cfsystem_service) do
         isnamevar
         
         validate do |value|
-            unless value =~ /^cfsvc-[a-z0-9_@-]+$/i
+            unless value =~ /^cftimer-[a-z0-9_@-]+$/i
                 raise ArgumentError, "%s is not a valid service name" % value
             end
         end
@@ -80,9 +80,11 @@ Puppet::Type.newtype(:cfsystem_service) do
     newproperty(:command) do
         isrequired
     end
-    
-    newproperty(:allow_restart) do
-        defaultto true
+
+    newproperty(:period) do
+    end
+
+    newproperty(:calendar) do
     end
 end
 
