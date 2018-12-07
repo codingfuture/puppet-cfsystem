@@ -336,7 +336,7 @@ module PuppetX::CfSystem
         mem_limit = options.fetch(:mem_limit, nil)
         cow_reserve = options.fetch(:cow_reserve, 0)
         mem_lock = options.fetch(:mem_lock, false)
-        cgroups_v2 = false
+        cgroups_v2 = Gem::Version.new(Facter['kernelmajversion'].value()) >= Gem::Version.new('4.5')
         
         mem_limit = "#{mem_limit + cow_reserve}M" if mem_limit.is_a? Integer
         
@@ -355,7 +355,8 @@ module PuppetX::CfSystem
             
             unless mem_limit.nil?
                 section_ini['MemoryAccounting'] = 'true'
-                section_ini['MemoryMax'] = mem_limit
+                section_ini['MemoryHigh'] = mem_limit
+                section_ini['MemoryMax'] = "#{(mem_limit.to_i * 1.5).to_i}M"
                         
                 if mem_lock
                     section_ini['LimitMEMLOCK'] = "infinity"

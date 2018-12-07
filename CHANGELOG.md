@@ -6,6 +6,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ## (next)
 - CHANGED: updated for Ubuntu 18.04 Bionic support
 - CHANGED: to use cfhttp service in firewall config
+- CHANGED: enabled cgroup-v2 for kernels 4.5+
 - NEW: cfsystem::add_handy_tools to control additional package setup
 - NEW: FreeIPA NTP support
 - NEW: cfsystem_service type
