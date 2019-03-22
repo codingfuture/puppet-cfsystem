@@ -1,5 +1,5 @@
 #
-# Copyright 2018 (c) Andrey Galkin
+# Copyright 2018-2019 (c) Andrey Galkin
 #
 
 function cfsystem::add_group(String[1] $user, String[1] $group) >> Any {
