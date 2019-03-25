@@ -103,7 +103,9 @@ module PuppetX::CfSystem
         
         # Show diff
         #---
-        if opts.fetch(:show_diff, true)
+        if opts.fetch(:silent, false)
+            # pass
+        elsif opts.fetch(:show_diff, true)
             if File.exists?(file)
                 diff = Puppet::Util::Diff.diff(file, tmpfile)
                 opts.fetch(:mask_diff, []).each do |v|
