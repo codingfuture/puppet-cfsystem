@@ -133,20 +133,18 @@ module PuppetX::CfSystem::Util
 
     #---
     def self.genSecretCommon(secrets, assoc_id, len, set)
-        if not secrets.has_key? assoc_id
-            if set.nil? or set.empty?
-                if len < 4
-                    fail("Requested secret length is too short #{len} for #{assoc_id}")
-                end
-
-                secret = SecureRandom.urlsafe_base64((len * 3 / 4).to_i)
-
-                #warning("Generating new secret #{secret} for #{assoc_id} in: #{secrets}")
-                secrets[assoc_id] = secret
-            else
-                #warning("Forcing new secret #{set} for #{assoc_id} in: #{secrets}")
-                secrets[assoc_id] = set
+        if !set.nil? and !set.empty?
+            #warning("Forcing new secret #{set} for #{assoc_id} in: #{secrets}")
+            secrets[assoc_id] = set
+        elsif not secrets.has_key? assoc_id
+            if len < 4
+                fail("Requested secret length is too short #{len} for #{assoc_id}")
             end
+
+            secret = SecureRandom.urlsafe_base64((len * 3 / 4).to_i)
+
+            #warning("Generating new secret #{secret} for #{assoc_id} in: #{secrets}")
+            secrets[assoc_id] = secret
         end
         
         return secrets[assoc_id]
