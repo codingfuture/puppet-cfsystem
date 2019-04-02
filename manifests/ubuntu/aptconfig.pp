@@ -23,6 +23,11 @@ class cfsystem::ubuntu::aptconfig {
     }
 
     #---
+    package {'update-motd':
+        ensure => absent,
+    }
+
+    #---
     apt::source { 'ubuntu':
         location => $::cfsystem::ubuntu::apt_url,
         release  => $::cfsystem::ubuntu::release,
