@@ -86,9 +86,15 @@ module PuppetX::CfSystem
     
     def self.atomicWrite(file, content, opts={})
         content = content.join("\n") + "\n" if content.is_a? Array
-        
+
+        mode = opts.fetch(:mode, 0600)
+        user = opts.fetch(:user, 'root')
+        group = opts.fetch(:group, user)
+
         if File.exists?(file) and (content == File.read(file))
             debug("Content matches for #{file}")
+            FileUtils.chmod(mode, file)
+            FileUtils.chown(user, group, file)
             return false
         end
         
@@ -97,7 +103,7 @@ module PuppetX::CfSystem
         #---
         tmpfile = file + ".#{$$}"
         
-        File.open(tmpfile, 'w+', opts.fetch(:mode, 0600) ) do |f|
+        File.open(tmpfile, 'w+', mode) do |f|
             f.write(content)
         end
         
@@ -121,8 +127,6 @@ module PuppetX::CfSystem
 
         # Atomically move config file to its location
         #---
-        user = opts.fetch(:user, 'root')
-        group = opts.fetch(:group, user)
         FileUtils.chown(user, group, tmpfile)
         File.rename(tmpfile, file)
         debug("Writed a new #{file}")
