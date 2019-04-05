@@ -98,7 +98,7 @@ Puppet::Type.type(:cfsystem_timer).provide(
         
         settings_tune.each { |k, v|
             if k == 'Timer'
-                timer_init[k] = v.clone
+                timer_ini[k] = v.clone
             else
                 content_ini.setdefault(k, {})
                 content_ini[k].merge!
