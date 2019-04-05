@@ -15,8 +15,10 @@ class cfsystem::custombin {
         mode   => '0755',
     }
     -> file { $bin_dir:
-        ensure => directory,
-        mode   => '0755',
+        ensure  => directory,
+        mode    => '0755',
+        purge   => true,
+        recurse => true,
     }
     -> file { '/etc/profile.d':
         ensure  => directory,

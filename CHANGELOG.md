@@ -6,6 +6,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ## (next)
 - FIXED: forced secrets to override persistent values
 - FIXED: atomicWrite to obey ownership & mode when content is the same
+- CHANED: to prune /opt/codingfuture/bin
 - CHANGED: Ubuntu instance to remove update-motd package
 - NEW: 'silent' atomic file write API for temporary cases
 
