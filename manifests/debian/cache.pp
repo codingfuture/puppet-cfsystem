@@ -7,14 +7,6 @@
 class cfsystem::debian::cache(
     $acng_patterns = {},
 ) {
-    # Required by stretch/xenial
-    user { '_apt':
-        ensure => present,
-        home   => '/nonexistent',
-        shell  => '/bin/false',
-        gid    => 'nogroup',
-    }
-
     if $::cfsystem::add_repo_cacher {
         $acng_patterns_def = {
             'P' => [],

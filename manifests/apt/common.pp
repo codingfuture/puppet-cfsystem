@@ -29,17 +29,8 @@ class cfsystem::apt::common(
         }
     }
 
-    stage { 'cf-apt-setup':
-        require => Stage['setup'],
-        before  => Stage['main'],
-    }
-
-    class { 'cfsystem::apt::update':
-        stage => 'cf-apt-setup',
-    }
-
     class { 'cfsystem::apt::puppetlabs':
         release => $puppet_release,
-        stage   => 'cf-apt-setup',
+        stage   => 'setup',
     }
 }

@@ -7,8 +7,9 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - FIXED: forced secrets to override persistent values
 - FIXED: atomicWrite to obey ownership & mode when content is the same
 - FIXED: cfsystem_timer exceptions in some configurations
-- CHANED: to prune /opt/codingfuture/bin
+- CHANGED: to prune /opt/codingfuture/bin
 - CHANGED: Ubuntu instance to remove update-motd package
+- CHANGED: got rid of historical cf-apt-update workaround
 - NEW: 'silent' atomic file write API for temporary cases
 
 ## 1.2.0 (2018-12-09)

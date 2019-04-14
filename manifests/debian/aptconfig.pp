@@ -5,6 +5,14 @@
 
 # Please see README
 class cfsystem::debian::aptconfig {
+    # Required by stretch/xenial
+    user { '_apt':
+        ensure => present,
+        home   => '/nonexistent',
+        shell  => '/bin/false',
+        gid    => 'nogroup',
+    }
+
     # Use for temporary mapping with new releases
     #---
     if versioncmp($::facts['operatingsystemrelease'], '10') >= 0 {
