@@ -5,6 +5,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## (next)
 - NEW: allow borrowing insufficient memory from swap for distribution
+- NEW: implemented local backup filebucket cleanup
 
 ## 1.3.0 (2019-04-14)
 - FIXED: forced secrets to override persistent values

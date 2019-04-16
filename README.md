@@ -161,6 +161,7 @@ cfnetwork::client_ports:
 * `$key_server = 'hkp://pgp.mit.edu:80'` - default PGP key server
 * `$random_feed = true` - enable random entropy generating daemon
 * `$add_handy_tools = true` - install additional tools
+* `$puppet_backup_age = '1d'` - how long to keep local puppet filebucket backups
 
 ## `cfsystem::bindir` type
 

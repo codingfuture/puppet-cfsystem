@@ -66,6 +66,8 @@ class cfsystem (
 
     Boolean $random_feed = true,
     Boolean $add_handy_tools = true,
+
+    String[1] $puppet_backup_age = '1d',
 ) inherits cfsystem::defaults {
     include cfnetwork
     include cfauth
@@ -201,6 +203,14 @@ class cfsystem (
             content => epp('cfsystem/puppet.conf.epp'),
             require => Package['puppet-agent']
         }
+    }
+
+    # Cleanup local backups
+    tidy { '/opt/puppetlabs/puppet/cache/clientbucket/':
+        age     => $puppet_backup_age,
+        recurse => true,
+        rmdirs  => true,
+        backup  => false,
     }
 
     #---
