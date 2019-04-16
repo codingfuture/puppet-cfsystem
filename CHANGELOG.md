@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## (next)
+- NEW: allow borrowing insufficient memory from swap for distribution
+
 ## 1.3.0 (2019-04-14)
 - FIXED: forced secrets to override persistent values
 - FIXED: atomicWrite to obey ownership & mode when content is the same

@@ -174,10 +174,13 @@ module PuppetX::CfSystem
     
     def self.calcMemorySections()
         debug('Calculating RAM sections')
-        
-        total_ram = Facter['memory'].value['system']['total_bytes']
+
+        memory_fact = Facter['memory']
+        total_ram = memory_fact.value['system']['total_bytes']
         total_ram = total_ram / 1024 / 1024
-        debug("Total RAM: #{total_ram}MB")
+        total_swap = memory_fact.value.fetch('swap', {})['total_bytes']
+        total_swap = total_swap / 1024 / 1024
+        debug("Total RAM: #{total_ram}MB SWAP:#{total_swap}MB")
         
         newconf = self.config.get_new('memory_weight')
         
@@ -215,8 +218,14 @@ module PuppetX::CfSystem
         end
         
         if total_ram < min_ram
-            warning('Memory sections: ' + newconf.to_s )
-            raise ArgumentError, "Minimal ram required #{min_ram} is more than available #{total_ram}"
+            if (total_ram + total_swap) >= min_ram
+                # Allow to borrow swap, but do not distribute that normally
+                warning("Borrowing #{min_ram - total_ram}MB from swap!")
+                total_ram = min_ram
+            else
+                warning('Memory sections: ' + newconf.to_s )
+                raise ArgumentError, "Minimal ram required #{min_ram} is more than available #{total_ram}"
+            end
         end
         
         # Pass #1 whole memory distribution
