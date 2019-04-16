@@ -178,7 +178,7 @@ module PuppetX::CfSystem
         memory_fact = Facter['memory']
         total_ram = memory_fact.value['system']['total_bytes']
         total_ram = total_ram / 1024 / 1024
-        total_swap = memory_fact.value.fetch('swap', {})['total_bytes']
+        total_swap = memory_fact.value.fetch('swap', {'total_bytes' => 0})['total_bytes']
         total_swap = total_swap / 1024 / 1024
         debug("Total RAM: #{total_ram}MB SWAP:#{total_swap}MB")
         
