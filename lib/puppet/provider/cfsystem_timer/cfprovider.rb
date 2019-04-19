@@ -100,8 +100,8 @@ Puppet::Type.type(:cfsystem_timer).provide(
             if k == 'Timer'
                 timer_ini[k] = v.clone
             else
-                content_ini.setdefault(k, {})
-                content_ini[k].merge!
+                content_ini[k] ||= {}
+                content_ini[k].merge! v
             end
         }
 
