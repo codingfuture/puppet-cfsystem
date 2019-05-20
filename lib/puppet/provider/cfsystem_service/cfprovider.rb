@@ -87,7 +87,7 @@ Puppet::Type.type(:cfsystem_service).provide(
         }
         
         settings_tune.each { |k, v|
-            content_ini.setdefault(k, {})
+            content_ini[k] ||= {}
             content_ini[k].merge! v
         }
 
