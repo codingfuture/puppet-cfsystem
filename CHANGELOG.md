@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## (next)
+- FIXED: cf_apt_key_updater for Ubuntu 18.04
+
 ## 1.3.1 (2019-06-17)
 - FIXED: to allow cftimer- service tuning through settings_tune
 - FIXED: to allow cfsvc- service tuning through settings_tune

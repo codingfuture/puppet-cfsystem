@@ -5,12 +5,7 @@
 #!/bin/sh
 
 key_id=$1
-http_proxy="<%= $http_proxy %>"
-key_options=
-
-if [ -n "${http_proxy}" ]; then
-    key_options="--keyserver-options http-proxy=${http_proxy}"
-fi
+export http_proxy="<%= $http_proxy %>"
 
 if test -z "${key_id}"; then
     echo "Usage: $0 <gpg_key_id>"
@@ -19,12 +14,10 @@ fi
 
 if /usr/bin/apt-key adv --list-keys "${key_id}" | /bin/grep -q expired; then
     set -e
-    /usr/bin/apt-key adv \
-            $key_options \
-            --keyserver '<%= $key_server %>' \
-            --recv-keys "${key_id}"
+    curl -s "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x${key_id}" | \
+        /usr/bin/apt-key add
 
-    if $2 == 'puppet'; then
+    if "$2" == 'puppet'; then
         exit 1
     else
         exit 0
