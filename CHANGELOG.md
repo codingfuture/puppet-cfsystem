@@ -5,6 +5,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## (next)
 - FIXED: cf_apt_key_updater for Ubuntu 18.04
+- NEW: additional system startup commands
 
 ## 1.3.1 (2019-06-17)
 - FIXED: to allow cftimer- service tuning through settings_tune

@@ -330,6 +330,7 @@ module PuppetX::CfSystem
 
         unless calendar.nil?
             timer_ini['OnCalendar'] = calendar
+            timer_ini['Persistent'] = 'yes'
         end
 
         reload = atomicWriteIni(timer_file, content_ini,
