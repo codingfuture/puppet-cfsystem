@@ -343,6 +343,8 @@ module PuppetX::CfSystem
             Puppet::Util::Execution.execute([SYSTEMD_CTL, 'daemon-reload'])
         end
 
+        Puppet::Util::Execution.execute([SYSTEMD_CTL, 'enable', "#{timer_name}.timer"])
+
         return reload
     end
 

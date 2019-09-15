@@ -5,6 +5,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## (next)
 - FIXED: cf_apt_key_updater for Ubuntu 18.04
+- FIXED: to enable timers on startup
 - NEW: additional system startup commands
 
 ## 1.3.1 (2019-06-17)
